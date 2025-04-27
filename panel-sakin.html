@@ -1,0 +1,71 @@
+<!-- panel-sakin.html -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sakin Paneli</title>
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
+</head>
+<body class="header-vertical">
+    <div id="page-loader" class="bg-dark dark">
+        <svg class="loader" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <circle class="circle" fill="none" stroke-width="2" stroke-linecap="round" cx="16" cy="16" r="14"></circle>
+        </svg>
+    </div>
+
+    <header id="header" class="bg-dark dark">
+        <a href="index-dark.html" class="logo">
+            <img src="assets/img/logo-light.svg" alt="">
+        </a>
+        <nav id="main-menu">
+            <div class="nav-wrapper">
+                <ul class="nav nav-primary">
+                    <li><a href="panel-sakin.html" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
+                    <li><a href="aidat-kullanıcı.html"><i class="li-moneybag"></i>Aidat Takibi</a></li>
+                    <li><a href="duyuru_k.html"><i class="li-bell"></i>Duyurular</a></li>
+                    <li><a href="randevu.html"><i class="li-clock"></i>Randevu Alma</a></li>
+                    <li><a href="istek_sikayet_k.html"><i class="li-email"></i>İstek & Şikayet</a></li>
+                    <li><a href="index-dark.html" onclick="cikisYap()"><i class="li-arrow6"></i>Çıkış Yap</a></li>
+                </ul>
+            </div>
+            <span class="selector"></span>
+        </nav>
+    </header>
+
+    <div id="content">
+        <section class="section">
+            <div class="container-fluid container-custom">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="display-4">Sakin Paneli</h1>
+                        <p class="lead">Hoş geldiniz!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="assets/js/jquery-2.2.4.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/core.js"></script>
+    <script>
+        // Erişim kontrolü
+        $(document).ready(function() {
+            const kullaniciTuru = localStorage.getItem('kullaniciTuru');
+            if (kullaniciTuru !== 'sakin') {
+                window.location.href = 'index-dark.html';
+                return;
+            }
+        });
+
+        function cikisYap() {
+            localStorage.removeItem('kullaniciTuru');
+            window.location.href = 'index-dark.html';
+        }
+    </script>
+</body>
+</html>

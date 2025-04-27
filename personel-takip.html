@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- Meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- Title -->
+<title>Skill - Modern &amp; Creative HTML5 Template</title>
+
+<!-- Favicons -->
+<link rel="shortcut icon" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
+<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
+<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
+<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
+
+<!-- Google Web Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
+
+<!-- CSS Styles -->
+<link rel="stylesheet" href="assets/css/styles.css" />
+
+<!-- CSS Base -->
+<link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
+
+</head>
+
+<body class="header-vertical">
+
+<!-- Loader -->
+<div id="page-loader" class="bg-dark dark">
+    <svg class="loader" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle class="circle" fill="none" stroke-width="2" stroke-linecap="round" cx="16" cy="16" r="14"></circle></svg>
+    <span class="loading-txt text-muted">Loading...</span>
+</div>
+<!-- Loader / End -->
+
+<!-- Header -->
+<header id="header" class="bg-dark dark">
+
+    <!-- Logo -->
+    <a href="index-dark.html" class="logo">
+        <img src="assets/img/logo-light.svg" alt="">
+    </a>
+
+    <!-- Navigation -->
+    <nav id="main-menu">
+      <div class="nav-wrapper">
+        <ul class="nav nav-primary">
+            <li><a href="panel-yonetici.html"><i class="li-home"></i>Ana Sayfa</a></li>
+            <li><a href="/daireler/" class="active" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
+            <li><a href="aidat-takip.html"><i class="li-moneybag"></i>Aidat Takibi</a></li>
+            <li><a href="duyuru.html"><i class="li-bell"></i>Duyurular</a></li>
+            <li><a href="personel-takip.html" class="active"><i class="li-calendar"></i>Personel Takibi</a></li>
+            <li><a href="istek_sikayet.html"><i class="li-email"></i>İstek & Şikayet</a></li>
+            <li><a href="index-dark.html" onclick="cikisYap()"><i class="li-arrow6"></i>Çıkış Yap</a></li>
+        </ul>
+      </div>  
+      <span class="selector"></span>
+    </nav>
+
+</header>
+<!-- Header / End -->
+
+<!-- Content -->
+<div id="content">
+    <section class="section">
+        <div class="container container-sm">        
+            <h3 class="mb-40">Personel Tablosu</h3>
+            
+            <!-- Personel Ekle Butonu -->
+            <div class="text-right mb-20">
+                <button class="btn btn-primary btn-sm" onclick="personelFormGoster()">
+                Yeni Personel Ekle
+                    </button>
+            </div>
+
+
+            <!-- Personel Ekleme Formu -->
+            <div id="personelForm" style="display:none;" class="card bg-secondary p-20 mb-30 rounded animate__animated">
+                <div class="position-relative mb-15">
+                <h5 class="mb-0">Yeni Personel Ekle</h5>
+                <button onclick="personelFormKapat()" class="btn btn-sm close-btn" title="Kapat">
+                    &times;
+                </button>
+                </div>
+                <form id="add-personel-form" style="border: 0px;margin-bottom: 0;">
+                <div class="row">
+                    <div class="col-md-6">
+                    <label for="personelAd">Ad Soyad</label>
+                    <input type="text" class="form-control mb-15" required id="personelAd" />
+                    </div>
+                    <div class="col-md-6">
+                    <label for="personelIs">İş</label>
+                    <input type="text" class="form-control mb-15" required id="personelIs" />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success btn-sm">Personeli Ekle</button>
+                </form>
+            </div>
+
+            <!-- Personel Tablosu -->
+            
+            <div class="table-responsive mb-40">
+                <table class="table table-bordered table-striped" id="personel-tablosu">
+
+                    <thead>
+                        <tr>
+                            <th>Personel Adı Soyadı</th>
+                            <th>İş</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>İlim Yüksel Özsoy</td>
+                            <td>Güvenlik Görevlisi</td>
+                        </tr>
+                        <tr>
+                            <td>Ali Gökçay</td>
+                            <td>Temizlik Görevlisi</td>
+                        </tr>
+                        <tr>
+                            <td>Ata Baş</td>
+                            <td>Bahçıvan</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <h3 class="mb-40">Görev Tablosu</h3>
+
+            <!-- Görev Ekle Butonu -->
+            <div class="text-right mb-20">
+                <button class="btn btn-primary btn-sm" onclick="formGoster()">
+                    Yeni Görev Ekle
+                </button>
+            </div>
+        
+            <div id="gorevForm" style="display:none;" class="card bg-secondary p-20 mb-30 rounded animate__animated">
+                <div class="position-relative mb-15">
+                    <h5 class="mb-0">Yeni Görev Ekle</h5>
+                    <button onclick="formKapat()" class="btn btn-sm close-btn" title="Kapat">
+                        &times;
+                    </button>
+                </div>              
+                <form id="add-task-form" style="border: 0px;margin-bottom: 0;">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="gorevliAdi">Personel Adı</label>
+                            <input type="text" class="form-control mb-15" required id="gorevliAdi" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="gorevAciklama">Görev</label>
+                            <input type="text" class="form-control mb-15" required id="gorevAciklama" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="baslangicTarihi">Başlangıç Tarihi</label>
+                            <input type="date" class="form-control mb-15" id="baslangicTarihi" />
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <label for="bitisTarihi">Bitiş Tarihi</label>
+                            <input type="date" class="form-control mb-15" id="bitisTarihi" required />
+                        </div>                   
+                    </div>
+                    <button type="submit" class="btn btn-success btn-sm" id="gorevEkleBtn">Görevi Kaydet</button>
+                </form>
+            </div>
+        
+            <!-- Görevler Tablosu -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Personel</th>
+                            <th>Görev</th>
+                            <th>Başlangıç Tarihi</th>
+                            <th>Bitiş Tarihi</th>
+                            <th>Durum</th>
+                            <th>Uyarı</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gorev-tablosu">
+                        <tr>
+                            <td>Ahmet Yıldız</td>
+                            <td>Bahçe Temizliği</td>
+                            <td>2025-04-16</td>
+                            <td>2025-04-19</td>
+                            <td class="text-danger">Gecikmiş</td>
+                            <td><button class="btn btn-sm btn-danger">Uyar</button></td>
+                        </tr>
+                        <tr>
+                            <td>Merve Kara</td>
+                            <td>Giriş Temizliği</td>
+                            <td>2025-04-18</td>
+                            <td>2025-04-22</td>
+                            <td class="text-success">Yapıldı</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Ata Baş</td>
+                            <td>Ağaçlari Sulama</td>
+                            <td>2025-04-20</td>
+                            <td>2025-04-22</td>
+                            <td class="">Beklemede</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Animate.css CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<script>
+    // Personel Formu Göster
+    function personelFormGoster() {
+        const form = document.getElementById("personelForm");
+        form.classList.remove("animate__fadeOutUp");
+        form.style.display = "block";
+        if (!form.classList.contains("animate__fadeInDown")) {
+            form.classList.add("animate__fadeInDown");
+        }
+    }
+
+    // Personel Formu Kapat
+    function personelFormKapat() {
+        const form = document.getElementById("personelForm");
+        form.classList.remove("animate__fadeInDown");
+        form.classList.add("animate__fadeOutUp");
+        setTimeout(() => {
+            form.style.display = "none";
+        }, 500);
+    }
+
+    // Personel Ekleme
+    document.getElementById("add-personel-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const ad = document.getElementById("personelAd").value;
+        const is = document.getElementById("personelIs").value;
+
+        const tablo = document.getElementById("personel-tablosu").getElementsByTagName("tbody")[0];
+        const satir = tablo.insertRow();
+        satir.innerHTML = `
+            <td>${ad}</td>
+            <td>${is}</td>
+        `;
+
+        document.getElementById("personelAd").value = "";
+        document.getElementById("personelIs").value = "";
+        personelFormKapat();
+    });
+
+    // Görev Ekleme
+    function gorevEkle() {
+        const adi = document.getElementById("gorevliAdi").value;
+        const aciklama = document.getElementById("gorevAciklama").value;
+        const baslangic = document.getElementById("baslangicTarihi").value;
+        const bitis = document.getElementById("bitisTarihi").value;
+        const bugun = new Date().toISOString().split("T")[0];
+
+        const durum = (bitis < bugun) ? '<span class="text-danger">Gecikmiş</span>' : 'Beklemede';
+        const uyarButonu = (bitis < bugun)
+            ? "<button class='btn btn-sm btn-danger'>Uyar</button>"
+            : "-";
+
+        const tablo = document.getElementById("gorev-tablosu");
+        const satir = tablo.insertRow();
+        satir.innerHTML = `
+            <td>${adi}</td>
+            <td>${aciklama}</td>
+            <td>${baslangic}</td>
+            <td>${bitis}</td>
+            <td>${durum}</td>
+            <td>${uyarButonu}</td>
+        `;
+
+        document.getElementById("gorevliAdi").value = "";
+        document.getElementById("gorevAciklama").value = "";
+        document.getElementById("baslangicTarihi").value = "";
+        document.getElementById("bitisTarihi").value = "";
+        formKapat();
+    }
+
+    // Görev ekleme formu submit
+    document.getElementById('add-task-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        gorevEkle();
+    });
+
+    // Görev Formu Göster
+    function formGoster() {
+        const form = document.getElementById('gorevForm');
+        form.classList.remove('animate__fadeOutUp');
+        form.style.display = 'block';
+        if (!form.classList.contains("animate__fadeInDown")) {
+            form.classList.add('animate__fadeInDown');
+        }
+    }
+
+    // Görev Formu Kapat
+    function formKapat() {
+        const form = document.getElementById('gorevForm');
+        form.classList.remove('animate__fadeInDown');
+        form.classList.add('animate__fadeOutUp');
+        setTimeout(() => {
+            form.style.display = 'none';
+        }, 500);
+    }
+</script>
+
+</div>
+<!-- Content / End -->
+
+<!-- Footer -->
+<footer id="footer" class="dark bg-dark">
+    <div class="container-fluid container-custom">
+        <div class="row">
+            <div class="col-xl-5 text-xl-left text-xs-center">
+                <div class="module-group">
+                    <div class="module copyright">
+                        <a href="index.html" class="logo mr-15"><img src="assets/img/logo-light.svg" height="80" alt=""></a>
+                        <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7 text-xl-right text-xs-center">
+                <div class="module-group">
+                    <div class="module">
+                        <span class="text-muted mr-5">Language:</span>
+                        <ul class="nav-footer">
+                            <li class="active"><a href="#">English</a></li>
+                            <li><a href="#">Polish</a></li>
+                        </ul>
+                    </div>
+                    <div class="module">
+                        <span class="text-muted mr-10">Follow Us</span>
+                        <a href="#" class="icon icon-circle icon-hover icon-facebook icon-sm"><i class="ti-facebook"></i></a>
+                        <a href="#" class="icon icon-circle icon-hover icon-twitter icon-sm"><i class="ti-twitter-alt"></i></a>
+                        <a href="#" class="icon icon-circle icon-hover icon-google icon-sm"><i class="ti-google"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer / End -->
+
+
+<!-- Mobile Navigation Toggle -->
+<div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
+
+<!-- JS Libraries -->
+<script src="assets/js/jquery-2.2.4.min.js"></script>
+
+<!-- JS Plugins -->
+<script src="assets/js/plugins.js"></script>
+
+<!-- JS Core -->
+<script src="assets/js/core.js"></script>
+
+</body>
+
+</html>

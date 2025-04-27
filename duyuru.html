@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- Meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- Title -->
+<title>Skill - Modern &amp; Creative HTML5 Template</title>
+
+<!-- Favicons -->
+<link rel="shortcut icon" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
+<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
+<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
+<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
+
+<!-- Google Web Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
+
+<!-- CSS Styles -->
+<link rel="stylesheet" href="assets/css/styles.css" />
+
+<!-- CSS Base -->
+<link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
+
+</head>
+
+<body class="header-vertical">
+
+<!-- Loader -->
+<div id="page-loader" class="bg-dark dark">
+    <svg class="loader" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle class="circle" fill="none" stroke-width="2" stroke-linecap="round" cx="16" cy="16" r="14"></circle></svg>
+    <span class="loading-txt text-muted">Loading...</span>
+</div>
+<!-- Loader / End -->
+
+<!-- Header -->
+<header id="header" class="bg-dark dark">
+
+    <!-- Logo -->
+    <a href="index-dark.html" class="logo">
+        <img src="assets/img/logo-light.svg" alt="">
+    </a>
+
+    <!-- Navigation -->
+    <nav id="main-menu">
+      <div class="nav-wrapper">
+        <ul class="nav nav-primary">
+          <li><a href="panel-yonetici.html"><i class="li-home"></i>Ana Sayfa</a></li>
+          <li><a href="/daireler/" class="active" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
+
+          <li><a href="aidat-takip.html"><i class="li-moneybag"></i>Aidat Takibi</a></li>
+          <li><a href="duyuru.html" class="active"><i class="li-bell"></i>Duyurular</a></li>
+          <li><a href="personel-takip.html"><i class="li-calendar"></i>Personel Takibi</a></li>
+          <li><a href="istek_sikayet.html"><i class="li-email"></i>İstek & Şikayet</a></li>
+          <li><a href="index-dark.html" onclick="cikisYap()"><i class="li-arrow6"></i>Çıkış Yap</a></li>
+        </ul>
+      </div>  
+      <span class="selector"></span>
+    </nav>
+
+</header>
+<!-- Header / End -->
+
+<!-- Content -->
+<div id="content">
+    
+  <!-- Duyurular Sayfası -->
+<section class="section">
+  <div class="container container-sm">
+    <h4 class="mt-60">Duyurular</h4>
+
+    <!-- Yönetici ise bu buton görünür -->
+    <div id="admin-controls" style="margin-bottom: 20px; display: none;">
+      <button id="openModalBtn" class="btn btn-primary btn-sm">+ Yeni Duyuru Ekle</button>
+    </div>
+
+    <!-- Modal: Yeni Duyuru Ekleme Ekranı -->
+    <div id="announcementModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);">
+      <div class="modal-content" style="background: #fff; margin: 10% auto; padding: 20px; width: 50%; border-radius: 10px;">
+        <h5>Yeni Duyuru</h5>
+        <input type="text" id="announcementTitle" class="form-control mb-3" placeholder="Duyuru başlığı">
+        <textarea id="announcementText" class="form-control mb-3" placeholder="Duyuru metni" rows="4"></textarea>
+        <button id="saveAnnouncementBtn" class="btn btn-primary">Kaydet</button>
+        <button id="closeModalBtn" class="btn btn-secondary float-right">Kapat</button>
+      </div>
+    </div>
+
+    <!-- Duyuru Tablosu -->
+    <div class="table-responsive mt-30">
+      <table class="table table-bordered table-striped" id="duyuru-tablosu">
+        <thead>
+          <tr>
+            <th>Başlık</th>
+            <th>Metin</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+  const isAdmin = true;
+  const duyurular = [
+    { title: "Asansör Bakımı", text: "12 Nisan 2025 tarihinde asansör bakımı yapılacaktır." },
+    { title: "Bahçe Temizliği", text: "Bahçe temizlik işlemleri 14 Nisan'da başlayacaktır." }
+  ];
+
+  const tableBody = document.querySelector("#duyuru-tablosu tbody");
+  const modal = document.getElementById("announcementModal");
+  const titleInput = document.getElementById("announcementTitle");
+  const textInput = document.getElementById("announcementText");
+  const openModalBtn = document.getElementById("openModalBtn");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const saveAnnouncementBtn = document.getElementById("saveAnnouncementBtn");
+
+  let duzenlemeIndex = null;
+
+  if (isAdmin) document.getElementById("admin-controls").style.display = "block";
+
+  function renderTable() {
+    tableBody.innerHTML = "";
+    duyurular.forEach((a, index) => {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${a.title}</td>
+        <td>${a.text}
+          <button class="btn btn-sm btn-danger btn-sm float-end" style="float: right;padding: 2px 7px; font-size: 1.2rem; margin-left: 0.75rem" onclick="sil(${index})" title="Sil">🗑</button>
+          <button class="btn btn-warning btn-sm float-end" style="float: right;padding: 3px; font-size: 1.1rem" onclick="duzenle(${index})" title="Düzenle">
+            <i class="li-pencil"></i>
+          </button>
+        </td>
+      `;
+      tableBody.appendChild(row);
+    });
+  }
+
+  function duzenle(index) {
+    duzenlemeIndex = index;
+    titleInput.value = duyurular[index].title;
+    textInput.value = duyurular[index].text;
+    modal.style.display = "block";
+  }
+
+  function sil(index) {
+    if (confirm("Bu duyuruyu silmek istediğinize emin misiniz?")) {
+      duyurular.splice(index, 1);
+      renderTable();
+    }
+  }
+
+  openModalBtn.onclick = () => {
+    duzenlemeIndex = null;
+    titleInput.value = "";
+    textInput.value = "";
+    modal.style.display = "block";
+  };
+
+  closeModalBtn.onclick = () => {
+    modal.style.display = "none";
+  };
+
+  saveAnnouncementBtn.onclick = () => {
+    const title = titleInput.value.trim();
+    const text = textInput.value.trim();
+
+    if (!title || !text) return alert("Başlık ve metin boş olamaz.");
+
+    if (duzenlemeIndex !== null) {
+      duyurular[duzenlemeIndex] = { title, text };
+    } else {
+      duyurular.unshift({ title, text });
+    }
+
+    modal.style.display = "none";
+    renderTable();
+  };
+
+  renderTable();
+</script>
+
+<style>
+  #announcementModal input[type="text"],
+  #announcementModal textarea {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 8px;
+  }
+</style>
+
+
+</div>
+<!-- Content / End -->
+
+<!-- Footer -->
+<footer id="footer" class="dark bg-dark">
+    <div class="container-fluid container-custom">
+        <div class="row">
+            <div class="col-xl-5 text-xl-left text-xs-center">
+                <div class="module-group">
+                    <div class="module copyright">
+                        <a href="index.html" class="logo mr-15"><img src="assets/img/logo-light.svg" height="80" alt=""></a>
+                        <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7 text-xl-right text-xs-center">
+                <div class="module-group">
+                    <div class="module">
+                        <span class="text-muted mr-5">Language:</span>
+                        <ul class="nav-footer">
+                            <li class="active"><a href="#">English</a></li>
+                            <li><a href="#">Polish</a></li>
+                        </ul>
+                    </div>
+                    <div class="module">
+                        <span class="text-muted mr-10">Follow Us</span>
+                        <a href="#" class="icon icon-circle icon-hover icon-facebook icon-sm"><i class="ti-facebook"></i></a>
+                        <a href="#" class="icon icon-circle icon-hover icon-twitter icon-sm"><i class="ti-twitter-alt"></i></a>
+                        <a href="#" class="icon icon-circle icon-hover icon-google icon-sm"><i class="ti-google"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer / End -->
+
+
+<!-- Mobile Navigation Toggle -->
+<div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
+
+<!-- JS Libraries -->
+<script src="assets/js/jquery-2.2.4.min.js"></script>
+
+<!-- JS Plugins -->
+<script src="assets/js/plugins.js"></script>
+
+<!-- JS Core -->
+<script src="assets/js/core.js"></script>
+
+</body>
+
+</html>

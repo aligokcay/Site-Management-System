@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- Meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- Title -->
+<title>Skill - Modern &amp; Creative HTML5 Template</title>
+
+<!-- Favicons -->
+<link rel="shortcut icon" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
+<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
+<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
+<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
+
+<!-- Google Web Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
+
+<!-- CSS Styles -->
+<link rel="stylesheet" href="assets/css/styles.css" />
+
+<!-- CSS Base -->
+<link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    .login-container {
+        background: rgba(18, 19, 20, 0.8);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .login-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        background: linear-gradient(45deg, #00ff87, #60efff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+    }
+
+    .login-button {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        transform: scale(1);
+        border: none;
+        padding: 1rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .login-button:hover {
+        transform: scale(1.02);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .login-button i {
+        margin-right: 10px;
+        font-size: 1.2em;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+        padding: 1.5rem;
+    }
+
+    .form-control {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        border-radius: 10px;
+        padding: 0.8rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: none;
+        color: white;
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    label {
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .giris-form {
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .giris-form.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .bg-image {
+        filter: brightness(0.5);
+    }
+
+    @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Yeni form stilleri */
+    .modern-form {
+        background: rgba(30, 32, 35, 0.95);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+
+    .modern-form .form-control {
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+    }
+
+    .modern-form .form-control:focus {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.2);
+    }
+
+    .modern-form .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .modern-form .form-floating {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .modern-form .form-floating label {
+        position: absolute;
+        top: 0;
+        left: 15px;
+        transform: translateY(-50%);
+        background: rgba(30, 32, 35, 0.95);
+        padding: 0 0.5rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+    }
+
+    .modern-form .btn-login {
+        background: linear-gradient(45deg, #ff3b30, #ff9500);
+        border: none;
+        border-radius: 12px;
+        padding: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+    }
+
+    .modern-form .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 59, 48, 0.4);
+    }
+
+    .modern-form .form-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .modern-form .form-header .icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #ff3b30;
+    }
+
+    .modern-form .form-header h3 {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: white;
+        margin: 0;
+    }
+
+    .modern-form .form-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+
+    .modern-form .form-footer .text-muted {
+        color: rgba(255, 255, 255, 0.5) !important;
+        font-size: 0.9rem;
+    }
+</style>
+
+</head>
+
+<body class="header-vertical">
+
+    {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success" role="alert">
+          {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+
+<!-- Loader -->
+<div id="page-loader" class="bg-dark dark">
+    <svg class="loader" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle class="circle" fill="none" stroke-width="2" stroke-linecap="round" cx="16" cy="16" r="14"></circle></svg>
+    <span class="loading-txt text-muted">Loading...</span>
+</div>
+<!-- Loader / End -->
+
+<!-- Header -->
+<header id="header" class="bg-dark dark">
+
+    <!-- Logo -->
+    <a href="index-dark.html" class="logo">
+        <img src="assets/img/logo-light.svg" alt="">
+    </a>
+
+    <!-- Navigation -->
+    <nav id="main-menu">
+      <div class="nav-wrapper">
+        <ul class="nav nav-primary">
+            <li><a href="index-dark.html" class="active"><i class="li-padlock1"></i>Giriş Ekranı</a></li>
+        </ul>
+      </div>  
+      <span class="selector"></span>
+    </nav>
+
+</header>
+<!-- Header / End -->
+
+<!-- Content -->
+<div id="content">
+
+    <!-- Section / Login Options -->
+    <section id="home" class="section fullheight">
+  
+      <!-- Background Image -->
+      <div class="bg-image bg-fixed"><img src="assets/img/photos/coaching2_bg01.jpg" alt=""></div>
+  
+      <div class="v-center container-fluid container-custom">
+        <div class="row justify-content-center">
+            <div class="col-md-5 mx-auto">
+                <div class="login-container">
+                    <h1 class="login-title">Site Yönetim Sistemi</h1>
+                    
+                    <!-- Giriş Butonları -->
+                    <div class="mb-5">
+                        <button class="login-button btn btn-danger btn-lg w-100 mb-3 d-flex align-items-center justify-content-center" onclick="formGoster('yonetici')">
+                            <i class="fas fa-user-tie"></i> YÖNETİCİ GİRİŞİ
+                        </button>
+                        <button class="login-button btn btn-success btn-lg w-100 mb-3 d-flex align-items-center justify-content-center" onclick="formGoster('sakin')">
+                            <i class="fas fa-home"></i> APARTMAN SAKİNİ GİRİŞİ
+                        </button>
+                        <button class="login-button btn btn-warning btn-lg w-100 mb-3 d-flex align-items-center justify-content-center" onclick="formGoster('personel')">
+                            <i class="fas fa-user-cog"></i> PERSONEL GİRİŞİ
+                        </button>
+                    </div>
+
+                    <!-- Yönetici Giriş Formu -->
+                    <div id="yoneticiForm" class="giris-form" style="display: none;">
+                        <div class="modern-form">
+                            <button onclick="formKapat()" 
+                                class="btn-close text-white" 
+                                style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; background: transparent; border: none;cursor: pointer;">
+                                &times;
+                            </button>                            
+                            <div class="form-header">
+                                <div class="icon">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <h3>Yönetici Girişi</h3>
+                            </div>
+                            <form method="POST" action="/login/">
+                                {% csrf_token %}
+                                <input type="hidden" name="role" value="yonetici">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="yoneticiKullaniciAdi" name="username" required placeholder="Kullanıcı adınızı giriniz">
+                                    <label for="yoneticiKullaniciAdi">Kullanıcı Adı</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="yoneticiSifre" name="password" required placeholder="Şifrenizi giriniz">
+                                    <label for="yoneticiSifre">Şifre</label>
+                                </div>
+                                <button type="submit" class="btn btn-login w-100">
+                                    <i class="fas fa-sign-in-alt me-2"></i> Giriş Yap
+                                </button>
+                                <div class="form-footer">
+                                    <p class="text-muted">Güvenli giriş için bilgilerinizi kontrol ediniz</p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Apartman Sakini Giriş Formu -->
+                    <div id="sakinForm" class="giris-form" style="display: none;">
+                        <div class="modern-form">
+                            <button onclick="formKapat()" 
+                                class="btn-close text-white" 
+                                style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; background: transparent; border: none;cursor: pointer;">
+                                &times;
+                            </button>  
+                            <div class="form-header">
+                                <div class="icon">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <h3>Apartman Sakini Girişi</h3>
+                            </div>
+                            <form method="POST" action="/login/">
+                                {% csrf_token %}
+                                <input type="hidden" name="role" value="sakin">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="sakinKullaniciAdi" name="username" required placeholder="Kullanıcı adınızı giriniz">
+                                    <label for="sakinKullaniciAdi">Kullanıcı Adı</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="sakinSifre" name="password" required placeholder="Şifrenizi giriniz">
+                                    <label for="sakinSifre">Şifre</label>
+                                </div>
+                                <button type="submit" class="btn btn-login w-100" style="background: linear-gradient(45deg, #34c759, #30d158);">
+                                    <i class="fas fa-sign-in-alt me-2"></i> Giriş Yap
+                                </button>
+                                <div class="form-footer">
+                                    <p class="text-muted">Güvenli giriş için bilgilerinizi kontrol ediniz</p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Personel Giriş Formu -->
+                    <div id="personelForm" class="giris-form" style="display: none;">
+                        <div class="modern-form">
+                            <button onclick="formKapat()" 
+                                class="btn-close text-white" 
+                                style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; background: transparent; border: none;cursor: pointer;">
+                                &times;
+                            </button>  
+                            <div class="form-header">
+                                <div class="icon">
+                                    <i class="fas fa-user-cog"></i>
+                                </div>
+                                <h3>Personel Girişi</h3>
+                            </div>
+                            <form method="POST" action="/login/">
+                                {% csrf_token %}
+                                <input type="hidden" name="role" value="personel">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="personelKullaniciAdi" name="username" required placeholder="Kullanıcı adınızı giriniz">
+                                    <label for="personelKullaniciAdi">Kullanıcı Adı</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="personelSifre" name="password" required placeholder="Şifrenizi giriniz">
+                                    <label for="personelSifre">Şifre</label>
+                                </div>
+                                <button type="submit" class="btn btn-login w-100" style="background: linear-gradient(45deg, #ff9f0a, #ffd60a);">
+                                    <i class="fas fa-sign-in-alt me-2"></i> Giriş Yap
+                                </button>
+                                <div class="form-footer">
+                                    <p class="text-muted">Güvenli giriş için bilgilerinizi kontrol ediniz</p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+  
+    </section>
+  
+  </div>
+  <!-- Content / End -->
+  
+
+<!-- Footer -->
+<footer id="footer" class="dark bg-dark">
+    <div class="container-fluid container-custom">
+        <div class="row">
+            <div class="col-xl-5 text-xl-left text-xs-center">
+                <div class="module-group">
+                    <div class="module copyright">
+                        <a href="index.html" class="logo mr-15"><img src="assets/img/logo-light.svg" height="80" alt=""></a>
+                        <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7 text-xl-right text-xs-center">
+                <div class="module-group">
+                    <div class="module">
+                        <span class="text-muted mr-5">Language:</span>
+                        <ul class="nav-footer">
+                            <li class="active"><a href="#">English</a></li>
+                            <li><a href="#">Polish</a></li>
+                        </ul>
+                    </div>
+                    <div class="module">
+                        <span class="text-muted mr-10">Follow Us</span>
+                        <a href="#" class="icon icon-circle icon-hover icon-facebook icon-sm"><i class="ti-facebook"></i></a>
+                        <a href="#" class="icon icon-circle icon-hover icon-twitter icon-sm"><i class="ti-twitter-alt"></i></a>
+                        <a href="#" class="icon icon-circle icon-hover icon-google icon-sm"><i class="ti-google"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer / End -->
+
+<!-- Mobile Navigation Toggle -->
+<div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
+
+<!-- JS Libraries -->
+<script src="assets/js/jquery-2.2.4.min.js"></script>
+
+<!-- JS Plugins -->
+<script src="assets/js/plugins.js"></script>
+
+<!-- JS Core -->
+<script src="assets/js/core.js"></script>
+<script>
+
+    function formGoster(tip) {
+        const formlar = ['yonetici', 'sakin', 'personel'];
+    
+        formlar.forEach(t => {
+            const form = document.getElementById(t + 'Form');
+            if (t === tip) {
+                form.style.display = 'block';
+                setTimeout(() => {
+                    form.classList.add('active');
+                }, 10);
+            } else {
+                form.classList.remove('active');
+                setTimeout(() => {
+                    form.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+    
+    function formKapat() {
+        const formlar = document.querySelectorAll('.giris-form');
+        formlar.forEach(form => {
+            form.classList.remove('active');
+            setTimeout(() => {
+                form.style.display = 'none';
+            }, 300);
+        });
+    }
+    
+    
+    
+    </script>    
+
+</body>
+
+</html>

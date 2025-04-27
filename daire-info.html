@@ -1,0 +1,325 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+
+<!-- Meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- Title -->
+<title>Skill - Modern &amp; Creative HTML5 Template</title>
+
+<!-- Favicons -->
+<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<link rel="apple-touch-icon" href="{% static 'img/favicon_60x60.png' %}">
+<link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/favicon_76x76.png' %}">
+<link rel="apple-touch-icon" sizes="120x120" href="{% static 'img/favicon_120x120.png' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/favicon_152x152.png' %}">
+
+<!-- Google Web Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- CSS Styles -->
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}">
+
+</head>
+
+<body class="header-vertical">
+
+<!-- Loader -->
+<div id="page-loader" class="bg-dark dark">
+    <svg class="loader" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle class="circle" fill="none" stroke-width="2" stroke-linecap="round" cx="16" cy="16" r="14"></circle></svg>
+    <span class="loading-txt text-muted">Loading...</span>
+</div>
+<!-- Loader / End -->
+
+<!-- Header -->
+<header id="header" class="bg-dark dark">
+
+    <!-- Logo -->
+    <a href="index-dark.html" class="logo">
+        <img src="{% static 'img/logo-light.svg' %}" alt="">
+    </a>
+
+    <!-- Navigation -->
+    <nav id="main-menu">
+      <div class="nav-wrapper">
+        <ul class="nav nav-primary">
+            <li><a href="/panel-yonetici.html"><i class="li-home"></i>Ana Sayfa</a></li>
+            <li><a href="/daireler/" class="active" style="pointer-events: auto;"><i class="li-house"></i>Daire Bilgileri</a></li>
+            <li><a href="/kira-takip/" style="pointer-events: auto;"><i class="li-moneybag"></i>Kira Takibi</a></li>
+            <li><a href="duyuru.html"><i class="li-bell"></i>Duyurular</a></li>
+            <li><a href="personel-takip.html"><i class="li-calendar"></i>Personel Takibi</a></li>
+            <li><a href="istek_sikayet.html"><i class="li-email"></i>İstek & Şikayet</a></li>
+            <li><a href="/logout/" style="pointer-events: auto;"><i class="li-arrow6"></i> Çıkış Yap</a></li>
+
+        </ul>
+      </div>  
+      <span class="selector"></span>
+    </nav>
+
+</header>
+<!-- Header / End -->
+
+<!-- Content -->
+<div id="content">
+    
+    <!-- Section -->
+    <section class="section">
+
+        <div class="container container-sm">
+
+            <!-- Daire Bilgileri Tablosu -->
+            <h4 class="mt-60">Daire Bilgileri</h4>
+            <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Blok</th>
+                    <th>Kat</th>
+                    <th>Daire No</th>
+                    <th>Sakin Adı</th>
+                    <th>Durum</th>
+                    <th style="width: 117px;">Alan</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for daire in daireler %}
+                    <tr>
+                        <td>{{ daire.blok }}</td>
+                        <td>{{ daire.kat }}</td>
+                        <td>{{ daire.daire_no }}</td>
+                        <td>{{ daire.mevcut_sakin|default:"Boş" }}</td>
+                        <td>
+                            {% if daire.kirada_mi %}
+                                Kiracı
+                            {% else %}
+                                Ev Sahibi
+                            {% endif %}
+                        </td>
+                        <td>
+                            100 m²
+                            <button class="btn btn-warning btn-sm float-end" style="float: right;padding: 2px;font-size: 0.9rem" onclick="duzenleSatir(this)">
+                                <i class="li-pencil"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+            <script>
+                function duzenleSatir(button) {
+                    const row = button.closest("tr");
+                    const cells = row.querySelectorAll("td");
+                    const isEditing = button.classList.contains("editing");
+            
+                    if (!isEditing) {
+                        // Düzenleme moduna geç
+                        for (let i = 0; i < cells.length - 1; i++) {
+                            
+                            if (i === 3 || i === 4) {  // sadece mevcut_sakin ve kirada_mi düzenlensin
+                                const text = cells[i].innerText.trim();
+                                const input = document.createElement("input");
+                                input.type = "text";
+                                input.className = "form-control form-control-sm";
+                                input.value = text;
+                                cells[i].innerHTML = "";
+                                cells[i].appendChild(input);
+                            }
+                        }
+                        button.innerHTML = '<i class="fas fa-check"></i>';
+                        button.classList.remove("btn-warning");
+                        button.classList.add("btn-success", "editing");
+                    } else {
+                        // Kayıt yap
+                     
+                        const mevcut_sakin = cells[3].querySelector("input").value;
+                        const kirada_mi = cells[4].querySelector("input") ? (cells[4].querySelector("input").value.toLowerCase() === "kiracı") : cells[4].innerText.toLowerCase() === "kiracı";
+                        
+            
+                        // AJAX ile server'a yolla
+                        fetch('/daire-guncelle/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCookie('csrftoken')
+                            },
+                            body: JSON.stringify({
+                                blok: cells[0].innerText.trim(),
+                                kat: parseInt(cells[1].innerText.trim()),
+                                daire_no: cells[2].innerText.trim(),
+                                mevcut_sakin: mevcut_sakin,
+                                kirada_mi: kirada_mi
+                            })
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                Swal.fire('Başarılı', 'Daire bilgisi güncellendi!', 'success');
+                            } else {
+                                Swal.fire('Hata', 'Daire bilgisi güncellenemedi.', 'error');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log(data);
+                        })
+                        .catch(error => {
+                            console.error('Hata:', error);
+                            Swal.fire('Hata', 'Sunucuya bağlanılamadı.', 'error');
+                        });
+            
+                        // Hücreleri tekrar normal göster
+                        for (let i = 0; i < cells.length - 1; i++) {
+                            const value = cells[i].querySelector("input").value;
+                            cells[i].innerHTML = value;
+                        }
+                        button.innerHTML = '<i class="li-pencil"></i>';
+                        button.classList.remove("btn-success", "editing");
+                        button.classList.add("btn-warning");
+                    }
+                }
+            
+                // CSRF Token'ı yakalamak için (Django güvenlik için ister)
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+            </script>
+
+            <div  style="padding: 0 10%;">
+                <h4 class="mt-60">Temel Oranlar</h4>
+                <!-- Progress -->
+                <div class="progress-wrapper">
+                    <progress class="progress mb-5" value="90" max="100" ></progress>
+                    <span class="value"></span>
+                    <strong class="text-sm">Doluluk Oranı</strong>
+                </div> 
+                <!-- Progress -->
+                <div class="progress-wrapper">
+                    <progress class="progress mb-5" value="60" max="100"></progress>
+                    <span class="value"></span>
+                    <strong class="text-sm">Ev Sahibi Oranı</strong>
+                </div> 
+                <!-- Progress -->
+                <div class="progress-wrapper">
+                    <progress class="progress mb-5" value="40" max="100"></progress>
+                    <span class="value"></span>
+                    <strong class="text-sm">Kiracı Oranı</strong>
+                </div> 
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Düzenle Modal -->
+<div class="modal fade" id="duzenleModal" tabindex="-1" aria-labelledby="duzenleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-white">
+        <form method="POST" action="{% url 'daire_guncelle' %}">
+          {% csrf_token %}
+          <div class="modal-header">
+            <h5 class="modal-title" id="duzenleModalLabel">Daire Bilgilerini Düzenle</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+  
+            <input type="hidden" id="modal-uid" name="uid">
+  
+            <div class="mb-3">
+              <label>Blok</label>
+              <input type="text" class="form-control" id="modal-blok" name="blok" required>
+            </div>
+  
+            <div class="mb-3">
+              <label>Kat</label>
+              <input type="number" class="form-control" id="modal-kat" name="kat" required>
+            </div>
+  
+            <div class="mb-3">
+              <label>Daire No</label>
+              <input type="text" class="form-control" id="modal-daire_no" name="daire_no" required>
+            </div>
+  
+            <div class="mb-3">
+              <label>Sakin Adı</label>
+              <input type="text" class="form-control" id="modal-mevcut_sakin" name="mevcut_sakin">
+            </div>
+  
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="modal-kirada_mi" name="kirada_mi">
+              <label class="form-check-label" for="modal-kirada_mi">Kiracı mı?</label>
+            </div>
+  
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Kaydet</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
+</div>
+<!-- Content / End -->
+
+<!-- Footer -->
+<footer id="footer" class="dark bg-dark">
+    <div class="container-fluid container-custom">
+        <div class="row">
+            <div class="col-xl-5 text-xl-left text-xs-center">
+                <div class="module-group">
+                    <div class="module copyright">
+                        <img src="{% static 'img/logo-light.svg' %}" height="80" alt="">
+                        <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7 text-xl-right text-xs-center">
+                <div class="module-group">
+                    <div class="module">
+                        <span class="text-muted mr-5">Language:</span>
+                        <ul class="nav-footer">
+                            <li class="active"><a href="#">English</a></li>
+                            <li><a href="#">Polish</a></li>
+                        </ul>
+                    </div>
+                    <div class="module">
+                        <span class="text-muted mr-10">Follow Us</span>
+                        <a href="#" class="icon icon-circle icon-hover icon-facebook icon-sm"><i class="ti-facebook"></i></a>
+                        <a href="#" class="icon icon-circle icon-hover icon-twitter icon-sm"><i class="ti-twitter-alt"></i></a>
+                        <a href="#" class="icon icon-circle icon-hover icon-google icon-sm"><i class="ti-google"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer / End -->
+
+
+<!-- Mobile Navigation Toggle -->
+<div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
+
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
+<script src="{% static 'js/core.js' %}"></script>
+
+</body>
+
+</html>
