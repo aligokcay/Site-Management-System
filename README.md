@@ -1,6 +1,5 @@
 # rAAt-ekip Projesi
 
-Bu proje rAAt ekibi için hazırlanmış bir Python tabanlı Django uygulamasıdır.
 
 ## Kurulum Adımları
 
@@ -40,9 +39,3 @@ Bu proje rAAt ekibi için hazırlanmış bir Python tabanlı Django uygulamasıd
    ```bash
    python manage.py runserver
    ```
-
-## Katkıda Bulunma
-- Forklayın, değişiklik yapın ve Pull Request gönderin 🎉
-
-## Lisans
-Bu proje sadece eğitim ve geliştirme amacıyla kullanılabilir.
