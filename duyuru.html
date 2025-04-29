@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,24 +6,10 @@
 <!-- Meta -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<!-- Title -->
-<title>Skill - Modern &amp; Creative HTML5 Template</title>
-
-<!-- Favicons -->
+<title>Yönetici Paneli</title>
 <link rel="shortcut icon" href="assets/img/favicon.png">
-<link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
-<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
-<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
-<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
-
-<!-- Google Web Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
-
-<!-- CSS Styles -->
 <link rel="stylesheet" href="assets/css/styles.css" />
-
-<!-- CSS Base -->
 <link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
 
 </head>
@@ -48,14 +35,13 @@
     <nav id="main-menu">
       <div class="nav-wrapper">
         <ul class="nav nav-primary">
-          <li><a href="panel-yonetici.html"><i class="li-home"></i>Ana Sayfa</a></li>
-          <li><a href="/daireler/" class="active" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
-
-          <li><a href="aidat-takip.html"><i class="li-moneybag"></i>Aidat Takibi</a></li>
-          <li><a href="duyuru.html" class="active"><i class="li-bell"></i>Duyurular</a></li>
-          <li><a href="personel-takip.html"><i class="li-calendar"></i>Personel Takibi</a></li>
-          <li><a href="istek_sikayet.html"><i class="li-email"></i>İstek & Şikayet</a></li>
-          <li><a href="index-dark.html" onclick="cikisYap()"><i class="li-arrow6"></i>Çıkış Yap</a></li>
+          <li><a href="panel-yonetici.html" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
+                    <li><a href="/daireler/" class="active" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
+                    <li><a href="/kira-takip/" class="active" style="pointer-events: auto;"><i class="li-moneybag"></i> Kira Takibi</a></li>
+                    <li><a href="/duyurular/"class="active" style="pointer-events: auto;"><i class="li-bell"></i>Duyurular</a></li>
+                    <li><a href="/personel-takip/" class="active" style="pointer-events: auto;"><i class="li-calendar"></i> Personel Takibi</a></li>
+                    <li><a href="istek_sikayet.html"><i class="li-email"></i>İstek & Şikayet</a></li>
+                    <li><a href="/logout/" style="pointer-events: auto;"><i class="li-arrow6"></i> Çıkış Yap</a></li>
         </ul>
       </div>  
       <span class="selector"></span>
@@ -97,7 +83,16 @@
             <th>Metin</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {% for duyuru in duyurular %}
+          <tr>
+              <td>{{ duyuru.title }}</td>
+              <td>{{ duyuru.content }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="2" class="text-center">Henüz duyuru yok.</td></tr>
+          {% endfor %}
+          </tbody>
       </table>
     </div>
 
@@ -206,7 +201,7 @@
             <div class="col-xl-5 text-xl-left text-xs-center">
                 <div class="module-group">
                     <div class="module copyright">
-                        <a href="index.html" class="logo mr-15"><img src="assets/img/logo-light.svg" height="80" alt=""></a>
+                      <a href="index.html" class="logo mr-15"><img src="img/logo-light.svg" height="80" alt=""></a>
                         <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
                     </div>
                 </div>
@@ -237,15 +232,9 @@
 <!-- Mobile Navigation Toggle -->
 <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
 
-<!-- JS Libraries -->
-<script src="assets/js/jquery-2.2.4.min.js"></script>
-
-<!-- JS Plugins -->
-<script src="assets/js/plugins.js"></script>
-
-<!-- JS Core -->
-<script src="assets/js/core.js"></script>
-
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
+<script src="{% static 'js/core.js' %}"></script>
 </body>
 
 </html>

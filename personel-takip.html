@@ -1,7 +1,8 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="tr">
 
+<head>
 <!-- Meta -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,20 +11,13 @@
 <title>Skill - Modern &amp; Creative HTML5 Template</title>
 
 <!-- Favicons -->
-<link rel="shortcut icon" href="assets/img/favicon.png">
-<link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
-<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
-<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
-<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
-
-<!-- Google Web Fonts -->
+<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}">
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
+<script src="{% static 'js/core.js' %}"></script>
 <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
-
-<!-- CSS Styles -->
-<link rel="stylesheet" href="assets/css/styles.css" />
-
-<!-- CSS Base -->
-<link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
 
 </head>
 
@@ -41,20 +35,21 @@
 
     <!-- Logo -->
     <a href="index-dark.html" class="logo">
-        <img src="assets/img/logo-light.svg" alt="">
+        <img src="{% static 'img/logo-light.svg' %}" alt="">
     </a>
 
     <!-- Navigation -->
     <nav id="main-menu">
       <div class="nav-wrapper">
         <ul class="nav nav-primary">
-            <li><a href="panel-yonetici.html"><i class="li-home"></i>Ana Sayfa</a></li>
-            <li><a href="/daireler/" class="active" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
-            <li><a href="aidat-takip.html"><i class="li-moneybag"></i>Aidat Takibi</a></li>
-            <li><a href="duyuru.html"><i class="li-bell"></i>Duyurular</a></li>
-            <li><a href="personel-takip.html" class="active"><i class="li-calendar"></i>Personel Takibi</a></li>
-            <li><a href="istek_sikayet.html"><i class="li-email"></i>İstek & Şikayet</a></li>
-            <li><a href="index-dark.html" onclick="cikisYap()"><i class="li-arrow6"></i>Çıkış Yap</a></li>
+            <li><a href="panel-yonetici.html" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
+                    <li><a href="/daireler/" class="active" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
+                    <li><a href="/kira-takip/" class="active" style="pointer-events: auto;"><i class="li-moneybag"></i> Kira Takibi</a></li>
+                    <li><a href="duyuru.html"><i class="li-bell"></i>Duyurular</a></li>
+                    <li><a href="/personel-takip/" class="active" style="pointer-events: auto;"><i class="li-calendar"></i> Personel Takibi</a></li>
+                    <li><a href="istek_sikayet.html"><i class="li-email"></i>İstek & Şikayet</a></li>
+                    <li><a href="/logout/" style="pointer-events: auto;"><i class="li-arrow6"></i> Çıkış Yap</a></li>
+
         </ul>
       </div>  
       <span class="selector"></span>
@@ -85,19 +80,18 @@
                     &times;
                 </button>
                 </div>
-                <form id="add-personel-form" style="border: 0px;margin-bottom: 0;">
-                <div class="row">
-                    <div class="col-md-6">
-                    <label for="personelAd">Ad Soyad</label>
-                    <input type="text" class="form-control mb-15" required id="personelAd" />
-                    </div>
-                    <div class="col-md-6">
-                    <label for="personelIs">İş</label>
-                    <input type="text" class="form-control mb-15" required id="personelIs" />
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-success btn-sm">Personeli Ekle</button>
-                </form>
+                <form method="post" action="{% url 'personel_takip' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="personel_ekle">
+                  
+                    <label>Ad Soyad</label>
+                    <input type="text" name="ad_soyad" class="form-control" required>
+                  
+                    <label>İş</label>
+                    <input type="text" name="job_title" class="form-control" required>
+                  
+                    <button type="submit" class="btn btn-success">Personel Ekle</button>
+                  </form>
             </div>
 
             <!-- Personel Tablosu -->
@@ -106,24 +100,12 @@
                 <table class="table table-bordered table-striped" id="personel-tablosu">
 
                     <thead>
+                        {% for personel in personeller %}
                         <tr>
-                            <th>Personel Adı Soyadı</th>
-                            <th>İş</th>
+                            <td>{{ personel.user.get_full_name }}</td>
+                            <td>{{ personel.job_title }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>İlim Yüksel Özsoy</td>
-                            <td>Güvenlik Görevlisi</td>
-                        </tr>
-                        <tr>
-                            <td>Ali Gökçay</td>
-                            <td>Temizlik Görevlisi</td>
-                        </tr>
-                        <tr>
-                            <td>Ata Baş</td>
-                            <td>Bahçıvan</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -145,28 +127,33 @@
                         &times;
                     </button>
                 </div>              
-                <form id="add-task-form" style="border: 0px;margin-bottom: 0;">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label for="gorevliAdi">Personel Adı</label>
-                            <input type="text" class="form-control mb-15" required id="gorevliAdi" />
-                        </div>
-                        <div class="col-md-3">
-                            <label for="gorevAciklama">Görev</label>
-                            <input type="text" class="form-control mb-15" required id="gorevAciklama" />
-                        </div>
-                        <div class="col-md-3">
-                            <label for="baslangicTarihi">Başlangıç Tarihi</label>
-                            <input type="date" class="form-control mb-15" id="baslangicTarihi" />
-                        </div>
-                        
-                        <div class="col-md-3">
-                            <label for="bitisTarihi">Bitiş Tarihi</label>
-                            <input type="date" class="form-control mb-15" id="bitisTarihi" required />
-                        </div>                   
-                    </div>
-                    <button type="submit" class="btn btn-success btn-sm" id="gorevEkleBtn">Görevi Kaydet</button>
-                </form>
+                <form method="post" action="{% url 'personel_takip' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="gorev_ekle">
+                  
+                    <label>Personel Seç</label>
+                    <select name="calisan_id" class="form-control" required>
+                        {% for personel in personeller %}
+                        <option value="{{ personel.id }}">{{ personel.user.get_full_name }}</option>
+                        {% endfor %}
+                    </select>
+                  
+                    <label>Görev</label>
+                    <input type="text" name="title" class="form-control" required>
+                  
+                    <label>Bitiş Tarihi</label>
+                    <input type="date" name="end_date" class="form-control" required>
+                  
+                    <label>Durum</label>
+                    <select name="status" class="form-control">
+                      <option value="beklemede">Beklemede</option>
+                      <option value="yapiliyor">Yapılıyor</option>
+                      <option value="tamamlandi">Tamamlandı</option>
+                      <option value="gecikmis">Gecikmiş</option>
+                    </select>
+                  
+                    <button type="submit" class="btn btn-success">Görev Ekle</button>
+                  </form>
             </div>
         
             <!-- Görevler Tablosu -->
@@ -183,30 +170,15 @@
                         </tr>
                     </thead>
                     <tbody id="gorev-tablosu">
-                        <tr>
-                            <td>Ahmet Yıldız</td>
-                            <td>Bahçe Temizliği</td>
-                            <td>2025-04-16</td>
-                            <td>2025-04-19</td>
-                            <td class="text-danger">Gecikmiş</td>
-                            <td><button class="btn btn-sm btn-danger">Uyar</button></td>
-                        </tr>
-                        <tr>
-                            <td>Merve Kara</td>
-                            <td>Giriş Temizliği</td>
-                            <td>2025-04-18</td>
-                            <td>2025-04-22</td>
-                            <td class="text-success">Yapıldı</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Ata Baş</td>
-                            <td>Ağaçlari Sulama</td>
-                            <td>2025-04-20</td>
-                            <td>2025-04-22</td>
-                            <td class="">Beklemede</td>
-                            <td>-</td>
-                        </tr>
+                        {% for gorev in gorevler %}
+                    <tr>
+                        <td>{{ gorev.assigned_to.user.get_full_name }}</td>
+                        <td>{{ gorev.title }}</td>
+                        <td>{{ gorev.start_date }}</td>
+                        <td>{{ gorev.end_date }}</td>
+                        <td>{{ gorev.get_status_display }}</td>
+                    </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -325,7 +297,7 @@
             <div class="col-xl-5 text-xl-left text-xs-center">
                 <div class="module-group">
                     <div class="module copyright">
-                        <a href="index.html" class="logo mr-15"><img src="assets/img/logo-light.svg" height="80" alt=""></a>
+                        <a href="index.html" class="logo mr-15"><img src="img/logo-light.svg" height="80" alt=""></a>
                         <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
                     </div>
                 </div>
@@ -356,14 +328,10 @@
 <!-- Mobile Navigation Toggle -->
 <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
 
-<!-- JS Libraries -->
-<script src="assets/js/jquery-2.2.4.min.js"></script>
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
+<script src="{% static 'js/core.js' %}"></script>
 
-<!-- JS Plugins -->
-<script src="assets/js/plugins.js"></script>
-
-<!-- JS Core -->
-<script src="assets/js/core.js"></script>
 
 </body>
 

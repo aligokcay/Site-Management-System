@@ -15,8 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path ,include
 from users.views import custom_login, home,  panel_yonetici_static, custom_logout, daire_bilgileri, daire_guncelle, kira_takip, panel_sakin_static, panel_personel_static
+from task.views import personel_takip_view, calisan_gorevleri
+from posts.views import duyuru_listesi, duyuru_ekle
 from django.conf import settings
 from django.conf.urls.static import static
 import os
@@ -32,6 +34,11 @@ urlpatterns = [
     path('daireler/', daire_bilgileri, name='daire_bilgileri'),
     path('daire-guncelle/', daire_guncelle, name='daire_guncelle'),
     path('kira-takip/', kira_takip, name='kira_takip'),
+    path('personel-takip/', personel_takip_view, name='personel_takip'),
+    path('gorevlerim/', calisan_gorevleri, name='calisan_gorevleri'),
+    path('duyurular/', duyuru_listesi, name='duyuru_listesi'),
+    path('duyuru-ekle/', duyuru_ekle, name='duyuru_ekle'),
+    
 
 ]
 

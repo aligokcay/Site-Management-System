@@ -1,12 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
-
+from .models import Calisan
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
 
     list_display = (
         'username', 
+        'first_name',
+        'last_name',
         'email', 
         'role', 
         'blok', 
@@ -44,3 +46,10 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('username',)
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+
+
+class CalisanAdmin(admin.ModelAdmin):
+    list_display = ('user', 'job_title')
+    search_fields = ('user__username', 'job_title')

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,20 +11,17 @@
 <title>Skill - Modern &amp; Creative HTML5 Template</title>
 
 <!-- Favicons -->
-<link rel="shortcut icon" href="assets/img/favicon.png">
-<link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
-<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
-<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
-<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
-
-<!-- Google Web Fonts -->
+<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}">
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
+<script src="{% static 'js/core.js' %}"></script>
 <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
 
-<!-- CSS Styles -->
-<link rel="stylesheet" href="assets/css/styles.css" />
+
 
 <!-- CSS Base -->
-<link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
 
 </head>
 
@@ -40,8 +38,8 @@
 <header id="header" class="bg-dark dark">
 
     <!-- Logo -->
-    <a href="index-dark.html" class="logo">
-        <img src="assets/img/logo-light.svg" alt="">
+    <a href="/" class="logo">
+      <img src="{% static 'img/logo-light.svg' %}" alt="">
     </a>
 
     <!-- Navigation -->
@@ -49,7 +47,7 @@
       <div class="nav-wrapper">
         <ul class="nav nav-primary">
           <li><a href="panel-personel.html"><i class="li-home"></i>Ana Sayfa</a></li>
-          <li><a href="gorev_p.html" class="active"><i class="li-calendar"></i>Görevler</a></li>
+          <li><a href="{% url 'calisan_gorevleri' %}"><i class="li-calendar"></i>Görevler</a></li>
           <li><a href="duyuru_p.html"><i class="li-bell"></i>Duyurular</a></li>
           <li><a href="istek_sikayet_p.html"><i class="li-email"></i>İstek & Şikayet</a></li>
           <li><a href="index-dark.html" onclick="cikisYap()"><i class="li-arrow6"></i>Çıkış Yap</a></li>
@@ -78,62 +76,31 @@
                 <th>İşlem</th>
               </tr>
             </thead>
-            <tbody id="personel-gorev-tablosu">
-              <!-- Dinamik olarak doldurulacak -->
-            </tbody>
+            <tbody>
+              {% if gorevler %}
+                  {% for gorev in gorevler %}
+                  <tr>
+                      <td>{{ gorev.description }}</td>
+                      <td>{{ gorev.start_date }}</td>
+                      <td>{{ gorev.end_date }}</td>
+                      <td>{{ gorev.get_status_display }}</td>
+                      <td>-</td> <!-- Şimdilik işlem butonu yok -->
+                  </tr>
+                  {% endfor %}
+              {% else %}
+                  <tr>
+                      <td colspan="5" class="text-center">Henüz atanmış bir görev bulunamadı.</td>
+                  </tr>
+              {% endif %}
+              </tbody>
           </table>
         </div>
   
       </div>
     </section>
   </div>
-  
   <script>
   // Örnek görevler - Gerçekte burası backend'den (veritabanı) alınacak
-  const kullaniciAdi = "Ata Baş"; // Şu an oturum açmış personelin adı
-  
-  const tumGorevler = [
-    { personel: "Ahmet Yıldız", gorev: "Bahçe Temizliği", baslangic: "2025-04-16", bitis: "2025-04-19", durum: "Gecikmiş" },
-    { personel: "Merve Kara", gorev: "Giriş Temizliği", baslangic: "2025-04-18", bitis: "2025-04-22", durum: "Yapıldı" },
-    { personel: "Ata Baş", gorev: "Ağaçları Sulama", baslangic: "2025-04-20", bitis: "2025-04-22", durum: "Beklemede" }
-  ];
-  
-  function gorevleriListele() {
-    const tablo = document.getElementById('personel-gorev-tablosu');
-    tablo.innerHTML = "";
-  
-    const benimGorevlerim = tumGorevler.filter(g => g.personel === kullaniciAdi);
-  
-    if (benimGorevlerim.length === 0) {
-      tablo.innerHTML = `<tr><td colspan="5" class="text-center">Görev bulunamadı.</td></tr>`;
-      return;
-    }
-  
-    benimGorevlerim.forEach((gorev, index) => {
-      tablo.innerHTML += `
-        <tr>
-          <td>${gorev.gorev}</td>
-          <td>${gorev.baslangic}</td>
-          <td>${gorev.bitis}</td>
-          <td id="durum-${index}">${gorev.durum}</td>
-          <td>
-            ${gorev.durum !== "Yapıldı" ? `<button class="btn btn-success btn-sm" onclick="isaretle(${index})">Yapıldı</button>` : "-"}
-          </td>
-        </tr>
-      `;
-    });
-  }
-  
-  function isaretle(index) {
-    const benimGorevlerim = tumGorevler.filter(g => g.personel === kullaniciAdi);
-    const secilenGorev = benimGorevlerim[index];
-  
-    if (secilenGorev) {
-      secilenGorev.durum = "Yapıldı";
-      alert("Görev başarıyla yapıldı olarak işaretlendi.");
-      gorevleriListele();
-    }
-  }
   
   // Sayfa yüklenince görevleri getir
   document.addEventListener('DOMContentLoaded', gorevleriListele);
@@ -146,7 +113,7 @@
             <div class="col-xl-5 text-xl-left text-xs-center">
                 <div class="module-group">
                     <div class="module copyright">
-                        <a href="index.html" class="logo mr-15"><img src="assets/img/logo-light.svg" height="80" alt=""></a>
+                      <img src="{% static 'img/logo-light.svg' %}" height="80" alt="">
                         <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
                     </div>
                 </div>
@@ -178,13 +145,12 @@
 <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
 
 <!-- JS Libraries -->
-<script src="assets/js/jquery-2.2.4.min.js"></script>
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
 
 <!-- JS Plugins -->
-<script src="assets/js/plugins.js"></script>
-
+<script src="{% static 'js/plugins.js' %}"></script>
 <!-- JS Core -->
-<script src="assets/js/core.js"></script>
+<script src="{% static 'js/core.js' %}"></script>
 
 </body>
 

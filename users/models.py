@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.conf import settings
 
 class CustomUser(AbstractUser):
     class Roles(models.TextChoices):
@@ -53,3 +54,11 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.uid or self.username # Admin panelinde kullanıcı adı yerine uid görünür
+
+
+class Calisan(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="employee_profile")
+    job_title = models.CharField(max_length=100, blank=True, null=True)  # Örn: Temizlik Görevlisi, Güvenlik vb.
+
+    def __str__(self):
+        return self.user.get_full_name() or self.user.username
