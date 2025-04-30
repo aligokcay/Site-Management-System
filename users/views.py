@@ -108,3 +108,4 @@ def daire_bilgileri(request):
 def kira_takip(request):
     daireler = CustomUser.objects.filter(role=CustomUser.Roles.SAKİN)
     return render(request, 'aidat-takip.html', {'daireler': daireler})
+

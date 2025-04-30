@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path ,include
 from users.views import custom_login, home,  panel_yonetici_static, custom_logout, daire_bilgileri, daire_guncelle, kira_takip, panel_sakin_static, panel_personel_static
 from task.views import personel_takip_view, calisan_gorevleri
-from posts.views import duyuru_listesi, duyuru_ekle
+from posts.views import duyuru_listesi, duyuru_ekle, duyuru_k, duyuru_p
 from django.conf import settings
 from django.conf.urls.static import static
 import os
@@ -38,6 +38,8 @@ urlpatterns = [
     path('gorevlerim/', calisan_gorevleri, name='calisan_gorevleri'),
     path('duyurular/', duyuru_listesi, name='duyuru_listesi'),
     path('duyuru-ekle/', duyuru_ekle, name='duyuru_ekle'),
+    path('duyuru-k/', duyuru_k, name='duyuru_k'), 
+    path('duyuru-p/', duyuru_p, name='duyuru_p'),
     
 
 ]

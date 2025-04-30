@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,8 +46,8 @@
       <div class="nav-wrapper">
         <ul class="nav nav-primary">
           <li><a href="panel-personel.html"><i class="li-home"></i>Ana Sayfa</a></li>
-          <li><a href="gorev_p.html"><i class="li-calendar"></i>Görevler</a></li>
-          <li><a href="duyuru_p.html" class="active"><i class="li-bell"></i>Duyurular</a></li>
+          <li><a href="{% url 'calisan_gorevleri' %}"><i class="li-calendar"></i>Görevler</a></li>
+          <li><a href="{% url 'duyuru_p' %}"><i class="li-bell"></i>Duyurular</a></li>
           <li><a href="istek_sikayet_p.html"><i class="li-email"></i>İstek & Şikayet</a></li>
           <li><a href="index-dark.html" onclick="cikisYap()"><i class="li-arrow6"></i>Çıkış Yap</a></li>
         </ul>
@@ -61,35 +62,24 @@
 <div id="content">
     
     <!-- Duyurular Sayfası -->
-<section class="section">
-    <div class="container container-sm">
-      <h4 class="mt-60">Duyurular</h4>
-  
-      <!-- Duyuru Listesi -->
-      <div id="announcementList" class="mt-30">
-        <!-- Duyurular JS ile buraya eklenecek -->
-      </div>
-    </div>
-  </section>
-  
-  <script>  
-    const announcements = [
-      { title: "Asansör Bakımı", text: "12 Nisan 2025 tarihinde asansör bakımı yapılacaktır." },
-      { title: "Bahçe Temizliği", text: "Bahçe temizlik işlemleri 14 Nisan'da başlayacaktır." }
-    ];
-    const listContainer = document.getElementById('announcementList');
+    <section class="section">
+      <div class="container container-sm">
+        <h4 class="mt-60">Duyurular</h4>
     
-    function renderAnnouncements() {
-      listContainer.innerHTML = announcements.map(a => `
-        <div class="card card-body mb-3" style="padding: 10px; padding-bottom: 0px">
-          <h6><strong>${a.title}</strong></h6>
-          <p>${a.text}</p>
+        <!-- Duyuru Listesi -->
+        <div id="announcementList" class="mt-30">
+          {% for duyuru in duyurular %}
+            <div class="card card-body mb-3" style="padding: 10px; padding-bottom: 0px">
+              <h6><strong>{{ duyuru.title }}</strong></h6>
+              <p>{{ duyuru.content }}</p>
+            </div>
+          {% empty %}
+            <div class="text-center">Henüz duyuru bulunmamaktadır.</div>
+          {% endfor %}
         </div>
-      `).join('');
-    }
+      </div>
+    </section>
   
-    renderAnnouncements();
-  </script>
 </div>
 <!-- Content / End -->
 
