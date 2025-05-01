@@ -59,10 +59,10 @@ def panel_sakin_static(request):
 def panel_personel_static(request):
     return render(request, 'panel-personel.html')
 
+
 def custom_logout(request):
     logout(request)
-    messages.success(request, "Başarıyla çıkış yapıldı!")
-    return redirect('index-dark.html') 
+    return redirect('home') 
 
 
 @csrf_exempt
