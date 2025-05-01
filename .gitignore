@@ -36,8 +36,6 @@ Thumbs.db
 *.log
 *.tmp
 
-# Databases
-*.sqlite3
 
 # Local ayarlar
 local_settings.py
