@@ -48,16 +48,12 @@
     <nav id="main-menu">
       <div class="nav-wrapper">
         <ul class="nav nav-primary">
-          <li><a href="panel-sakin.html"><i class="li-home"></i>Ana Sayfa</a></li>
-          <li>
-            <a href="{% url 'kira_takip' %}" class="active" style="pointer-events: auto;">
-              <i class="li-moneybag"></i> Kira Takibi
-            </a>
-          </li>
+          <li><a href="/panel-sakin.html" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
+          <li><a href="aidat-kullanıcı.html"><i class="li-moneybag"></i>Aidat Takibi</a></li>
           <li><a href="{% url 'duyuru_k' %}"><i class="li-bell"></i>Duyurular</a></li>
-          <li><a href="randevu.html"><i class="li-clock"></i>Randevu Alma</a></li>
-          <li><a href="istek_sikayet_k.html"><i class="li-email"></i>İstek & Şikayet</a></li>
-          <li><a href="/logout/" style="pointer-events: auto;"><i class="li-arrow6"></i> Çıkış Yap</a></li>
+          <li><a href="/randevu/"><i class="li-clock"></i>Randevu Alma</a></li>
+          <li><a href="/istek_sikayet_sakin/"><i class="li-email"></i>İstek & Şikayet</a></li>
+          <li><a href="index-dark.html" onclick="cikisYap()"><i class="li-arrow6"></i>Çıkış Yap</a></li>
 
       </ul>
       </div>  

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',  # Custom user app
     'task',
     'posts',  # Posts app
+    'randevu',
 ]
 
 MIDDLEWARE = [
