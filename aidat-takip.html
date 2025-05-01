@@ -50,7 +50,7 @@
                     <li><a href="/aidat-takip/" class="active" style="pointer-events: auto;"><i class="li-moneybag"></i> Aidat Takibi</a></li>
                     <li><a href="/duyurular/" class="active" style="pointer-events: auto;"><i class="li-bell"></i> Duyurular</a></li>
                     <li><a href="/personel-takip/" class="active" style="pointer-events: auto;"><i class="li-calendar"></i> Personel Takibi</a></li>
-                    <li><a href="istek_sikayet.html"><i class="li-email"></i>İstek & Şikayet</a></li>
+                    <li><a href="/istek_sikayet/"><i class="li-email"></i>İstek & Şikayet</a></li>
                     <li><a href="/logout/" style="pointer-events: auto;"><i class="li-arrow6"></i> Çıkış Yap</a></li>
 
         </ul>
@@ -115,6 +115,8 @@
                           <td>{{ a.user.mevcut_sakin }}</td>
                           <td>{{ a.donem }}</td>
                           <td>{{ a.tutar }}₺</td>
+                          <td>{{ a.son_odeme_tarihi }}₺</td>
+
                           <td>
                             {% if a.dekont %}
                               <a href="{{ a.dekont.url }}" target="_blank" class="btn btn-sm btn-info">
@@ -166,6 +168,8 @@
                 {% endif %}
                 </div>
             </div>
+
+
 
 
             <div  style="padding: 0 10%;">

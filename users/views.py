@@ -36,13 +36,13 @@ def custom_login(request):
             else:
                 print("Rol uyuşmazlığı!")
                 # Rol eşleşmiyorsa hata
-                return render(request, "index-dark.html", {"error": "Rol uyuşmuyor. Doğru giriş formunu kullanın."})
+                return render(request, "home", {"error": "Rol uyuşmuyor. Doğru giriş formunu kullanın."})
         else:
             print("Authenticate başarısız!")
             # Kullanıcı adı veya şifre yanlışsa
-            return render(request, "index-dark.html", {"error": "Kullanıcı adı veya şifre yanlış."})
+            return render(request, "home", {"error": "Kullanıcı adı veya şifre yanlış."})
     else:
-        return render(request, "index-dark.html")
+        return render(request, "home")
 
 
 
