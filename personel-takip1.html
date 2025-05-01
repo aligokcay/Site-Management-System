@@ -170,13 +170,12 @@
                     </thead>
                     <tbody id="gorev-tablosu">
                         {% for gorev in gorevler %}
-                        <tr data-taskid="{{ gorev.id }}">
+                    <tr>
                         <td>{{ gorev.assigned_to.user.get_full_name }}</td>
                         <td>{{ gorev.title }}</td>
                         <td>{{ gorev.start_date }}</td>
                         <td>{{ gorev.end_date }}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ gorev.get_status_display }}</td>
                     </tr>
                         {% endfor %}
                     </tbody>
@@ -184,29 +183,6 @@
             </div>
         </div>
     </section>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const bugun = new Date();
-        
-            document.querySelectorAll("#gorev-tablosu tr").forEach(function (satir) {
-                const bitisTd = satir.children[3]; // Bitiş Tarihi hücresi
-                const durumTd = satir.children[4]; // Durum hücresi
-                const uyarıTd = satir.children[5]; // Uyarı hücresi
-        
-                const bitisStr = bitisTd.textContent.trim();
-                const bitis = new Date(bitisStr);
-        
-                if (bitis < bugun) {
-                    durumTd.innerHTML = '<span class="text-danger">Gecikmiş</span>';
-                    uyarıTd.innerHTML = "<button class='btn btn-sm btn-danger'>Uyar</button>";
-                } else {
-                    durumTd.innerHTML = '<span>Beklemede</span>';
-                    uyarıTd.innerHTML = "-";
-                }
-            });
-        });
-    </script>
-        
 </div>
 
 <!-- Animate.css CDN -->
@@ -307,67 +283,6 @@
         setTimeout(() => {
             form.style.display = 'none';
         }, 500);
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const bugun = new Date();
-
-        document.querySelectorAll("#gorev-tablosu tr").forEach(function (satir) {
-            const bitisTd = satir.children[3];
-            console.log(bitisTd);
-            const durumTd = satir.children[4];
-            console.log(durumTd);
-            const uyarıTd = satir.children[5];
-            console.log(uyarıTd);
-            const taskId = satir.dataset.taskid;
-            console.log(taskId);
-
-            const bitisStr = bitisTd.textContent.trim();
-            const bitis = new Date(bitisStr);
-
-            if (bitis < bugun) {
-                durumTd.innerHTML = '<span class="text-danger">Gecikmiş</span>';
-                uyarıTd.innerHTML = `<button class='btn btn-sm btn-danger' onclick="uyarGonder(${taskId})">Uyar</button>`;
-            } else {
-                durumTd.innerHTML = '<span>Beklemede</span>';
-                uyarıTd.innerHTML = "-";
-            }
-        });
-    });
-
-    function uyarGonder(taskId) {
-        alert("Butona tıklandı! ID: ");
-        const taskId = button.dataset.id;
-        console.log("Gönderilecek task id:", taskId);
-        fetch("/gorev-uyar/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "X-CSRFToken": getCookie("csrftoken")
-            },
-            body: `task_id=${taskId}`
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === "ok") {
-                alert("Uyarı gönderildi.");
-            }
-        });
-    }
-
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== "") {
-            const cookies = document.cookie.split(";");
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + "=")) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
     }
 </script>
 

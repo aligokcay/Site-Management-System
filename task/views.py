@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required,user_passes_test
 from users.models import CustomUser, Calisan
-from task.models import Task, Aidat
+from task.models import Task, Aidat, GorevUyari, AidatUyari
 from task.forms import AidatForm, DekontForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.utils import timezone
 from datetime  import date, timedelta
 from django.utils.timezone import now
+from django.http import JsonResponse, HttpResponseBadRequest
 
 
 
@@ -262,3 +263,24 @@ def aidat_kullanici_view(request):
     return render(request, 'aidat-kullanıcı.html', {
         'aidatlar': aidatlar,
     })
+
+
+@login_required
+def gorev_uyar(request):
+    if request.method == "POST":
+        print("POST isteği alındı.")
+        task_id = request.POST.get("task_id")
+        print("Görev ID:", task_id)
+
+        
+        
+        try:
+            task = Task.objects.get(pk=task_id)
+            print("Görev bulundu:", task.title)
+            GorevUyari.objects.create(user=task.assigned_to.user, task=task, aciklama="Görev süresi aşıldı.")
+            print("Uyarı oluşturuldu.")
+            return JsonResponse({"status": "ok"})
+        except Task.DoesNotExist:
+            print("Görev bulunamadı.")
+            return HttpResponseBadRequest("Görev bulunamadı.")
+    return HttpResponseBadRequest("Geçersiz istek.")

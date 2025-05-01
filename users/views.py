@@ -32,18 +32,17 @@ def custom_login(request):
                 elif user.role == CustomUser.Roles.PERSONEL:
                     return redirect('/panel-personel.html')
                 else:
-                    return redirect('/')  # Yedek güvenlik önlemi
+                    return redirect('home')
             else:
-                print("Rol uyuşmazlığı!")
+                messages.error(request, "Rol eşleşmedi!")
                 # Rol eşleşmiyorsa hata
-                return render(request, "home", {"error": "Rol uyuşmuyor. Doğru giriş formunu kullanın."})
+                return redirect('home')
         else:
-            print("Authenticate başarısız!")
+            messages.error(request, "Kullanıcı adı veya şifre hatalı!")
             # Kullanıcı adı veya şifre yanlışsa
-            return render(request, "home", {"error": "Kullanıcı adı veya şifre yanlış."})
+            return redirect('home')
     else:
-        return render(request, "home")
-
+        return redirect('home')
 
 
 

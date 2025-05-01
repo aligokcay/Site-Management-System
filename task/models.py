@@ -43,3 +43,23 @@ class Aidat(models.Model):
         if self.dekont and not  self.odeme_durumu:
             self.odendi = True
         super().save(*args, **kwargs)
+
+class GorevUyari(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='gorev_uyarilari')
+    gorev = models.ForeignKey('Task', on_delete=models.CASCADE, related_name='uyarilar')
+    mesaj = models.TextField()
+    olusturma_tarihi = models.DateTimeField(auto_now_add=True)
+   
+
+    def __str__(self):
+        return f"{self.user.username} için görev uyarısı: {self.gorev.title}"
+
+class AidatUyari(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='aidat_uyarilari')
+    aidat = models.ForeignKey('Aidat', on_delete=models.CASCADE, related_name='uyarilar')
+    mesaj = models.TextField()
+    olusturma_tarihi = models.DateTimeField(auto_now_add=True)
+    
+
+    def __str__(self):
+        return f"{self.user.username} için aidat uyarısı: {self.aidat.donem}"
