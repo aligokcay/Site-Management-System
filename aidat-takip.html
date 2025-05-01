@@ -47,7 +47,7 @@
         <ul class="nav nav-primary">
             <li><a href="panel-yonetici.html" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
                     <li><a href="/daireler/" class="active" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
-                    <li><a href="/kira-takip/" class="active" style="pointer-events: auto;"><i class="li-moneybag"></i> Kira Takibi</a></li>
+                    <li><a href="/aidat-takip/" class="active" style="pointer-events: auto;"><i class="li-moneybag"></i> Aidat Takibi</a></li>
                     <li><a href="/duyurular/" class="active" style="pointer-events: auto;"><i class="li-bell"></i> Duyurular</a></li>
                     <li><a href="/personel-takip/" class="active" style="pointer-events: auto;"><i class="li-calendar"></i> Personel Takibi</a></li>
                     <li><a href="istek_sikayet.html"><i class="li-email"></i>İstek & Şikayet</a></li>
@@ -67,38 +67,104 @@
     <!-- Section -->
     <section class="section">
 
+     <!-- ### AİDAT OLUŞTURMA FORMU ### -->
+     <div class="card mb-4">
+        <div class="card-header"><h5>Bu Ayın Aidatını Oluştur</h5></div>
+        <div class="card-body">
+          <form method="post" action="{% url 'aidat_takip' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="bulk_tutar">Aidat Tutarı (₺)</label>
+              <input
+                type="number" step="0.01" min="0"
+                name="bulk_tutar" id="bulk_tutar"
+                class="form-control w-25 d-inline-block"
+                placeholder="Örn. 750.00" required
+              />
+              <button type="submit" name="do_bulk_create" class="btn btn-primary ml-2">
+                Oluştur
+              </button>
+            </div>
+            {% if messages %}
+              {% for m in messages %}
+                <div class="alert alert-{{ m.tags }} mt-2">{{ m }}</div>
+              {% endfor %}
+            {% endif %}
+          </form>
+        </div>
+      </div>
+
         <div class="container container-sm">
-            <!-- Aidat ve Ödeme Takibi Tablosu -->
-            <h4 class="mt-60">Aidat ve Ödeme Takibi</h4>
-            <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Daire No</th>
-                        <th>    </th>
-                        <th>    </th>
-                        <th>Sakin</th>
-                        <th>Borç Durumu</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for daire in daireler %}
-                    <tr>
-                        <td>{{ daire.blok }}</td>
-                        <td>{{ daire.kat }}</td>
-                        <td>{{ daire.daire_no }}</td>
-                        <td>{{ daire.mevcut_sakin }}</td>
-                        <td>
-                            {% if daire.kira_odendi %}
-                                Ödendi
+           <!-- ### ÖDENMEMİŞ AİDATLAR LİSTESİ ### -->
+            <div class="card">
+                <div class="card-header">
+                <h5>Ödenmemiş Aidatlar</h5>
+                </div>
+                <div class="card-body">
+                {% if unpaid %}
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Daire</th><th>Sakin</th><th>Dönem</th><th>Tutar</th><th>Ödendi</th><th>Son Ödeme</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in aidatlar %}
+                        <tr>
+                          <td>{{ a.user.username }}</td>
+                          <td>{{ a.user.mevcut_sakin }}</td>
+                          <td>{{ a.donem }}</td>
+                          <td>{{ a.tutar }}₺</td>
+                          <td>
+                            {% if a.dekont %}
+                              <a href="{{ a.dekont.url }}" target="_blank" class="btn btn-sm btn-info">
+                                PDF'yi Görüntüle
+                              </a>
+                              <button class="btn btn-sm btn-success" onclick="approve('{{ a.pk }}')">Onayla</button>
+
                             {% else %}
-                                Ödenmedi
+                              <span class="text-muted">Dekont bekleniyor</span>
                             {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+
+                  <script>
+                    function approve(pk) {
+                      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                  
+                      const form = document.createElement('form');
+                      form.method = 'post';
+                      form.action = "{% url 'admin_aidat_list' %}";
+                  
+                      const csrfInput = document.createElement('input');
+                      csrfInput.type = 'hidden';
+                      csrfInput.name = 'csrfmiddlewaretoken';
+                      csrfInput.value = csrfToken;
+                  
+                      const pkInput = document.createElement('input');
+                      pkInput.type = 'hidden';
+                      pkInput.name = 'approve_pk';
+                      pkInput.value = pk;
+                  
+                      form.appendChild(csrfInput);
+                      form.appendChild(pkInput);
+                  
+                      document.body.appendChild(form);
+                      form.submit();
+
+                      setTimeout(() => {
+                        window.location.href = "{% url 'aidat_takip' %}";
+                      }, 1000);
+                    }
+                  </script>
+                {% endif %}
+                {% if not unpaid %}
+                    <p>Tüm aidatlar ödenmiş.</p>
+                {% endif %}
+                </div>
             </div>
 
 
@@ -127,7 +193,9 @@
             <div class="col-xl-5 text-xl-left text-xs-center">
                 <div class="module-group">
                     <div class="module copyright">
-                        <a href="index.html" class="logo mr-15"><img src="img/logo-light.svg" height="80" alt=""></a>
+                        <a href="{% url 'aidat_takip' %}" class="logo mr-15">
+                            <img src="{% static 'img/logo-light.svg' %}" height="80" alt="Site Logo">
+                          </a>
                         <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
                     </div>
                 </div>

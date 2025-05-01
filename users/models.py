@@ -37,7 +37,7 @@ class CustomUser(AbstractUser):
     )  
     # Kiracı ismi: "Ahmet Yılmaz" gibi; yoksa "Kiracı Yok" gibi bir ifade
 
-    kira_durumu = models.CharField(max_length=20, default="Ödenmedi")
+
     aidat_durumu = models.CharField(max_length=20, default="Ödenmedi")
     
     def save(self, *args, **kwargs):

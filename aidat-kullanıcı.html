@@ -1,5 +1,6 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
 
 <!-- Meta -->
@@ -10,20 +11,22 @@
 <title>Skill - Modern &amp; Creative HTML5 Template</title>
 
 <!-- Favicons -->
-<link rel="shortcut icon" href="assets/img/favicon.png">
-<link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
-<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
-<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
-<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
 
-<!-- Google Web Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
+<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<link rel="apple-touch-icon" href="{% static 'img/favicon_60x60.png' %}">
+<link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/favicon_76x76.png' %}">
+<link rel="apple-touch-icon" sizes="120x120" href="{% static 'img/favicon_120x120.png' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/favicon_152x152.png' %}">
 
-<!-- CSS Styles -->
-<link rel="stylesheet" href="assets/css/styles.css" />
-
-<!-- CSS Base -->
-<link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+    
+    <!-- Google Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
+    
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}" />
 
 </head>
 
@@ -40,16 +43,17 @@
 <header id="header" class="bg-dark dark">
 
     <!-- Logo -->
-    <a href="index-dark.html" class="logo">
-        <img src="assets/img/logo-light.svg" alt="">
-    </a>
+      
+  <a href="{% url 'panel_sakin_static' %}" class="logo mr-15">
+      <img src="{% static 'img/logo-light.svg' %}" alt="Logo">
+  </a>
 
     <!-- Navigation -->
     <nav id="main-menu">
       <div class="nav-wrapper">
         <ul class="nav nav-primary">
           <li><a href="/panel-sakin.html" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
-          <li><a href="aidat-kullanıcı.html"><i class="li-moneybag"></i>Aidat Takibi</a></li>
+          <li><a href="{% url 'sakin_aidat_takip' %}"><i class="li-moneybag"></i>Aidat Takibi</a></li>
           <li><a href="{% url 'duyuru_k' %}"><i class="li-bell"></i>Duyurular</a></li>
           <li><a href="/randevu/"><i class="li-clock"></i>Randevu Alma</a></li>
           <li><a href="/istek_sikayet_sakin/"><i class="li-email"></i>İstek & Şikayet</a></li>
@@ -68,76 +72,88 @@
       <div class="container container-sm">
         <h4 class="mt-60">Benim Aidat Bilgilerim</h4>
         <div class="table-responsive">
-          <table class="table table-bordered table-striped">
+          <table class="table">
             <thead>
-              <tr>
-                <th>Daire No</th>
-                <th>Ad Soyad</th>
-                <th>Son Ödeme</th>
-                <th>Borç</th>
-                <th>İşlem</th>
-              </tr>
+              <tr><th>Ay</th><th>Tutar</th><th>Durum</th><th>İşlem</th></tr>
             </thead>
             <tbody>
-              <tr id="aidatRow">
-                <td>1</td>
-                <td>Ali Yılmaz</td>
-                <td>Şubat 2025</td>
-                <td id="borcDurumu">750₺</td>
+              {% for a in user.aidatlar.all %}
+              <tr>
+                <td>{{ a.ay|date:"F Y" }}</td>
+                <td>{{ a.tutar }} ₺</td>
+                <td>{{ a.odeme_durumu|yesno:"Ödendi,Beklemede" }}</td>
                 <td>
-                  <button class="btn btn-sm btn-success" id="odemeBtn" onclick="openPaymentModal()">Öde</button>
+                  {% if not a.odeme_durumu %}
+                    {% if not a.dekont %}
+                      <button 
+                        class="btn btn-primary btn-sm open-payment" 
+                        data-pk="{{ a.pk }}"
+                        data-ay="{{ a.ay|date:'F Y' }}"
+                        data-tutar="{{ a.tutar }}">
+                        Öde
+                      </button>
+                    {% else %}
+                      Dekont yüklendi
+                    {% endif %}
+                  {% endif %}
                 </td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
       </div>
     </section>
   
-    <!-- Ödeme Modalı -->
-    <div id="paymentModal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);">
-      <div style="background:#fff; margin:10% auto; padding:20px; border-radius:10px; width:300px; text-align:center;">
-        <h5>Aidat Ödeme</h5>
-        <p id="paymentInfo">750₺ aidat ödemesi yapılacak</p>
-        <input type="text" placeholder="Kart Numarası" class="form-control mb-2" />
-        <input type="text" placeholder="Son Kullanma Tarihi (AA/YY)" class="form-control mb-2" />
-        <input type="text" placeholder="CVV" class="form-control mb-2" />
-        <button class="btn btn-success btn-sm" onclick="pay()">Ödeme Yap</button>
-        <button class="btn btn-secondary btn-sm" onclick="closePaymentModal()">İptal</button>
+<!-- Ödeme Modalı -->
+<div id="paymentModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h5>Aidat Ödeme – <span id="modalAy"></span></h5>
+    <p id="paymentInfo"></p>
+    <form id="paymentForm" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="hidden" name="aidat_id" id="modalAidatId">
+      <label>PDF Dekont Yükle:</label>
+      <input type="file" name="dekont" accept="application/pdf" required class="form-control mb-2">
+      <div class="text-right">
+        <button type="button" onclick="closePaymentModal()">İptal</button>
+        <button type="submit">Gönder</button>
       </div>
-    </div>
+    </form>
   </div>
+</div>
   <!-- Content / End -->
   
-  <!-- Ek JS -->
-  <script>
-    function openPaymentModal() {
-      document.getElementById("paymentModal").style.display = "block";
-    }
-  
-    function closePaymentModal() {
-      document.getElementById("paymentModal").style.display = "none";
-    }
-  
-    function pay() {
-      alert("Ödeme başarılı!");
-      document.getElementById("borcDurumu").innerText = "Ödendi";
-      const btn = document.getElementById("odemeBtn");
-      btn.innerText = "Ödendi";
-      btn.disabled = true;
-      btn.classList.remove("btn-success");
-      btn.classList.add("btn-secondary");
-      closePaymentModal();
-    }
 
-    // Erişim kontrolü
-    $(document).ready(function() {
-        const kullaniciTuru = localStorage.getItem('kullaniciTuru');
-        if (kullaniciTuru !== 'sakin') {
-            window.location.href = 'index-dark.html';
-            return;
-        }
-    });
+  <script>
+          const modal = document.getElementById('paymentModal');
+      const modalAy = document.getElementById('modalAy');
+      const paymentInfo = document.getElementById('paymentInfo');
+      const modalAidatId = document.getElementById('modalAidatId');
+      const paymentForm = document.getElementById('paymentForm');
+
+      document.querySelectorAll('.open-payment').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const pk    = btn.dataset.pk;
+          const ay    = btn.dataset.ay;
+          const tutar = btn.dataset.tutar;
+
+          modalAy.textContent      = ay;
+          paymentInfo.textContent  = tutar + ' ₺ için dekont yükleyin.';
+          modalAidatId.value       = pk;
+
+          // Sadece action’ı ayarla
+          paymentForm.action = `/aidat/dekont-yukle/${pk}/`;
+          modal.style.display = 'block';
+        });
+      });
+
+      function closePaymentModal() {
+        modal.style.display = 'none';
+      }
+      modal.addEventListener('click', e => {
+        if (e.target === modal) closePaymentModal();
+      });
   </script>
   
 
@@ -180,13 +196,14 @@
 <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
 
 <!-- JS Libraries -->
-<script src="assets/js/jquery-2.2.4.min.js"></script>
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
 
 <!-- JS Plugins -->
-<script src="assets/js/plugins.js"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
 
 <!-- JS Core -->
-<script src="assets/js/core.js"></script>
+<script src="{% static 'js/core.js' %}"></script>
+
 
 </body>
 

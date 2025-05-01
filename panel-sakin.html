@@ -7,15 +7,11 @@
     <title>Sakin Paneli</title>
     
     <!-- Favicons -->
-    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
-    
-    <!-- Google Web Fonts -->
+    <link rel="shortcut icon" href="assets/img/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
-    
-    <!-- CSS Styles -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-    <link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}" />
-    
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
+
 </head>
 <body class="header-vertical">
     <div id="page-loader" class="bg-dark dark">
@@ -32,7 +28,7 @@
             <div class="nav-wrapper">
                 <ul class="nav nav-primary">
                     <li><a href="/panel-sakin.html" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
-                    <li><a href="aidat-kullanıcı.html"><i class="li-moneybag"></i>Aidat Takibi</a></li>
+                    <li><a href="/sakin-aidat-takip/"><i class="li-moneybag"></i>Aidat Takibi</a></li>
                     <li><a href="{% url 'duyuru_k' %}"><i class="li-bell"></i>Duyurular</a></li>
                     <li><a href="/randevu/"><i class="li-clock"></i>Randevu Alma</a></li>
                     <li><a href="/istek_sikayet_sakin/"><i class="li-email"></i>İstek & Şikayet</a></li>
@@ -59,21 +55,7 @@
     <script src="assets/js/jquery-2.2.4.min.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/core.js"></script>
-    <script>
-        // Erişim kontrolü
-        $(document).ready(function() {
-            const kullaniciTuru = localStorage.getItem('kullaniciTuru');
-            if (kullaniciTuru !== 'sakin') {
-                window.location.href = '/panel-sakin.html';
-                return;
-            }
-        });
     
-        function cikisYap() {
-            localStorage.removeItem('kullaniciTuru');
-            window.location.href = '/';
-        }
-    </script>
     
 </body>
 </html>

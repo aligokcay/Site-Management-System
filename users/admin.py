@@ -16,16 +16,12 @@ class CustomUserAdmin(UserAdmin):
         'daire_no', 
         'uid', 
         'kirada_mi', 
-        'mevcut_sakin', 
-        'is_staff', 
-        'is_active'
+        'mevcut_sakin'
     )
     
     list_filter = (
         'role', 
-        'kirada_mi', 
-        'is_staff', 
-        'is_active'
+        'kirada_mi'
     )
 
     fieldsets = (

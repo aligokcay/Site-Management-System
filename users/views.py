@@ -17,13 +17,6 @@ def custom_login(request):
         password = request.POST.get("password")
         role = request.POST.get("role")
 
-        # DEBUG: Konsola yazdır
-        print(f"\n==== Gelen Login Bilgileri ====")
-        print(f"Kullanıcı Adı: {username}")
-        print(f"Şifre: {password}")
-        print(f"Rol: {role}")
-        print(f"================================\n")
-
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
@@ -53,6 +46,7 @@ def custom_login(request):
 
 
 
+
 @login_required
 def panel_yonetici_static(request):
     return render(request, 'panel-yonetici.html')
@@ -68,7 +62,7 @@ def panel_personel_static(request):
 def custom_logout(request):
     logout(request)
     messages.success(request, "Başarıyla çıkış yapıldı!")
-    return redirect('login') 
+    return redirect('index-dark.html') 
 
 
 @csrf_exempt
@@ -100,6 +94,7 @@ def daire_guncelle(request):
 
     print("Geçersiz istek!")
     return JsonResponse({'error': 'Geçersiz istek.'}, status=400)
+
 
 def daire_bilgileri(request):
     daireler = CustomUser.objects.filter(role=CustomUser.Roles.SAKİN)

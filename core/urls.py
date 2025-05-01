@@ -16,8 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path ,include
-from users.views import custom_login, home,  panel_yonetici_static, custom_logout, daire_bilgileri, daire_guncelle, kira_takip, panel_sakin_static, panel_personel_static
-from task.views import personel_takip_view, calisan_gorevleri
+from users.views import custom_login, home,  panel_yonetici_static, custom_logout, daire_bilgileri, daire_guncelle,  panel_sakin_static, panel_personel_static
+from task.views import personel_takip_view, calisan_gorevleri, admin_aidat_list, admin_aidat_approve,aidat_yonetici, dekont_yukle, aidat_kullanici_view
 from posts.views import duyuru_listesi, duyuru_ekle, duyuru_k, duyuru_p, istek_sikayet_sakin, istek_sikayet_personel, admin_istek_sikayet_paneli
 from randevu.views import randevu_panel
 from django.conf import settings
@@ -34,7 +34,7 @@ urlpatterns = [
     path('panel-personel.html', panel_personel_static, name='panel_personel_static'),
     path('daireler/', daire_bilgileri, name='daire_bilgileri'),
     path('daire-guncelle/', daire_guncelle, name='daire_guncelle'),
-    path('kira-takip/', kira_takip, name='kira_takip'),
+    path('aidat-takip/', aidat_yonetici, name='aidat_takip'),
     path('personel-takip/', personel_takip_view, name='personel_takip'),
     path('gorevlerim/', calisan_gorevleri, name='calisan_gorevleri'),
     path('duyurular/', duyuru_listesi, name='duyuru_listesi'),
@@ -45,10 +45,16 @@ urlpatterns = [
     path('istek_sikayet_personel/',istek_sikayet_personel, name='istek_sikayet_personel'),
     path('istek_sikayet/', admin_istek_sikayet_paneli, name='admin_istek_sikayet'),
     path('randevu/', randevu_panel, name='randevu_panel'),
+    path('aidat-takip/aidatlar/', admin_aidat_list, name='admin_aidat_list'),
+    path('aidat-takip/aidat/<int:pk>/approve/', admin_aidat_approve, name='admin_aidat_approve'),
+    path('aidat/dekont-yukle/<int:pk>/', dekont_yukle, name='dekont_yukle'),
+    path('sakin-aidat-takip/', aidat_kullanici_view, name='sakin_aidat_takip'),
+
+
 
 
     
 
 ]
-
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=os.path.join(settings.BASE_DIR, 'assets'))
