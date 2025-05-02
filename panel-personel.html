@@ -17,14 +17,13 @@
 <link rel="apple-touch-icon" sizes="120x120" href="img/favicon_120x120.png">
 <link rel="apple-touch-icon" sizes="152x152" href="img/favicon_152x152.png">
 
-<!-- Google Web Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
 
 <!-- CSS Styles -->
-<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 
 <!-- CSS Base -->
-<link id="theme" rel="stylesheet" href="css/themes/theme-green.min.css" />
+<link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}" />
 
 </head>
 
@@ -77,21 +76,21 @@
 
 <!-- Content / Start -->
 <section class="section">
-    <div class="container">
-      <h3>Görev Uyarılarım</h3>
-      {% if uyarilar %}
-      <ul class="list-group">
-        {% for uyari in uyarilar %}
-        <li class="list-group-item">
-          <strong>{{ uyari.gorev.title }}</strong> görevi için: {{ uyari.mesaj }}<br>
-          <small class="text-muted">{{ uyari.olusturma_tarihi|date:"d M Y H:i" }}</small>
-        </li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p>Henüz bir uyarınız bulunmamaktadır.</p>
-      {% endif %}
-    </div>
+    <div class="card mt-4" style="margin-left: 600px;">
+        <div class="card-header"><h5>Görev Uyarıları</h5></div>
+        <div class="card-body">
+          {% if uyarilar %}
+
+            <ul>
+              {% for uyar in uyarilar %}
+                <li>{{ uyar.mesaj }} - {{ uyar.olusturma_tarihi }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>Henüz bir uyarınız yok.</p>
+          {% endif %}
+        </div>
+      </div>
   </section>
 <!-- Content / End -->
 
@@ -134,13 +133,13 @@
 <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
 
 <!-- JS Libraries -->
-<script src="js/jquery-2.2.4.min.js"></script>
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
 
 <!-- JS Plugins -->
-<script src="js/plugins.js"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
 
 <!-- JS Core -->
-<script src="js/core.js"></script>
+<script src="{% static 'js/core.js' %}"></script>
 
 </body>
 
