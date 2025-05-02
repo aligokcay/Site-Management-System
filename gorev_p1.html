@@ -80,22 +80,11 @@
               {% if gorevler %}
                   {% for gorev in gorevler %}
                   <tr>
-                      <td>{{ gorev.title }}</td>
+                      <td>{{ gorev.description }}</td>
                       <td>{{ gorev.start_date }}</td>
                       <td>{{ gorev.end_date }}</td>
-                      <td>{{ gorev.status }}</td>
-
-                      <td>
-                        {% if gorev.status != "tamamlandi" %}
-                        <form method="post" action="{% url 'gorev_tamamla' gorev.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-success btn-sm">Tamamlandı</button>
-                        </form>
-                        {% else %}
-                            <span class="badge bg-success">✔ Tamamlandı</span>
-                        {% endif %}
-                    </td>
-                     <!-- Şimdilik işlem butonu yok -->
+                      <td>{{ gorev.get_status_display }}</td>
+                      <td>-</td> <!-- Şimdilik işlem butonu yok -->
                   </tr>
                   {% endfor %}
               {% else %}
@@ -109,40 +98,6 @@
   
       </div>
     </section>
-    <script>
-      // document.addEventListener("DOMContentLoaded", function () {
-      //     const bugun = new Date();
-      
-      //     document.querySelectorAll("tbody tr").forEach(function (satir) {
-      //         const bitisTd = satir.children[2]; // Bitiş Tarihi
-      //         const durumTd = satir.children[3]; // Durum
-      //         const islemTd = satir.children[4]; // İşlem
-      
-      //         // Eğer bu satırda görev yoksa (boş satır uyarısı), atla
-      //         if (!bitisTd || !bitisTd.textContent.trim()) return;
-      
-      //         const bitis = new Date(bitisTd.textContent.trim());
-      
-      //         if (bitis < bugun) {
-      //             durumTd.innerHTML = '<span class="text-danger">Gecikmiş</span>';
-      //         } else {
-      //             durumTd.innerHTML = '<span>Beklemede</span>';
-      //         }
-      
-      //         // Yapıldı butonu ekle
-      //         islemTd.innerHTML = "<button class='btn btn-sm btn-success' onclick='gorevYapildi(this)'>Yapıldı</button>";
-      //     });
-      // });
-      
-      // Buton fonksiyonu
-      // function gorevYapildi(button) {
-      //     const satir = button.closest("tr");
-      //     const durumTd = satir.children[3];
-      //     durumTd.innerHTML = '<span class="text-success">Tamamlandı</span>';
-      //     button.remove(); // Butonu kaldır
-      // }
-      </script>
-      
   </div>
   <script>
   // Örnek görevler - Gerçekte burası backend'den (veritabanı) alınacak

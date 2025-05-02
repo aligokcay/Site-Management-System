@@ -175,8 +175,26 @@
                         <td>{{ gorev.title }}</td>
                         <td>{{ gorev.start_date }}</td>
                         <td>{{ gorev.end_date }}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{% if gorev.end_date < today %}
+                            <span class="text-danger">Gecikmiş</span>
+                        {% else %}
+                            Beklemede
+                        {% endif %}</td>
+                        <td>
+                            {% if gorev.end_date < today %}
+                            <form method="post" action="{% url 'gorev_uyar' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="task_id" value="{{ gorev.id }}">
+                                {% if gorev.end_date < today and gorev.status != "tamamlandi" %}
+                                    <button type="submit" class="btn btn-sm btn-danger">Uyar</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-sm btn-secondary" disabled>Gecikmemiş</button>
+                                {% endif %}
+                            </form>
+                            {% else %}
+                                -
+                            {% endif %}
+                          </td>
                     </tr>
                         {% endfor %}
                     </tbody>
@@ -185,26 +203,26 @@
         </div>
     </section>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const bugun = new Date();
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     const bugun = new Date();
         
-            document.querySelectorAll("#gorev-tablosu tr").forEach(function (satir) {
-                const bitisTd = satir.children[3]; // Bitiş Tarihi hücresi
-                const durumTd = satir.children[4]; // Durum hücresi
-                const uyarıTd = satir.children[5]; // Uyarı hücresi
+        //     document.querySelectorAll("#gorev-tablosu tr").forEach(function (satir) {
+        //         const bitisTd = satir.children[3]; // Bitiş Tarihi hücresi
+        //         const durumTd = satir.children[4]; // Durum hücresi
+        //         const uyarıTd = satir.children[5]; // Uyarı hücresi
         
-                const bitisStr = bitisTd.textContent.trim();
-                const bitis = new Date(bitisStr);
+        //         const bitisStr = bitisTd.textContent.trim();
+        //         const bitis = new Date(bitisStr);
         
-                if (bitis < bugun) {
-                    durumTd.innerHTML = '<span class="text-danger">Gecikmiş</span>';
-                    uyarıTd.innerHTML = "<button class='btn btn-sm btn-danger'>Uyar</button>";
-                } else {
-                    durumTd.innerHTML = '<span>Beklemede</span>';
-                    uyarıTd.innerHTML = "-";
-                }
-            });
-        });
+        //         if (bitis < bugun) {
+        //             durumTd.innerHTML = '<span class="text-danger">Gecikmiş</span>';
+        //             uyarıTd.innerHTML = "<button class='btn btn-sm btn-danger'>Uyar</button>";
+        //         } else {
+        //             durumTd.innerHTML = '<span>Beklemede</span>';
+        //             uyarıTd.innerHTML = "-";
+        //         }
+        //     });
+        // });
     </script>
         
 </div>
@@ -233,55 +251,38 @@
         }, 500);
     }
 
-    // Personel Ekleme
-    document.getElementById("add-personel-form").addEventListener("submit", function (event) {
-        event.preventDefault();
 
-        const ad = document.getElementById("personelAd").value;
-        const is = document.getElementById("personelIs").value;
-
-        const tablo = document.getElementById("personel-tablosu").getElementsByTagName("tbody")[0];
-        const satir = tablo.insertRow();
-        satir.innerHTML = `
-            <td>${ad}</td>
-            <td>${is}</td>
-        `;
-
-        document.getElementById("personelAd").value = "";
-        document.getElementById("personelIs").value = "";
-        personelFormKapat();
-    });
 
     // Görev Ekleme
-    function gorevEkle() {
-        const adi = document.getElementById("gorevliAdi").value;
-        const aciklama = document.getElementById("gorevAciklama").value;
-        const baslangic = document.getElementById("baslangicTarihi").value;
-        const bitis = document.getElementById("bitisTarihi").value;
-        const bugun = new Date().toISOString().split("T")[0];
+    // function gorevEkle() {
+    //     const adi = document.getElementById("gorevliAdi").value;
+    //     const aciklama = document.getElementById("gorevAciklama").value;
+    //     const baslangic = document.getElementById("baslangicTarihi").value;
+    //     const bitis = document.getElementById("bitisTarihi").value;
+    //     const bugun = new Date().toISOString().split("T")[0];
 
-        const durum = (bitis < bugun) ? '<span class="text-danger">Gecikmiş</span>' : 'Beklemede';
-        const uyarButonu = (bitis < bugun)
-            ? "<button class='btn btn-sm btn-danger'>Uyar</button>"
-            : "-";
+    //     const durum = (bitis < bugun) ? '<span class="text-danger">Gecikmiş</span>' : 'Beklemede';
+    //     const uyarButonu = (bitis < bugun)
+    //         ? "<button class='btn btn-sm btn-danger'>Uyar</button>"
+    //         : "-";
 
-        const tablo = document.getElementById("gorev-tablosu");
-        const satir = tablo.insertRow();
-        satir.innerHTML = `
-            <td>${adi}</td>
-            <td>${aciklama}</td>
-            <td>${baslangic}</td>
-            <td>${bitis}</td>
-            <td>${durum}</td>
-            <td>${uyarButonu}</td>
-        `;
+    //     const tablo = document.getElementById("gorev-tablosu");
+    //     const satir = tablo.insertRow();
+    //     satir.innerHTML = `
+    //         <td>${adi}</td>
+    //         <td>${aciklama}</td>
+    //         <td>${baslangic}</td>
+    //         <td>${bitis}</td>
+    //         <td>${durum}</td>
+    //         <td>${uyarButonu}</td>
+    //     `;
 
-        document.getElementById("gorevliAdi").value = "";
-        document.getElementById("gorevAciklama").value = "";
-        document.getElementById("baslangicTarihi").value = "";
-        document.getElementById("bitisTarihi").value = "";
-        formKapat();
-    }
+    //     document.getElementById("gorevliAdi").value = "";
+    //     document.getElementById("gorevAciklama").value = "";
+    //     document.getElementById("baslangicTarihi").value = "";
+    //     document.getElementById("bitisTarihi").value = "";
+    //     formKapat();
+    // }
 
     // Görev ekleme formu submit
     document.getElementById('add-task-form').addEventListener('submit', function (event) {
@@ -309,66 +310,69 @@
         }, 500);
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const bugun = new Date();
+//     document.addEventListener("DOMContentLoaded", function () {
+//         const bugun = new Date();
 
-        document.querySelectorAll("#gorev-tablosu tr").forEach(function (satir) {
-            const bitisTd = satir.children[3];
-            console.log(bitisTd);
-            const durumTd = satir.children[4];
-            console.log(durumTd);
-            const uyarıTd = satir.children[5];
-            console.log(uyarıTd);
-            const taskId = satir.dataset.taskid;
-            console.log(taskId);
+//         document.querySelectorAll("#gorev-tablosu tr").forEach(function (satir) {
+//             const bitisTd = satir.children[3];
+//             console.log(bitisTd);
+//             const durumTd = satir.children[4];
+//             console.log(durumTd);
+//             const uyarıTd = satir.children[5];
+//             console.log(uyarıTd);
+//             const taskId = satir.dataset.taskid;
+//             console.log(taskId);
 
-            const bitisStr = bitisTd.textContent.trim();
-            const bitis = new Date(bitisStr);
+//             const bitisStr = bitisTd.textContent.trim();
+//             const bitis = new Date(bitisStr);
 
-            if (bitis < bugun) {
-                durumTd.innerHTML = '<span class="text-danger">Gecikmiş</span>';
-                uyarıTd.innerHTML = `<button class='btn btn-sm btn-danger' onclick="uyarGonder(${taskId})">Uyar</button>`;
-            } else {
-                durumTd.innerHTML = '<span>Beklemede</span>';
-                uyarıTd.innerHTML = "-";
-            }
-        });
-    });
+//             if (bitis < bugun) {
+//                 durumTd.innerHTML = '<span class="text-danger">Gecikmiş</span>';
+//                 uyarıTd.innerHTML = `<button class='btn btn-sm btn-danger' onclick="uyarGonder(${taskId})">Uyar</button>`;
+//             } else {
+//                 durumTd.innerHTML = '<span>Beklemede</span>';
+//                 uyarıTd.innerHTML = "-";
+//             }
+//         });
+//     });
 
-    function uyarGonder(taskId) {
-        alert("Butona tıklandı! ID: ");
-        const taskId = button.dataset.id;
-        console.log("Gönderilecek task id:", taskId);
-        fetch("/gorev-uyar/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "X-CSRFToken": getCookie("csrftoken")
-            },
-            body: `task_id=${taskId}`
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === "ok") {
-                alert("Uyarı gönderildi.");
-            }
-        });
-    }
+//     function uyarGonder(taskId) {
+//     alert("Butona tıklandı! ID: " + taskId);
+//     console.log("Gönderilecek task id:", taskId);
 
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== "") {
-            const cookies = document.cookie.split(";");
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + "=")) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
+//     fetch("/gorev-uyar/", {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/x-www-form-urlencoded",
+//             "X-CSRFToken": getCookie("csrftoken")
+//         },
+//         body: `task_id=${taskId}`
+//     })
+//     .then(res => res.json())
+//     .then(data => {
+//         if (data.status === "ok") {
+//             alert("Uyarı gönderildi.");
+//         } else {
+//             console.error("Sunucu hatası:", data);
+//         }
+//     })
+//     .catch(error => console.error("İstek hatası:", error));
+// }
+
+//     function getCookie(name) {
+//         let cookieValue = null;
+//         if (document.cookie && document.cookie !== "") {
+//             const cookies = document.cookie.split(";");
+//             for (let i = 0; i < cookies.length; i++) {
+//                 const cookie = cookies[i].trim();
+//                 if (cookie.substring(0, name.length + 1) === (name + "=")) {
+//                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//                     break;
+//                 }
+//             }
+//         }
+//         return cookieValue;
+//     }
 </script>
 
 </div>

@@ -8,7 +8,10 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime  import date, timedelta
 from django.utils.timezone import now
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
+
 
 
 
@@ -52,8 +55,6 @@ def personel_takip_view(request):
             end_date = request.POST.get('end_date')
             status = request.POST.get('status')
 
-            from datetime import date
-
             calisan = Calisan.objects.get(id=calisan_id)
 
             Task.objects.create(
@@ -70,9 +71,12 @@ def personel_takip_view(request):
     personeller = Calisan.objects.all()
     gorevler = Task.objects.all()
 
+    today = date.today()
+
     return render(request, 'personel-takip.html', {
         'personeller': personeller,
         'gorevler': gorevler,
+        'today': today,
     })
 
 @login_required
@@ -266,21 +270,36 @@ def aidat_kullanici_view(request):
 
 
 @login_required
+@csrf_exempt
 def gorev_uyar(request):
     if request.method == "POST":
-        print("POST isteği alındı.")
         task_id = request.POST.get("task_id")
-        print("Görev ID:", task_id)
+        task = get_object_or_404(Task, id=task_id)
 
-        
-        
-        try:
-            task = Task.objects.get(pk=task_id)
-            print("Görev bulundu:", task.title)
-            GorevUyari.objects.create(user=task.assigned_to.user, task=task, aciklama="Görev süresi aşıldı.")
-            print("Uyarı oluşturuldu.")
-            return JsonResponse({"status": "ok"})
-        except Task.DoesNotExist:
-            print("Görev bulunamadı.")
-            return HttpResponseBadRequest("Görev bulunamadı.")
-    return HttpResponseBadRequest("Geçersiz istek.")
+        GorevUyari.objects.create(
+            user=task.assigned_to.user,
+            gorev=task,
+            mesaj="Görevin süresi geçti, lütfen kontrol ediniz."
+        )
+        messages.success(request, "Uyarı başarıyla gönderildi.")
+    return redirect("personel_takip")
+
+
+
+@require_POST
+def gorev_tamamla(request, pk):
+    gorev = get_object_or_404(Task, pk=pk)
+    gorev.status = "tamamlandi"
+    gorev.save()
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+
+@login_required
+def panel_personel_view(request):
+    uyarilar = GorevUyari.objects.filter(user=request.user).order_by('-olusturma_tarihi')
+    if not uyarilar.exists():
+        print("Henüz bir uyarınız yok.")
+    else:
+        print(f"{uyarilar.count()} adet uyarınız var.")
+        return render(request, 'panel-personel.html', {'uyarilar': uyarilar})

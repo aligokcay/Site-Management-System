@@ -11,20 +11,20 @@
 <title>Skill - Modern &amp; Creative HTML5 Template</title>
 
 <!-- Favicons -->
-<link rel="shortcut icon" href="assets/img/favicon.png">
-<link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
-<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
-<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
-<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
+<link rel="shortcut icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/favicon_60x60.png">
+<link rel="apple-touch-icon" sizes="76x76" href="img/favicon_76x76.png">
+<link rel="apple-touch-icon" sizes="120x120" href="img/favicon_120x120.png">
+<link rel="apple-touch-icon" sizes="152x152" href="img/favicon_152x152.png">
 
 <!-- Google Web Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
 
 <!-- CSS Styles -->
-<link rel="stylesheet" href="assets/css/styles.css" />
+<link rel="stylesheet" href="css/styles.css" />
 
 <!-- CSS Base -->
-<link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
+<link id="theme" rel="stylesheet" href="css/themes/theme-green.min.css" />
 
 </head>
 
@@ -42,14 +42,14 @@
 
     <!-- Logo -->
     <a href="index-dark.html" class="logo">
-        <img src="assets/img/logo-light.svg" alt="">
+        <img src="img/logo-light.svg" alt="">
     </a>
 
     <!-- Navigation -->
     <nav id="main-menu">
       <div class="nav-wrapper">
         <ul class="nav nav-primary">
-          <li><a href="panel-personel.html" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
+            <li><a href="{% url 'panel_personel_static' %}" class="active">Ana Sayfa</a></li>
           <li><a href="/gorevlerim/"><i class="li-calendar"></i>Görevler</a></li>
           <li><a href="/duyuru_p/"><i class="li-bell"></i>Duyurular</a></li>
           <li><a href="/istek_sikayet_personel/"><i class="li-email"></i>İstek & Şikayet</a></li>
@@ -75,6 +75,26 @@
 </div>
   
 
+<!-- Content / Start -->
+<section class="section">
+    <div class="container">
+      <h3>Görev Uyarılarım</h3>
+      {% if uyarilar %}
+      <ul class="list-group">
+        {% for uyari in uyarilar %}
+        <li class="list-group-item">
+          <strong>{{ uyari.gorev.title }}</strong> görevi için: {{ uyari.mesaj }}<br>
+          <small class="text-muted">{{ uyari.olusturma_tarihi|date:"d M Y H:i" }}</small>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>Henüz bir uyarınız bulunmamaktadır.</p>
+      {% endif %}
+    </div>
+  </section>
+<!-- Content / End -->
+
 <!-- Footer -->
 <footer id="footer" class="dark bg-dark">
     <div class="container-fluid container-custom">
@@ -82,7 +102,7 @@
             <div class="col-xl-5 text-xl-left text-xs-center">
                 <div class="module-group">
                     <div class="module copyright">
-                        <a href="index.html" class="logo mr-15"><img src="assets/img/logo-light.svg" height="80" alt=""></a>
+                        <a href="index.html" class="logo mr-15"><img src="img/logo-light.svg" height="80" alt=""></a>
                         <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
                     </div>
                 </div>
@@ -114,13 +134,13 @@
 <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
 
 <!-- JS Libraries -->
-<script src="assets/js/jquery-2.2.4.min.js"></script>
+<script src="js/jquery-2.2.4.min.js"></script>
 
 <!-- JS Plugins -->
-<script src="assets/js/plugins.js"></script>
+<script src="js/plugins.js"></script>
 
 <!-- JS Core -->
-<script src="assets/js/core.js"></script>
+<script src="js/core.js"></script>
 
 </body>
 
