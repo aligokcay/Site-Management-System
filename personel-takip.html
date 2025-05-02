@@ -42,10 +42,10 @@
     <nav id="main-menu">
       <div class="nav-wrapper">
         <ul class="nav nav-primary">
-            <li><a href="panel-yonetici.html" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
-                    <li><a href="/daireler/" class="active" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
-                    <li><a href="/aidat-takip/" class="active" style="pointer-events: auto;"><i class="li-moneybag"></i> Kira Takibi</a></li>
-                    <li><a href="/duyurular/" class="active" style="pointer-events: auto;"><i class="li-bell"></i> Duyurular</a></li>
+            <li><a href="panel-yonetici.html" class=""><i class="li-home"></i>Ana Sayfa</a></li>
+                    <li><a href="/daireler/" class="" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
+                    <li><a href="/aidat-takip/" class="" style="pointer-events: auto;"><i class="li-moneybag"></i> Aidat Takibi</a></li>
+                    <li><a href="/duyurular/" class="" style="pointer-events: auto;"><i class="li-bell"></i> Duyurular</a></li>
                     <li><a href="/personel-takip/" class="active" style="pointer-events: auto;"><i class="li-calendar"></i> Personel Takibi</a></li>
                     <li><a href="/istek_sikayet/"><i class="li-email"></i>İstek & Şikayet</a></li>
                     <li><a href="/logout/" style="pointer-events: auto;"><i class="li-arrow6"></i> Çıkış Yap</a></li>
@@ -61,60 +61,7 @@
 <div id="content">
     <section class="section">
         <div class="container container-sm">        
-            <h3 class="mb-40">Personel Tablosu</h3>
-            
-            <!-- Personel Ekle Butonu -->
-            <div class="text-right mb-20">
-                <button class="btn btn-primary btn-sm" onclick="personelFormGoster()">
-                Yeni Personel Ekle
-                    </button>
-            </div>
-
-
-            <!-- Personel Ekleme Formu -->
-            <div id="personelForm" style="display:none;" class="card bg-secondary p-20 mb-30 rounded animate__animated">
-                <div class="position-relative mb-15">
-                <h5 class="mb-0">Yeni Personel Ekle</h5>
-                <button onclick="personelFormKapat()" class="btn btn-sm close-btn" title="Kapat">
-                    &times;
-                </button>
-                </div>
-                <form method="post" action="{% url 'personel_takip' %}"  style="border: 0px;margin-bottom: 0;">
-                    {% csrf_token %}
-                    <div class="row">
-                        <input type="hidden" name="form_type" value="personel_ekle">
-                        <div class="col-md-6">
-                            <label>Ad Soyad</label>
-                            <input type="text" name="ad_soyad" class="form-control mb-15" required>               
-                        </div>
-                        <div class="col-md-6">
-                            <label>İş</label>
-                            <input type="text" name="job_title" class="form-control mb-15" required>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-success  btn-sm">Personel Ekle</button>
-                  </form>
-            </div>
-
-            <!-- Personel Tablosu -->
-            
-            <div class="table-responsive mb-40">
-                <table class="table table-bordered table-striped" id="personel-tablosu">
-
-                    <thead>
-                        {% for personel in personeller %}
-                        <tr>
-                            <td>{{ personel.user.get_full_name }}</td>
-                            <td>{{ personel.job_title }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-
-            <h3 class="mb-40">Görev Tablosu</h3>
+            <h3 class="mb-20">Görev Tablosu</h3>
 
             <!-- Görev Ekle Butonu -->
             <div class="text-right mb-20">
@@ -167,7 +114,7 @@
             </div>
         
             <!-- Görevler Tablosu -->
-            <div class="table-responsive">
+            <div class="table-responsive mb-40" >
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -189,7 +136,7 @@
                         <td>{{ gorev.get_status_display }}</td>
                         <td>
                             {% if gorev.end_date < today %}
-                            <form method="post" action="{% url 'gorev_uyar' %}">
+                            <form method="post" action="{% url 'gorev_uyar' %}" style="margin: 0;">
                                 {% csrf_token %}
                                 <input type="hidden" name="task_id" value="{{ gorev.id }}">
                                 {% if gorev.end_date < today and gorev.status != "tamamlandi" %}
@@ -212,31 +159,60 @@
                     </tbody>
                 </table>
             </div>
+
+            <h3 class="mb-20">Personel Tablosu</h3>
+            
+            <!-- Personel Ekle Butonu -->
+            <div class="text-right mb-20">
+                <button class="btn btn-primary btn-sm" onclick="personelFormGoster()">
+                Yeni Personel Ekle
+                    </button>
+            </div>
+
+
+            <!-- Personel Ekleme Formu -->
+            <div id="personelForm" style="display:none;" class="card bg-secondary p-20 mb-30 rounded animate__animated">
+                <div class="position-relative mb-15">
+                <h5 class="mb-0">Yeni Personel Ekle</h5>
+                <button onclick="personelFormKapat()" class="btn btn-sm close-btn" title="Kapat">
+                    &times;
+                </button>
+                </div>
+                <form method="post" action="{% url 'personel_takip' %}"  style="border: 0px;margin-bottom: 0;">
+                    {% csrf_token %}
+                    <div class="row">
+                        <input type="hidden" name="form_type" value="personel_ekle">
+                        <div class="col-md-6">
+                            <label>Ad Soyad</label>
+                            <input type="text" name="ad_soyad" class="form-control mb-15" required>               
+                        </div>
+                        <div class="col-md-6">
+                            <label>İş</label>
+                            <input type="text" name="job_title" class="form-control mb-15" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success  btn-sm">Personel Ekle</button>
+                  </form>
+            </div>
+
+            <!-- Personel Tablosu -->
+            
+            <div class="table-responsive mb-40">
+                <table class="table table-bordered table-striped" id="personel-tablosu">
+
+                    <thead>
+                        {% for personel in personeller %}
+                        <tr>
+                            <td>{{ personel.user.get_full_name }}</td>
+                            <td>{{ personel.job_title }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </section>
-    <script>
-        // document.addEventListener("DOMContentLoaded", function () {
-        //     const bugun = new Date();
-        
-        //     document.querySelectorAll("#gorev-tablosu tr").forEach(function (satir) {
-        //         const bitisTd = satir.children[3]; // Bitiş Tarihi hücresi
-        //         const durumTd = satir.children[4]; // Durum hücresi
-        //         const uyarıTd = satir.children[5]; // Uyarı hücresi
-        
-        //         const bitisStr = bitisTd.textContent.trim();
-        //         const bitis = new Date(bitisStr);
-        
-        //         if (bitis < bugun) {
-        //             durumTd.innerHTML = '<span class="text-danger">Gecikmiş</span>';
-        //             uyarıTd.innerHTML = "<button class='btn btn-sm btn-danger'>Uyar</button>";
-        //         } else {
-        //             durumTd.innerHTML = '<span>Beklemede</span>';
-        //             uyarıTd.innerHTML = "-";
-        //         }
-        //     });
-        // });
-    </script>
-        
+    </section>     
 </div>
 
 <!-- Animate.css CDN -->
@@ -256,7 +232,7 @@
             const bitis = new Date(bitisStr);
 
             // Durumu kontrol et: Eğer "Tamamlandı" ise, durumu değiştirme
-            if (status === 'Tamamlandı') {
+            if (status.toLowerCase() === 'tamamlandı') {
                 durumTd.innerHTML = '<span class="text-success">Tamamlandı</span>';
             } else {
                 // "Tamamlanmamış" durumlar için bitiş tarihine göre durumu güncelle
@@ -382,41 +358,6 @@
 
 </div>
 <!-- Content / End -->
-
-<!-- Footer -->
-<footer id="footer" class="dark bg-dark">
-    <div class="container-fluid container-custom">
-        <div class="row">
-            <div class="col-xl-5 text-xl-left text-xs-center">
-                <div class="module-group">
-                    <div class="module copyright">
-                        <a href="index.html" class="logo mr-15"><img src="img/logo-light.svg" height="80" alt=""></a>
-                        <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-7 text-xl-right text-xs-center">
-                <div class="module-group">
-                    <div class="module">
-                        <span class="text-muted mr-5">Language:</span>
-                        <ul class="nav-footer">
-                            <li class="active"><a href="#">English</a></li>
-                            <li><a href="#">Polish</a></li>
-                        </ul>
-                    </div>
-                    <div class="module">
-                        <span class="text-muted mr-10">Follow Us</span>
-                        <a href="#" class="icon icon-circle icon-hover icon-facebook icon-sm"><i class="ti-facebook"></i></a>
-                        <a href="#" class="icon icon-circle icon-hover icon-twitter icon-sm"><i class="ti-twitter-alt"></i></a>
-                        <a href="#" class="icon icon-circle icon-hover icon-google icon-sm"><i class="ti-google"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- Footer / End -->
-
 
 <!-- Mobile Navigation Toggle -->
 <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>

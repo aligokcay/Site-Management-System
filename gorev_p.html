@@ -47,7 +47,7 @@
       <div class="nav-wrapper">
         <ul class="nav nav-primary">
           <li><a href="panel-personel.html"><i class="li-home"></i>Ana Sayfa</a></li>
-          <li><a href="/gorevlerim/"><i class="li-calendar"></i>Görevler</a></li>
+          <li><a href="/gorevlerim/" class="active"><i class="li-calendar"></i>Görevler</a></li>
           <li><a href="{% url 'duyuru_p' %}"><i class="li-bell"></i>Duyurular</a></li>
           <li><a href="/istek_sikayet_personel/"><i class="li-email"></i>İstek & Şikayet</a></li>
           <li><a href="/logout/" onclick="cikisYap()"><i class="li-arrow6"></i>Çıkış Yap</a></li>
@@ -92,7 +92,7 @@
                             <button type="submit" class="btn btn-success btn-sm">Tamamlandı</button>
                         </form>
                         {% else %}
-                            <span class="badge bg-success">✔ Tamamlandı</span>
+                            -
                         {% endif %}
                     </td>
                      <!-- Şimdilik işlem butonu yok -->
@@ -110,81 +110,36 @@
       </div>
     </section>
     <script>
-      // document.addEventListener("DOMContentLoaded", function () {
-      //     const bugun = new Date();
-      
-      //     document.querySelectorAll("tbody tr").forEach(function (satir) {
-      //         const bitisTd = satir.children[2]; // Bitiş Tarihi
-      //         const durumTd = satir.children[3]; // Durum
-      //         const islemTd = satir.children[4]; // İşlem
-      
-      //         // Eğer bu satırda görev yoksa (boş satır uyarısı), atla
-      //         if (!bitisTd || !bitisTd.textContent.trim()) return;
-      
-      //         const bitis = new Date(bitisTd.textContent.trim());
-      
-      //         if (bitis < bugun) {
-      //             durumTd.innerHTML = '<span class="text-danger">Gecikmiş</span>';
-      //         } else {
-      //             durumTd.innerHTML = '<span>Beklemede</span>';
-      //         }
-      
-      //         // Yapıldı butonu ekle
-      //         islemTd.innerHTML = "<button class='btn btn-sm btn-success' onclick='gorevYapildi(this)'>Yapıldı</button>";
-      //     });
-      // });
-      
-      // Buton fonksiyonu
-      // function gorevYapildi(button) {
-      //     const satir = button.closest("tr");
-      //     const durumTd = satir.children[3];
-      //     durumTd.innerHTML = '<span class="text-success">Tamamlandı</span>';
-      //     button.remove(); // Butonu kaldır
-      // }
+      document.addEventListener("DOMContentLoaded", function () {
+        const bugun = new Date();
+
+        // Görev tablosundaki her satırı kontrol et (gösterim için)
+        document.querySelectorAll("tbody tr").forEach(function (satir) {
+            const bitisTd = satir.children[2]; // Bitiş Tarihi hücresi
+            const durumTd = satir.children[3]; // Durum hücresi
+            
+            const status = durumTd.textContent.trim();
+            const bitisStr = bitisTd.textContent.trim();
+            const bitis = new Date(bitisStr);
+
+            // Durumu kontrol et: Eğer "Tamamlandı" ise, durumu değiştirme
+            if (status.toLowerCase() === 'tamamlandi') {
+                durumTd.innerHTML = '<span class="text-success">Tamamlandı</span>';
+            } else {
+                // "Tamamlanmamış" durumlar için bitiş tarihine göre durumu güncelle
+                if (bitis < bugun) {
+                    durumTd.innerHTML = '<span class="text-danger">Gecikmiş</span>';
+                } else {
+                    durumTd.innerHTML = '<span>Beklemede</span>';
+                }
+            }
+        });
+      });
+
+      document.addEventListener('DOMContentLoaded', gorevleriListele);
       </script>
       
   </div>
-  <script>
-  // Örnek görevler - Gerçekte burası backend'den (veritabanı) alınacak
-  
-  // Sayfa yüklenince görevleri getir
-  document.addEventListener('DOMContentLoaded', gorevleriListele);
-  </script>  
-
-<!-- Footer -->
-<footer id="footer" class="dark bg-dark">
-    <div class="container-fluid container-custom">
-        <div class="row">
-            <div class="col-xl-5 text-xl-left text-xs-center">
-                <div class="module-group">
-                    <div class="module copyright">
-                      <img src="{% static 'img/logo-light.svg' %}" height="80" alt="">
-                        <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-7 text-xl-right text-xs-center">
-                <div class="module-group">
-                    <div class="module">
-                        <span class="text-muted mr-5">Language:</span>
-                        <ul class="nav-footer">
-                            <li class="active"><a href="#">English</a></li>
-                            <li><a href="#">Polish</a></li>
-                        </ul>
-                    </div>
-                    <div class="module">
-                        <span class="text-muted mr-10">Follow Us</span>
-                        <a href="#" class="icon icon-circle icon-hover icon-facebook icon-sm"><i class="ti-facebook"></i></a>
-                        <a href="#" class="icon icon-circle icon-hover icon-twitter icon-sm"><i class="ti-twitter-alt"></i></a>
-                        <a href="#" class="icon icon-circle icon-hover icon-google icon-sm"><i class="ti-google"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- Footer / End -->
-
 
 <!-- Mobile Navigation Toggle -->
 <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
