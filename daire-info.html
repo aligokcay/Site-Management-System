@@ -46,20 +46,19 @@
 
     <!-- Navigation -->
     <nav id="main-menu">
-      <div class="nav-wrapper">
-        <ul class="nav nav-primary">
-            <li><a href="panel-yonetici.html" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
-                    <li><a href="/daireler/" class="active" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
-                    <li><a href="/aidat-takip/" class="active" style="pointer-events: auto;"><i class="li-moneybag"></i> Kira Takibi</a></li>
-                    <li><a href="/duyurular/" class="active" style="pointer-events: auto;"><i class="li-bell"></i> Duyurular</a></li>
-                    <li><a href="/personel-takip/" class="active" style="pointer-events: auto;"><i class="li-calendar"></i> Personel Takibi</a></li>
-                    <li><a href="/istek_sikayet/"><i class="li-email"></i>İstek & Şikayet</a></li>
-                    <li><a href="/logout/" style="pointer-events: auto;"><i class="li-arrow6"></i> Çıkış Yap</a></li>
-
-        </ul>
-      </div>  
-      <span class="selector"></span>
-    </nav>
+        <div class="nav-wrapper">
+          <ul class="nav nav-primary">
+              <li><a href="panel-yonetici.html" class=""><i class="li-home"></i>Ana Sayfa</a></li>
+              <li><a href="/daireler/" class="active" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
+              <li><a href="/aidat-takip/" class="" style="pointer-events: auto;"><i class="li-moneybag"></i> Aidat Takibi</a></li>
+              <li><a href="/duyurular/" class="" style="pointer-events: auto;"><i class="li-bell"></i> Duyurular</a></li>
+              <li><a href="/personel-takip/" class="" style="pointer-events: auto;"><i class="li-calendar"></i> Personel Takibi</a></li>
+              <li><a href="/istek_sikayet/"><i class="li-email"></i>İstek & Şikayet</a></li>
+              <li><a href="/logout/" style="pointer-events: auto;"><i class="li-arrow6"></i> Çıkış Yap</a></li>
+          </ul>
+        </div>  
+        <span class="selector"></span>
+      </nav>
 
 </header>
 <!-- Header / End -->
@@ -174,7 +173,8 @@
             
                         // Hücreleri tekrar normal göster
                         for (let i = 0; i < cells.length - 1; i++) {
-                            const value = cells[i].querySelector("input").value;
+                            const input = cells[i].querySelector("input");
+                            const value = input ? input.value : cells[i].innerText;
                             cells[i].innerHTML = value;
                         }
                         button.innerHTML = '<i class="li-pencil"></i>';
@@ -204,12 +204,6 @@
                 <h4 class="mt-60">Temel Oranlar</h4>
                 <!-- Progress -->
                 <div class="progress-wrapper">
-                    <progress class="progress mb-5" value="90" max="100" ></progress>
-                    <span class="value"></span>
-                    <strong class="text-sm">Doluluk Oranı</strong>
-                </div> 
-                <!-- Progress -->
-                <div class="progress-wrapper">
                     <progress class="progress mb-5" value="60" max="100"></progress>
                     <span class="value"></span>
                     <strong class="text-sm">Ev Sahibi Oranı</strong>
@@ -221,6 +215,34 @@
                     <strong class="text-sm">Kiracı Oranı</strong>
                 </div> 
             </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const rows = document.querySelectorAll("table tbody tr");
+                    let kiraci = 0, evSahibi = 0;
+                
+                    rows.forEach(row => {
+                        const durum = row.cells[4].innerText.trim().toLowerCase();
+                
+                        if (durum === "kiracı") {
+                            kiraci++;
+                        } else if (durum === "ev sahibi") {
+                            evSahibi++;
+                        }
+                    });
+                
+                    const toplam = kiraci + evSahibi;
+                    const evSahibiOrani = toplam ? (evSahibi / toplam * 100).toFixed(0) : 0;
+                    const kiraciOrani = toplam ? (kiraci / toplam * 100).toFixed(0) : 0;
+                
+                    const progresses = document.querySelectorAll(".progress-wrapper");
+                
+                    progresses[0].querySelector("progress").value = evSahibiOrani;
+                    progresses[0].querySelector(".value").innerText = `%${evSahibiOrani}`;
+                
+                    progresses[1].querySelector("progress").value = kiraciOrani;
+                    progresses[1].querySelector(".value").innerText = `%${kiraciOrani}`;
+                });
+                </script>                
         </div>
 
     </section>
@@ -277,41 +299,6 @@
 
 </div>
 <!-- Content / End -->
-
-<!-- Footer -->
-<footer id="footer" class="dark bg-dark">
-    <div class="container-fluid container-custom">
-        <div class="row">
-            <div class="col-xl-5 text-xl-left text-xs-center">
-                <div class="module-group">
-                    <div class="module copyright">
-                        <img src="{% static 'img/logo-light.svg' %}" height="80" alt="">
-                        <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-7 text-xl-right text-xs-center">
-                <div class="module-group">
-                    <div class="module">
-                        <span class="text-muted mr-5">Language:</span>
-                        <ul class="nav-footer">
-                            <li class="active"><a href="#">English</a></li>
-                            <li><a href="#">Polish</a></li>
-                        </ul>
-                    </div>
-                    <div class="module">
-                        <span class="text-muted mr-10">Follow Us</span>
-                        <a href="#" class="icon icon-circle icon-hover icon-facebook icon-sm"><i class="ti-facebook"></i></a>
-                        <a href="#" class="icon icon-circle icon-hover icon-twitter icon-sm"><i class="ti-twitter-alt"></i></a>
-                        <a href="#" class="icon icon-circle icon-hover icon-google icon-sm"><i class="ti-google"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- Footer / End -->
-
 
 <!-- Mobile Navigation Toggle -->
 <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
