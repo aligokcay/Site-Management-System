@@ -79,17 +79,21 @@
                     &times;
                 </button>
                 </div>
-                <form method="post" action="{% url 'personel_takip' %}">
+                <form method="post" action="{% url 'personel_takip' %}"  style="border: 0px;margin-bottom: 0;">
                     {% csrf_token %}
-                    <input type="hidden" name="form_type" value="personel_ekle">
-                  
-                    <label>Ad Soyad</label>
-                    <input type="text" name="ad_soyad" class="form-control" required>
-                  
-                    <label>İş</label>
-                    <input type="text" name="job_title" class="form-control" required>
-                  
-                    <button type="submit" class="btn btn-success">Personel Ekle</button>
+                    <div class="row">
+                        <input type="hidden" name="form_type" value="personel_ekle">
+                        <div class="col-md-6">
+                            <label>Ad Soyad</label>
+                            <input type="text" name="ad_soyad" class="form-control mb-15" required>               
+                        </div>
+                        <div class="col-md-6">
+                            <label>İş</label>
+                            <input type="text" name="job_title" class="form-control mb-15" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success  btn-sm">Personel Ekle</button>
                   </form>
             </div>
 
@@ -126,33 +130,40 @@
                         &times;
                     </button>
                 </div>              
-                <form method="post" action="{% url 'personel_takip' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="form_type" value="gorev_ekle">
+                <form method="post" action="{% url 'personel_takip' %}" style="border: 0px;margin-bottom: 0;">
+                    <div class="row">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="gorev_ekle">                            
+                        <div class="col-md-4">
+                            <label>Personel Seç</label>
+                            <select name="calisan_id" class="form-control mb-15" required>
+                                {% for personel in personeller %}
+                                <option value="{{ personel.id }}">{{ personel.user.get_full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Görev</label>
+                            <input type="text" name="title" class="form-control mb-15" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Bitiş Tarihi</label>
+                            <input type="date" name="end_date" class="form-control mb-15" required>
+                        </div>
+                        <input type="hidden" name="status" id="durumInput" value="beklemede">
+                        <!-- <label>Durum</label>
+                        <select name="status" class="form-control">
+                          <option value="beklemede">Beklemede</option>
+                          <option value="yapiliyor">Yapılıyor</option>
+                          <option value="tamamlandi">Tamamlandı</option>
+                          <option value="gecikmis">Gecikmiş</option>
+                        </select> -->
+                    </div>
                   
-                    <label>Personel Seç</label>
-                    <select name="calisan_id" class="form-control" required>
-                        {% for personel in personeller %}
-                        <option value="{{ personel.id }}">{{ personel.user.get_full_name }}</option>
-                        {% endfor %}
-                    </select>
-                  
-                    <label>Görev</label>
-                    <input type="text" name="title" class="form-control" required>
-                  
-                    <label>Bitiş Tarihi</label>
-                    <input type="date" name="end_date" class="form-control" required>
-                  
-                    <label>Durum</label>
-                    <select name="status" class="form-control">
-                      <option value="beklemede">Beklemede</option>
-                      <option value="yapiliyor">Yapılıyor</option>
-                      <option value="tamamlandi">Tamamlandı</option>
-                      <option value="gecikmis">Gecikmiş</option>
-                    </select>
-                  
-                    <button type="submit" class="btn btn-success">Görev Ekle</button>
-                  </form>
+                    <button type="submit" class="btn btn-success btn-sm">Görev Ekle</button>
+                </form>               
             </div>
         
             <!-- Görevler Tablosu -->
@@ -170,16 +181,12 @@
                     </thead>
                     <tbody id="gorev-tablosu">
                         {% for gorev in gorevler %}
-                        <tr data-taskid="{{ gorev.id }}">
+                    <tr>
                         <td>{{ gorev.assigned_to.user.get_full_name }}</td>
                         <td>{{ gorev.title }}</td>
                         <td>{{ gorev.start_date }}</td>
                         <td>{{ gorev.end_date }}</td>
-                        <td>{% if gorev.end_date < today %}
-                            <span class="text-danger">Gecikmiş</span>
-                        {% else %}
-                            Beklemede
-                        {% endif %}</td>
+                        <td>{{ gorev.get_status_display }}</td>
                         <td>
                             {% if gorev.end_date < today %}
                             <form method="post" action="{% url 'gorev_uyar' %}">
@@ -188,13 +195,18 @@
                                 {% if gorev.end_date < today and gorev.status != "tamamlandi" %}
                                     <button type="submit" class="btn btn-sm btn-danger">Uyar</button>
                                 {% else %}
-                                    <button type="submit" class="btn btn-sm btn-secondary" disabled>Gecikmemiş</button>
+                                    -
+                                    <style>
+                                        form{
+                                            border: 0px;
+                                        }
+                                    </style>
                                 {% endif %}
                             </form>
                             {% else %}
                                 -
                             {% endif %}
-                          </td>
+                        </td>
                     </tr>
                         {% endfor %}
                     </tbody>
@@ -231,6 +243,32 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const bugun = new Date();
+
+        // Görev tablosundaki her satırı kontrol et (gösterim için)
+        document.querySelectorAll("#gorev-tablosu tr").forEach(function (satir) {
+            const bitisTd = satir.children[3]; // Bitiş Tarihi hücresi
+            const durumTd = satir.children[4]; // Durum hücresi
+            
+            const status = durumTd.textContent.trim();
+            const bitisStr = bitisTd.textContent.trim();
+            const bitis = new Date(bitisStr);
+
+            // Durumu kontrol et: Eğer "Tamamlandı" ise, durumu değiştirme
+            if (status === 'Tamamlandı') {
+                durumTd.innerHTML = '<span class="text-success">Tamamlandı</span>';
+            } else {
+                // "Tamamlanmamış" durumlar için bitiş tarihine göre durumu güncelle
+                if (bitis < bugun) {
+                    durumTd.innerHTML = '<span class="text-danger">Gecikmiş</span>';
+                } else {
+                    durumTd.innerHTML = '<span>Beklemede</span>';
+                }
+            }
+        });
+    });
+
     // Personel Formu Göster
     function personelFormGoster() {
         const form = document.getElementById("personelForm");
@@ -250,39 +288,6 @@
             form.style.display = "none";
         }, 500);
     }
-
-
-
-    // Görev Ekleme
-    // function gorevEkle() {
-    //     const adi = document.getElementById("gorevliAdi").value;
-    //     const aciklama = document.getElementById("gorevAciklama").value;
-    //     const baslangic = document.getElementById("baslangicTarihi").value;
-    //     const bitis = document.getElementById("bitisTarihi").value;
-    //     const bugun = new Date().toISOString().split("T")[0];
-
-    //     const durum = (bitis < bugun) ? '<span class="text-danger">Gecikmiş</span>' : 'Beklemede';
-    //     const uyarButonu = (bitis < bugun)
-    //         ? "<button class='btn btn-sm btn-danger'>Uyar</button>"
-    //         : "-";
-
-    //     const tablo = document.getElementById("gorev-tablosu");
-    //     const satir = tablo.insertRow();
-    //     satir.innerHTML = `
-    //         <td>${adi}</td>
-    //         <td>${aciklama}</td>
-    //         <td>${baslangic}</td>
-    //         <td>${bitis}</td>
-    //         <td>${durum}</td>
-    //         <td>${uyarButonu}</td>
-    //     `;
-
-    //     document.getElementById("gorevliAdi").value = "";
-    //     document.getElementById("gorevAciklama").value = "";
-    //     document.getElementById("baslangicTarihi").value = "";
-    //     document.getElementById("bitisTarihi").value = "";
-    //     formKapat();
-    // }
 
     // Görev ekleme formu submit
     document.getElementById('add-task-form').addEventListener('submit', function (event) {
