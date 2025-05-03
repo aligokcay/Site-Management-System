@@ -8,8 +8,10 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime  import date, timedelta
 from django.utils.timezone import now
+from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.http import HttpResponse
 
 
 
@@ -175,11 +177,12 @@ def admin_aidat_list(request):
         aidat.save()
         messages.success(request, f"{aidat.donem} dönemi onaylandı.")
         return redirect('admin_aidat_list')
-
+    today= timezone.now().date()
     unpaid = Aidat.objects.filter(odeme_durumu=False).order_by('-donem')
     return render(request, 'aidat-takip.html', {
         'form': form,
         'aidatlar': unpaid,
+        'today': today,
     })
 
 def admin_aidat_approve(request, pk):
@@ -218,10 +221,6 @@ def admin_create_aidat(request):
 
 def aidat_yonetici(request):
 
-    # Debug: her istekte method ve POST verisini yazdıralım
-    print("REQUEST METHOD:", request.method)
-    print("POST KEYS:", request.POST.keys())
-    print("POST DATA:", dict(request.POST))
 
     # --- BÜYÜK AİDAT OLUŞTURMA ---
     if request.method == "POST" and 'do_bulk_create' in request.POST:
@@ -255,10 +254,11 @@ def aidat_yonetici(request):
 
     aidatlar = Aidat.objects.filter(odeme_durumu=False).order_by('-donem')
     unpaid = aidatlar.exists()
-
+    today = now().date()
     return render(request, 'aidat-takip.html', {
         'aidatlar': aidatlar,
         'unpaid': unpaid,
+        'today': today,
     })
 
 @login_required
@@ -268,10 +268,13 @@ def aidat_kullanici_view(request):
         'aidatlar': aidatlar,
     })
 
+def get_today_context():
+    return {'today': date.today()}
 
 @login_required
 @csrf_exempt
 def gorev_uyar(request):
+    context = get_today_context()
     if request.method == "POST":
         task_id = request.POST.get("task_id")
         task = get_object_or_404(Task, id=task_id)
@@ -295,11 +298,48 @@ def gorev_tamamla(request, pk):
 
 
 
+# @login_required
+# def panel_personel_view(request):
+#     uyarilar = GorevUyari.objects.filter(user=request.user).order_by('-olusturma_tarihi')
+#     if not uyarilar.exists():
+#         print("Henüz bir uyarınız yok.")
+#     else:
+#         print(f"{uyarilar.count()} adet uyarınız var.")
+#         return render(request, 'panel-personel.html', {'uyarilar': uyarilar})
 @login_required
 def panel_personel_view(request):
     uyarilar = GorevUyari.objects.filter(user=request.user).order_by('-olusturma_tarihi')
-    if not uyarilar.exists():
-        print("Henüz bir uyarınız yok.")
-    else:
-        print(f"{uyarilar.count()} adet uyarınız var.")
-        return render(request, 'panel-personel.html', {'uyarilar': uyarilar})
+    return render(request, 'panel-personel.html', {'uyarilar': uyarilar})
+    
+
+
+
+@login_required
+@csrf_exempt
+def aidat_uyar(request):
+    if request.method == "POST":
+        aidat_id = request.POST.get("aidat_id")
+        aidat = get_object_or_404(Aidat, id=aidat_id)
+
+        if not aidat.odeme_durumu and aidat.son_odeme_tarihi < timezone.now().date():
+            AidatUyari.objects.create(
+                user=aidat.user,
+                aidat=aidat,
+                mesaj="Aidat ödemeniz gecikti, lütfen en kısa sürede ödeme yapınız."
+            )
+            messages.success(request, "Aidat uyarısı başarıyla gönderildi.")
+        else:
+            messages.warning(request, "Uyarı gerekli değil. Aidat zaten ödendi ya da son ödeme tarihi geçmedi.")
+
+    return redirect("aidat_takip")  # buradaki view adına göre düzenleyebilirsin
+
+
+@login_required
+def panel_sakin_view(request):
+    print("Panel sakin view çalıştı.")
+    aidat_uyarilar = AidatUyari.objects.filter(user=request.user).order_by('-olusturma_tarihi')
+
+    return render(request, 'panel-sakin.html', {
+        'uyarilar': aidat_uyarilar,
+    })
+

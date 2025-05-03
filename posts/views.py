@@ -56,8 +56,9 @@ def istek_sikayet_sakin(request):
             return redirect('istek_sikayet_sakin')  # refresh
     else:
         form = IstekSikayetForm()
+    istekler = IstekSikayet.objects.filter(user=request.user).order_by('-created_at')
 
-    return render(request, 'istek_sikayet_k.html', {'form': form})
+    return render(request, 'istek_sikayet_k.html', {'form': form, 'istekler': istekler})
 
 
 @login_required
@@ -82,13 +83,6 @@ def istek_sikayet_personel(request):
         'istekler': istekler
     })
 
-@login_required
-def istek_sikayet_sakin(request):
-    if request.user.role != 'sakin':
-        return HttpResponseForbidden()
-
-    istekler = IstekSikayet.objects.filter(user=request.user).order_by('-created_at')
-    return render(request, 'istek_sikayet_k.html', {'istekler': istekler})
 
 @login_required
 def admin_istek_sikayet_paneli(request):

@@ -74,27 +74,29 @@
         <div class="table-responsive">
           <table class="table">
             <thead>
-              <tr><th>Ay</th><th>Tutar</th><th>Durum</th><th>İşlem</th></tr>
+              <tr><th>Donem</th><th>Tutar</th><th>Durum</th><th>İşlem</th></tr>
             </thead>
             <tbody>
               {% for a in user.aidatlar.all %}
               <tr>
-                <td>{{ a.ay|date:"F Y" }}</td>
+                <td>{{ a.donem }}</td>
                 <td>{{ a.tutar }} ₺</td>
                 <td>{{ a.odeme_durumu|yesno:"Ödendi,Beklemede" }}</td>
                 <td>
                   {% if not a.odeme_durumu %}
                     {% if not a.dekont %}
-                      <button 
-                        class="btn btn-primary btn-sm open-payment" 
-                        data-pk="{{ a.pk }}"
-                        data-ay="{{ a.ay|date:'F Y' }}"
-                        data-tutar="{{ a.tutar }}">
-                        Öde
-                      </button>
-                    {% else %}
-                      Dekont yüklendi
+                      {% if gorev.end_date < today %}
+                      <form method="post" action="{% url 'aidat_uyar' %}" style="margin: 0;">
                     {% endif %}
+
+                    {% else %}
+                        -
+                      
+                    {% endif %}
+                    <form method="post" action="{% url 'aidat_uyar' %}" style="margin: 0;">
+
+                  {% else %}
+                  <a href="{{ a.dekont.url }}" target="_blank">Dekontu Görüntüle</a>
                   {% endif %}
                 </td>
               </tr>

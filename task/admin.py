@@ -10,9 +10,9 @@ class TaskAdmin(admin.ModelAdmin):
 
 @admin.register(Aidat)
 class AidatAdmin(admin.ModelAdmin):
-    list_display = ('user', 'donem', 'tutar', 'odeme_durumu')
-    readonly_fields = ('user','donem','tutar')
-    fields = ('user','donem','tutar','odeme_durumu','dekont')
+    list_display = ('user', 'donem', 'tutar', 'odeme_durumu','son_odeme_tarihi' )
+    
+    fields = ('user','donem','tutar','odeme_durumu','dekont','son_odeme_tarihi')
     # böylece admin, mevcut aidatı seçip sadece dekont yükleyebilir
 
 @admin.register(GorevUyari)

@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
 
 <!-- Meta -->
@@ -104,7 +104,7 @@
                 <table class="table">
                     <thead>
                       <tr>
-                        <th>Daire</th><th>Sakin</th><th>Dönem</th><th>Tutar</th><th>Ödendi</th><th>Son Ödeme</th>
+                        <th>Daire</th><th>Sakin</th><th>Dönem</th><th>Tutar</th><th>Ödendi</th><th>Son Ödeme</th><th>Bugun</th><th>Uyari</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -114,7 +114,6 @@
                           <td>{{ a.user.mevcut_sakin }}</td>
                           <td>{{ a.donem }}</td>
                           <td>{{ a.tutar }}₺</td>
-                          <td>{{ a.son_odeme_tarihi }}₺</td>
 
                           <td>
                             {% if a.dekont %}
@@ -125,6 +124,28 @@
 
                             {% else %}
                               <span class="text-muted">Dekont bekleniyor</span>
+                            {% endif %}
+                          </td>
+                          <td>{{ a.son_odeme_tarihi }}</td>
+                          <td>{{ today }}</td>
+                          <td>
+                            {% if not a.odeme_durumu %}
+                              {% if not a.dekont %}
+                                {% if a.son_odeme_tarihi and a.son_odeme_tarihi < today %}
+                                <form method="post" action="{% url 'aidat_uyar' %}" style="margin: 0;">
+                                  {% csrf_token %}
+                                  <input type="hidden" name="aidat_id" value="{{ a.id }}">
+                                  <input type="hidden" name="mesaj" value="Aidat ödemesi gecikti. Lütfen en kısa sürede ödemenizi yapın.">
+                                  <button type="submit" class="btn btn-sm btn-danger">Uyar</button>
+                                </form>
+                                {% else %}
+                                  Bekleniyor
+                                {% endif %}
+                              {% else %}
+                                <a href="{{ a.dekont.url }}" target="_blank">Dekontu Gör</a>
+                              {% endif %}
+                            {% else %}
+                              <a href="{{ a.dekont.url }}" target="_blank">Dekontu Görüntüle</a>
                             {% endif %}
                           </td>
                         </tr>

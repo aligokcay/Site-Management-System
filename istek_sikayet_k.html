@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +12,11 @@
 <title>Skill - Modern &amp; Creative HTML5 Template</title>
 
 <!-- Favicons -->
-<link rel="shortcut icon" href="assets/img/favicon.png">
-<link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
-<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
-<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
-<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
+<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<link rel="apple-touch-icon" href="{% static 'img/favicon_60x60.png' %}">
+<link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/favicon_76x76.png' %}">
+<link rel="apple-touch-icon" sizes="120x120" href="{% static 'img/favicon_120x120.png' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/favicon_152x152.png' %}">
 
 <style>
     label {
@@ -35,13 +37,15 @@
 </style>
 
 <!-- Google Web Fonts -->
+<!-- Google Web Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
 
 <!-- CSS Styles -->
-<link rel="stylesheet" href="assets/css/styles.css" />
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 
 <!-- CSS Base -->
-<link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
+<link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}" />
+
 
 </head>
 
@@ -61,7 +65,8 @@
 
     <!-- Logo -->
     <a href="index-dark.html" class="logo">
-        <img src="assets/img/logo-light.svg" alt="">
+        
+        <img src="{% static 'img/logo-light.svg' %}" alt="">
     </a>
 
     <!-- Navigation -->
@@ -140,13 +145,15 @@
 <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
 
 <!-- JS Libraries -->
-<script src="assets/js/jquery-2.2.4.min.js"></script>
+<!-- JS Libraries -->
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
 
 <!-- JS Plugins -->
-<script src="assets/js/plugins.js"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
 
 <!-- JS Core -->
-<script src="assets/js/core.js"></script>
+<script src="{% static 'js/core.js' %}"></script>
+
 
 </body>
 </html>

@@ -7,10 +7,20 @@
     <title>Sakin Paneli</title>
     
     <!-- Favicons -->
-    <link rel="shortcut icon" href="assets/img/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css" />
-    <link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
+<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<link rel="apple-touch-icon" href="{% static 'img/favicon_60x60.png' %}">
+<link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/favicon_76x76.png' %}">
+<link rel="apple-touch-icon" sizes="120x120" href="{% static 'img/favicon_120x120.png' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/favicon_152x152.png' %}">
+
+<!-- Google Web Fonts (Bu kalsın çünkü dış bağlantı) -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
+
+<!-- CSS Styles -->
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+
+<!-- CSS Theme -->
+<link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}" />
 
 </head>
 <body class="header-vertical">
@@ -27,7 +37,7 @@
         <nav id="main-menu">
             <div class="nav-wrapper">
                 <ul class="nav nav-primary">
-                    <li><a href="/panel-sakin.html" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
+                    <li><a href="{% url 'panel_sakin_static' %}" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
                     <li><a href="/sakin-aidat-takip/"><i class="li-moneybag"></i>Aidat Takibi</a></li>
                     <li><a href="{% url 'duyuru_k' %}"><i class="li-bell"></i>Duyurular</a></li>
                     <li><a href="/randevu/"><i class="li-clock"></i>Randevu Alma</a></li>
@@ -38,7 +48,28 @@
             <span class="selector"></span>
         </nav>
     </header>
+    <!-- Header / End -->
 
+    <!-- Content -->
+    <section class="section">
+        <div class="card mt-4" style="margin-left: 600px;">
+            <div class="card-header"><h5>Görev Uyarıları</h5></div>
+            
+            <div class="card-body">
+              {% if uyarilar %}
+    
+                <ul>
+                  {% for uyar in uyarilar %}
+                    <li>{{ uyar.mesaj }} - {{ uyar.olusturma_tarihi }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>Henüz bir uyarınız yok.</p>
+              {% endif %}
+            </div>
+          </div>
+      </section>
+    <!-- Content / End -->
     <div id="content">
         <section class="section">
             <div class="container-fluid container-custom">
@@ -52,9 +83,13 @@
         </section>
     </div>
 
-    <script src="assets/js/jquery-2.2.4.min.js"></script>
-    <script src="assets/js/plugins.js"></script>
-    <script src="assets/js/core.js"></script>
+    <script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+
+<!-- JS Plugins -->
+<script src="{% static 'js/plugins.js' %}"></script>
+
+<!-- JS Core -->
+<script src="{% static 'js/core.js' %}"></script>
     
     
 </body>

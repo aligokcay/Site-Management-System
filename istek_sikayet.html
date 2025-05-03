@@ -1,5 +1,6 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
 
 <!-- Meta -->
@@ -10,22 +11,23 @@
 <title>Skill - Modern &amp; Creative HTML5 Template</title>
 
 <!-- Favicons -->
-<link rel="shortcut icon" href="assets/img/favicon.png">
-<link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
-<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
-<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
-<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
+<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<link rel="apple-touch-icon" href="{% static 'img/favicon_60x60.png' %}">
+<link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/favicon_76x76.png' %}">
+<link rel="apple-touch-icon" sizes="120x120" href="{% static 'img/favicon_120x120.png' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/favicon_152x152.png' %}">
 
 <!-- Google Web Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
+
+<!-- Font Awesome (CDN, kalabilir) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <!-- CSS Styles -->
-<link rel="stylesheet" href="assets/css/styles.css" />
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
-<!-- CSS Base -->
-<link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
-
+<!-- CSS Theme -->
+<link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}">
 <style>
 .custom-tabs-wrapper {
   position: relative;
@@ -140,7 +142,7 @@
                 <th>Kullanıcı</th>
                 <th>İstek</th>
                 <th>Tarih</th>
-                <th>İşlemler</th>
+                <!-- <th>İşlemler</th> -->
               </tr>
             </thead>
             <tbody>
@@ -148,24 +150,21 @@
                 <tr>
                   <td>
                     {% if istek.user.role == 'personel' %}
-                      Görev: {{ istek.user.employee_profile.job_title }}
+                    {{ istek.user.employee_profile.job_title }}  gorevlisi: {{ istek.user.get_full_name }}
                     {% elif istek.user.role == 'sakin' %}
-                      Kullanıcı: {{ istek.user.username }}
+                    {{ istek.user.username }}  sakini  {{ istek.user.mevcut_sakin}}
                     {% endif %}
                   </td>
                   <td>
-                    {% if istek.user.role == 'personel' %}
-                      {{ istek.user.get_full_name }}
-                    {% elif istek.user.role == 'sakin' %}
-                      {{ istek.user.mevcut_sakin }}
-                    {% endif %}
+                    <strong>{{ istek.konu }}</strong><br>
+                    {{ istek.aciklama }}
                   </td>
                   <td>{{ istek.created_at|date:"d.m.Y H:i" }}</td>
-                  <td>
+                  <!-- <td>
                     <button class="btn btn-sm btn-outline-success" onclick="okundu(this)">✔</button>
                     <button class="btn btn-sm btn-outline-warning" onclick="yildizla(this)">★</button>
                     <button class="btn btn-sm btn-outline-danger" onclick="sil(this)">🗑</button>
-                  </td>
+                  </td> -->
                 </tr>
               {% empty %}
                 <tr><td colspan="4" class="text-center">Hiç istek bulunamadı.</td></tr>
@@ -183,7 +182,7 @@
                 <th>Kullanıcı</th>
                 <th>Şikayet</th>
                 <th>Tarih</th>
-                <th>İşlemler</th>
+                <!-- <th>İşlemler</th> -->
               </tr>
             </thead>
             <tbody>
@@ -191,24 +190,21 @@
                 <tr>
                   <td>
                     {% if istek.user.role == 'personel' %}
-                      Görev: {{ istek.user.employee_profile.job_title }}
+                    {{ istek.user.employee_profile.job_title }}  gorevlisi: {{ istek.user.get_full_name }}
                     {% elif istek.user.role == 'sakin' %}
-                      Kullanıcı: {{ istek.user.username }}
+                    {{ istek.user.username }}  sakini  {{ istek.user.mevcut_sakin}}
                     {% endif %}
                   </td>
                   <td>
-                    {% if istek.user.role == 'personel' %}
-                      {{ istek.user.get_full_name }}
-                    {% elif istek.user.role == 'sakin' %}
-                      {{ istek.user.mevcut_sakin }}
-                    {% endif %}
+                    <strong>{{ istek.konu }}</strong><br>
+                    {{ istek.aciklama }}
                   </td>
                   <td>{{ istek.created_at|date:"d.m.Y H:i" }}</td>
-                  <td>
+                  <!-- <td>
                     <button class="btn btn-sm btn-outline-success" onclick="okundu(this)">✔</button>
                     <button class="btn btn-sm btn-outline-warning" onclick="yildizla(this)">★</button>
                     <button class="btn btn-sm btn-outline-danger" onclick="sil(this)">🗑</button>
-                  </td>
+                  </td> -->
                 </tr>
               {% empty %}
                 <tr><td colspan="4" class="text-center">Hiç istek bulunamadı.</td></tr>
@@ -276,13 +272,13 @@
 <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
 
 <!-- JS Libraries -->
-<script src="assets/js/jquery-2.2.4.min.js"></script>
+<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
 
 <!-- JS Plugins -->
-<script src="assets/js/plugins.js"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
 
 <!-- JS Core -->
-<script src="assets/js/core.js"></script>
+<script src="{% static 'js/core.js' %}"></script>
 
 </body>
 

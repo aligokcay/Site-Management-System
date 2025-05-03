@@ -28,7 +28,7 @@ def custom_login(request):
                 if user.role == CustomUser.Roles.YONETICI:
                     return redirect('/panel-yonetici.html')
                 elif user.role == CustomUser.Roles.SAKİN:
-                    return redirect('/panel-sakin.html')
+                    return redirect('/panel_sakin_static')
                 elif user.role == CustomUser.Roles.PERSONEL:
                     return redirect('/panel_personel_static')
                 else:
@@ -52,7 +52,7 @@ def panel_yonetici_static(request):
 
 @login_required
 def panel_sakin_static(request):
-    return render(request, 'panel_sakin_static')
+    return render(request, 'panel-sakin.html')
 
 @login_required
 def panel_personel_static(request):

@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path ,include
 from users.views import custom_login, home,  panel_yonetici_static, custom_logout, daire_bilgileri, daire_guncelle,  panel_sakin_static, panel_personel_static
-from task.views import personel_takip_view, calisan_gorevleri, admin_aidat_list, admin_aidat_approve,aidat_yonetici, dekont_yukle, aidat_kullanici_view,gorev_uyar, gorev_tamamla, panel_personel_view
+from task.views import personel_takip_view, calisan_gorevleri, admin_aidat_list, admin_aidat_approve,aidat_yonetici, dekont_yukle, aidat_kullanici_view,gorev_uyar, gorev_tamamla, panel_personel_view, aidat_uyar,panel_sakin_view
 from posts.views import duyuru_listesi, duyuru_ekle, duyuru_k, duyuru_p, istek_sikayet_sakin, istek_sikayet_personel, admin_istek_sikayet_paneli
 from randevu.views import randevu_panel
 from django.conf import settings
@@ -31,7 +31,7 @@ urlpatterns = [
     path('', home, name='home'), 
     path('panel-yonetici.html', panel_yonetici_static, name='panel_yonetici_static'),
     path('panel-sakin.html', panel_sakin_static, name='panel_sakin_static'),
-    path('panel_personel_static', panel_personel_static, name='panel_personel_static'),
+    path('panel_personel.html', panel_personel_static, name='panel_personel_static'),
     path('daireler/', daire_bilgileri, name='daire_bilgileri'),
     path('daire-guncelle/', daire_guncelle, name='daire_guncelle'),
     path('aidat-takip/', aidat_yonetici, name='aidat_takip'),
@@ -51,8 +51,9 @@ urlpatterns = [
     path('sakin-aidat-takip/', aidat_kullanici_view, name='sakin_aidat_takip'),
     path("gorev-uyar/", gorev_uyar, name="gorev_uyar"),
     path("gorev/<int:pk>/tamamla/", gorev_tamamla, name="gorev_tamamla"),
+    path("aidat-uyar/", aidat_uyar, name="aidat_uyar"),
     path('panel_personel_static/', panel_personel_view, name='panel_personel_view'),
-    
+    path('panel_sakin_static/', panel_sakin_view, name='panel_sakin_view'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
