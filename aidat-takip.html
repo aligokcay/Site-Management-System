@@ -18,8 +18,12 @@
 <script src="{% static 'js/plugins.js' %}"></script>
 <script src="{% static 'js/core.js' %}"></script>
 <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
-
-
+<style>
+  .btn-sm {
+    padding: 0.55rem 0.8rem;
+    font-size: 0.65rem;
+  }
+</style>
 
 </head>
 
@@ -101,10 +105,10 @@
                 </div>
                 <div class="card-body">
                 {% if unpaid %}
-                <table class="table">
+                <table class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>Daire</th><th>Sakin</th><th>Dönem</th><th>Tutar</th><th>Ödendi</th><th>Son Ödeme</th><th>Bugun</th><th>Uyari</th>
+                        <th>Daire</th><th>Sakin</th><th>Dönem</th><th>Tutar</th><th>Ödendi</th><th>Son Ödeme</th><th>İşlem</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -118,7 +122,7 @@
                           <td>
                             {% if a.dekont %}
                               <a href="{{ a.dekont.url }}" target="_blank" class="btn btn-sm btn-info">
-                                PDF'yi Görüntüle
+                                Dekontu Görüntüle
                               </a>
                               <button class="btn btn-sm btn-success" onclick="approve('{{ a.pk }}')">Onayla</button>
 
@@ -127,7 +131,6 @@
                             {% endif %}
                           </td>
                           <td>{{ a.son_odeme_tarihi }}</td>
-                          <td>{{ today }}</td>
                           <td>
                             {% if not a.odeme_durumu %}
                               {% if not a.dekont %}
@@ -139,13 +142,13 @@
                                   <button type="submit" class="btn btn-sm btn-danger">Uyar</button>
                                 </form>
                                 {% else %}
-                                  Bekleniyor
+                                  -
                                 {% endif %}
                               {% else %}
-                                <a href="{{ a.dekont.url }}" target="_blank">Dekontu Gör</a>
+                                -
                               {% endif %}
                             {% else %}
-                              <a href="{{ a.dekont.url }}" target="_blank">Dekontu Görüntüle</a>
+                              -
                             {% endif %}
                           </td>
                         </tr>
@@ -188,22 +191,6 @@
                 {% endif %}
                 </div>
             </div>
-
-
-
-
-            <div  style="padding: 0 10%;">
-                <h4 class="mt-60">Temel Oranlar</h4>
-                <!-- Progress -->
-                <div class="progress-wrapper">
-                    <progress class="progress mb-5" value="50" max="100" ></progress>
-                    <span class="value"></span>
-                    <strong class="text-sm">Bu Ayın Aidatının Ödenme Oranı</strong>
-                </div> 
-            </div>
-            
-
-        </div>
 
     </section>
 

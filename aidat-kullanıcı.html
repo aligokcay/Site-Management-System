@@ -27,6 +27,78 @@
     <!-- CSS Styles -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
     <link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}" />
+    <style>
+      .btn-sm {
+        padding: 0.55rem 0.8rem;
+        font-size: 0.65rem;
+      }
+        /* Modal arkaplanı */
+  .modal {
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0 33%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5); /* Yarı saydam siyah arkaplan */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Modal içeriği */
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    position: relative;
+    animation: fadeIn 0.3s ease;
+  }
+
+  /* Başlık */
+  .modal-content h5 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  /* Alt butonlar */
+  .modal-content .text-right {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .modal-content button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+
+  .modal-content button[type="submit"] {
+    background-color: #28a745; /* yeşil */
+    color: white;
+  }
+
+  .modal-content button[type="button"] {
+    background-color: #dc3545; /* kırmızı */
+    color: white;
+  }
+
+  /* Basit fade-in animasyonu */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+    </style>
 
 </head>
 
@@ -70,13 +142,14 @@
 <div id="content">
     <section class="section">
       <div class="container container-sm">
-        <h4 class="mt-60">Benim Aidat Bilgilerim</h4>
+        <h4 class="mt-60">Aidatlarım</h4>
         <div class="table-responsive">
-          <table class="table">
+          <table class="table table-bordered table-striped">
             <thead>
               <tr><th>Donem</th><th>Tutar</th><th>Durum</th><th>İşlem</th></tr>
             </thead>
             <tbody>
+              {% now "Y-m" as bugun %}
               {% for a in user.aidatlar.all %}
               <tr>
                 <td>{{ a.donem }}</td>
@@ -85,22 +158,34 @@
                 <td>
                   {% if not a.odeme_durumu %}
                     {% if not a.dekont %}
-                      {% if gorev.end_date < today %}
-                      <form method="post" action="{% url 'aidat_uyar' %}" style="margin: 0;">
-                    {% endif %}
-
+                      {% if a.donem < bugun %}
+                        <button 
+                          class="btn btn-primary btn-sm open-payment" 
+                          data-pk="{{ a.pk }}"
+                          data-ay="{{ a.ay|date:'F Y' }}"
+                          data-tutar="{{ a.tutar }}">
+                          Öde
+                        </button>
+                      {% else %}
+                        <button 
+                          class="btn btn-warning btn-sm open-payment" 
+                          data-pk="{{ a.pk }}"
+                          data-ay="{{ a.ay|date:'F Y' }}"
+                          data-tutar="{{ a.tutar }}">
+                          Öde
+                        </button>
+                      {% endif %}
                     {% else %}
-                        -
-                      
+                      Dekont yüklendi, onaylama bekleniyor
                     {% endif %}
-                    <form method="post" action="{% url 'aidat_uyar' %}" style="margin: 0;">
-
                   {% else %}
-                  <a href="{{ a.dekont.url }}" target="_blank">Dekontu Görüntüle</a>
+                    <a href="{{ a.dekont.url }}" target="_blank">  <button class="btn btn-success btn-sm" disabled>
+                      Dekont Görüntüle
+                    </button></a>
                   {% endif %}
                 </td>
               </tr>
-              {% endfor %}
+              {% endfor %}              
             </tbody>
           </table>
         </div>
