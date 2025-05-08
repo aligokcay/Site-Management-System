@@ -20,8 +20,12 @@
 <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
 
 
+<!-- CSS Styles -->
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 
 <!-- CSS Base -->
+<link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}" />
+
 
 </head>
 
@@ -38,8 +42,8 @@
 <header id="header" class="bg-dark dark">
 
     <!-- Logo -->
-    <a href="/" class="logo">
-      <img src="{% static 'img/logo-light.svg' %}" alt="">
+    <a href="index-dark.html" class="logo"  style="padding: 0;">
+      <img src="{% static 'img/logo.png' %}" style="max-height: 220px;">
     </a>
 
     <!-- Navigation -->

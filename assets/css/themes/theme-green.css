@@ -90,7 +90,6 @@ iframe {
 img {
   max-width: 100%;
   height: auto;
-  -webkit-backface-visibility: hidden;
 }
 
 .container-custom {
@@ -2203,7 +2202,7 @@ img {
   top: 0;
   left: 0;
   right: -26px;
-  background-image: linear-gradient(to right, #77ad6c, #60b26b);
+  background-image: linear-gradient(to right, #77ad6c, #8B0000);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
@@ -3720,12 +3719,12 @@ html.locked-scrolling body {
 }
 
 .btn-primary {
-  background-image: linear-gradient(to right, #77ad6c, #60b26b);
+  background-image: linear-gradient(to right, #77ad6c, #8B0000);
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:focus:active {
   border-color: transparent;
-  background-image: linear-gradient(to right, #77ad6c, #60b26b);
+  background-image: linear-gradient(to right, #77ad6c, #8B0000);
   color: #67af66;
 }
 
@@ -3948,7 +3947,7 @@ html.locked-scrolling body {
   cursor: pointer;
   color: #fff;
   overflow: hidden;
-  background-image: linear-gradient(to right, #77ad6c, #60b26b);
+  background-image: linear-gradient(to right, #77ad6c, #8B0000);
 }
 
 .btn-submit:before {
@@ -3974,7 +3973,7 @@ html.locked-scrolling body {
 }
 
 .btn-submit:hover, .btn-submit:focus, .btn-submit:active, .btn-submit:focus:active {
-  background-image: linear-gradient(to right, #77ad6c, #60b26b);
+  background-image: linear-gradient(to right, #77ad6c, #8B0000);
   color: #fff;
   outline: none;
 }
@@ -4561,7 +4560,7 @@ html.locked-scrolling body {
 }
 
 .fc-event.primary, a.fc-event.primary {
-  background-image: linear-gradient(to right, #77ad6c, #60b26b);
+  background-image: linear-gradient(to right, #77ad6c, #8B0000);
   color: #fff;
 }
 
@@ -4622,7 +4621,7 @@ html.locked-scrolling body {
 }
 
 .fc button.fc-state-active {
-  background-image: linear-gradient(to right, #77ad6c, #60b26b);
+  background-image: linear-gradient(to right, #77ad6c, #8B0000);
   color: #fff;
 }
 
@@ -6573,7 +6572,7 @@ select.form-control {
   -ms-border-radius: 12px;
   -o-border-radius: 12px;
   border-radius: 12px;
-  background-image: linear-gradient(to right, #77ad6c, #60b26b);
+  background-image: linear-gradient(to right, #77ad6c, #8B0000);
 }
 
 .progress[value]::-moz-progress-bar {
@@ -6582,7 +6581,7 @@ select.form-control {
   -ms-border-radius: 12px;
   -o-border-radius: 12px;
   border-radius: 12px;
-  background-image: linear-gradient(to right, #77ad6c, #60b26b);
+  background-image: linear-gradient(to right, #77ad6c, #8B0000);
 }
 
 .progress[value]::-ms-fill {
@@ -6591,7 +6590,7 @@ select.form-control {
   -ms-border-radius: 12px;
   -o-border-radius: 12px;
   border-radius: 12px;
-  background-image: linear-gradient(to right, #77ad6c, #60b26b);
+  background-image: linear-gradient(to right, #77ad6c, #8B0000);
 }
 
 .progress-primary[value]::-ms-fill {
@@ -6921,12 +6920,12 @@ p.lead {
 }
 
 .blockquote.blockquote-primary p {
-  background-image: linear-gradient(to right, #77ad6c, #60b26b);
+  background-image: linear-gradient(to right, #77ad6c, #8B0000);
   color: #fff;
 }
 
 .blockquote.blockquote-primary p:after {
-  border-color: transparent #60b26b transparent transparent;
+  border-color: transparent #8B0000 transparent transparent;
 }
 
 /* Sizes */
