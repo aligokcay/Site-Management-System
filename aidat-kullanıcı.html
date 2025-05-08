@@ -143,6 +143,11 @@
     <section class="section">
       <div class="container container-sm">
         <h4 class="mt-60">Aidatlarım</h4>
+        {% if messages %}
+                    {% for m in messages %}
+                      <div class="alert alert-{{ m.tags }} mt-2">{{ m }}</div>
+                    {% endfor %}
+        {% endif %}
         <div class="table-responsive">
           <table class="table table-bordered table-striped">
             <thead>
