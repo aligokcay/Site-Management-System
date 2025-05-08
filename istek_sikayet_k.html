@@ -94,23 +94,28 @@
         <h3 class="mb-30">İstek & Şikayet Yaz</h3>
         <div class="row">
   
-          <!-- İstek/Şikayet Yazma Alanı -->
           <div class="col-md-6">
-            <form method="POST">
+            <form method="POST" style="border: none;">
               {% csrf_token %}
           
-              <label for="{{ form.kategori.id_for_label }}">Tür Seç:</label>
-              {{ form.kategori }}
+              <div class="mb-2">
+                <label for="{{ form.kategori.id_for_label }}" class="form-label">Tür Seç:</label>
+                {{ form.kategori }}
+              </div>
           
-              <label for="{{ form.konu.id_for_label }}">Konu:</label>
-              {{ form.konu }}
+              <div class="">
+                <label for="{{ form.konu.id_for_label }}" class="form-label">Konu:</label>
+                {{ form.konu }}
+              </div>
           
-              <label for="{{ form.aciklama.id_for_label }}">Mesajınız:</label>
-              {{ form.aciklama }}
+              <div class="">
+                <label for="{{ form.aciklama.id_for_label }}" class="form-label">Mesajınız:</label>
+                {{ form.aciklama }}
+              </div>
           
-              <button type="submit" class="btn btn-primary mt-2">Gönder</button>
+              <button type="submit" class="btn btn-sm btn-primary mt-1" style="width: 110px;">Gönder</button>
             </form>
-          </div>
+          </div>          
   
           <!-- Geçmiş İstek/Şikayetler Alanı -->
           <div class="col-md-6">

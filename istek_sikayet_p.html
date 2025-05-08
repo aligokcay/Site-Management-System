@@ -34,6 +34,9 @@
       border-radius: 4px;
       padding: 8px;
     }
+    .select  {
+    width: 100%;
+    }
 </style>
 
 <!-- Google Web Fonts -->
@@ -63,7 +66,7 @@
 
     <!-- Logo -->
     <a href="index-dark.html" class="logo">
-        <img src="img/logo-light.svg" alt="">
+      <img src="{% static 'img/logo-light.svg' %}" alt="">
     </a>
 
     <!-- Navigation -->
@@ -92,7 +95,7 @@
   
           <!-- İstek/Şikayet Yazma Alanı -->
           <div class="col-md-6">
-            <form method="POST">
+            <form method="POST" style="border: none;">
               {% csrf_token %}
           
               <label for="{{ form.kategori.id_for_label }}">Tür Seç:</label>
@@ -104,7 +107,7 @@
               <label for="{{ form.aciklama.id_for_label }}">Mesajınız:</label>
               {{ form.aciklama }}
           
-              <button type="submit" class="btn btn-primary mt-2">Gönder</button>
+              <button type="submit" class="btn btn-sm btn-primary mt-2" style="width: 110px;">Gönder</button>
             </form>
           </div>
   
