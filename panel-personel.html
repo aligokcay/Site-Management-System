@@ -22,125 +22,127 @@
 <!-- CSS Styles -->
 <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 
+<style>
+    .blockquote.blockquote-primary p:after {
+      border-color: transparent #8B0000 transparent transparent !important;
+    }
+</style>
+  
+
 <!-- CSS Base -->
 <link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}" />
 
 </head>
 
 <body class="header-vertical">
-
-<!-- Loader -->
-<div id="page-loader" class="bg-dark dark">
-    <svg class="loader" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle class="circle" fill="none" stroke-width="2" stroke-linecap="round" cx="16" cy="16" r="14"></circle></svg>
-    <span class="loading-txt text-muted">Loading...</span>
-</div>
-<!-- Loader / End -->
-
-<!-- Header -->
-<header id="header" class="bg-dark dark">
-
-    <!-- Logo -->
-    <a href="index-dark.html" class="logo">
-        <img src="img/logo-light.svg" alt="">
-    </a>
-
-    <!-- Navigation -->
-    <nav id="main-menu">
-      <div class="nav-wrapper">
-        <ul class="nav nav-primary">
-            <li><a href="{% url 'panel_personel_static' %}" class="active">Ana Sayfa</a></li>
-          <li><a href="/gorevlerim/"><i class="li-calendar"></i>Görevler</a></li>
-          <li><a href="/duyuru_p/"><i class="li-bell"></i>Duyurular</a></li>
-          <li><a href="/istek_sikayet_personel/"><i class="li-email"></i>İstek & Şikayet</a></li>
-          <li><a href="/logout/" style="pointer-events: auto;"><i class="li-arrow6"></i> Çıkış Yap</a></li>
-      </ul>
-      </div>  
-      <span class="selector"></span>
-    </nav>
-
-</header>
-<!-- Header / End -->
-<div id="content">
-  <section class="section">
-      <div class="container-fluid container-custom">
-          <div class="row">
-              <div class="col-12">
-                  <h1 class="display-4">Personel Paneli</h1>
-                  <p class="lead">Hoş geldiniz!</p>
-              </div>
-          </div>
-      </div>
-  </section>
-</div>
-  
-
-<!-- Content / Start -->
-<section class="section">
-    <div class="card mt-4" style="margin-left: 600px;">
-        <div class="card-header"><h5>Görev Uyarıları</h5></div>
-        
-        <div class="card-body">
-          {% if uyarilar %}
-
-            <ul>
-              {% for uyar in uyarilar %}
-                <li>{{ uyar.mesaj }} - {{ uyar.olusturma_tarihi }}</li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <p>Henüz bir uyarınız yok.</p>
-          {% endif %}
-        </div>
-      </div>
-  </section>
-<!-- Content / End -->
-
-<!-- Footer -->
-<footer id="footer" class="dark bg-dark">
-    <div class="container-fluid container-custom">
-        <div class="row">
-            <div class="col-xl-5 text-xl-left text-xs-center">
-                <div class="module-group">
-                    <div class="module copyright">
-                        <a href="index.html" class="logo mr-15"><img src="img/logo-light.svg" height="80" alt=""></a>
-                        <span class="text-muted">Copyright Skill 2016©. Made by <a href="http://www.suelo.pl/" target="blank">Suelo</a>.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-7 text-xl-right text-xs-center">
-                <div class="module-group">
-                    <div class="module">
-                        <span class="text-muted mr-5">Language:</span>
-                        <ul class="nav-footer">
-                            <li class="active"><a href="#">English</a></li>
-                            <li><a href="#">Polish</a></li>
-                        </ul>
-                    </div>
-                    <div class="module">
-                        <span class="text-muted mr-10">Follow Us</span>
-                        <a href="#" class="icon icon-circle icon-hover icon-facebook icon-sm"><i class="ti-facebook"></i></a>
-                        <a href="#" class="icon icon-circle icon-hover icon-twitter icon-sm"><i class="ti-twitter-alt"></i></a>
-                        <a href="#" class="icon icon-circle icon-hover icon-google icon-sm"><i class="ti-google"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Loader -->
+    <div id="page-loader" class="bg-dark dark">
+        <svg class="loader" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle class="circle" fill="none" stroke-width="2" stroke-linecap="round" cx="16" cy="16" r="14"></circle></svg>
+        <span class="loading-txt text-muted">Loading...</span>
     </div>
-</footer>
-<!-- Footer / End -->
+    <!-- Loader / End -->
+
+    <!-- Header -->
+    <header id="header" class="bg-dark dark">
+        <a href="index-dark.html" class="logo">
+            <img src="{% static 'img/logo-light.svg' %}" alt="">
+        </a>
+
+        <!-- Navigation -->
+        <nav id="main-menu">
+        <div class="nav-wrapper">
+            <ul class="nav nav-primary">
+            <li><a href="{% url 'panel_personel_static' %}" class="active"><i class="li-home"></i>Ana Sayfa</a></li>
+            <li><a href="/gorevlerim/"><i class="li-calendar"></i>Görevler</a></li>
+            <li><a href="/duyuru_p/"><i class="li-bell"></i>Duyurular</a></li>
+            <li><a href="/istek_sikayet_personel/"><i class="li-email"></i>İstek & Şikayet</a></li>
+            <li><a href="/logout/" style="pointer-events: auto;"><i class="li-arrow6"></i> Çıkış Yap</a></li>
+        </ul>
+        </div>  
+        <span class="selector"></span>
+        </nav>
+
+    </header>
+    <!-- Header / End -->
 
 
-<!-- Mobile Navigation Toggle -->
-<div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
+    <div id="content">
+        <section class="section text-xs-center">
+            <div class="container container-sm">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="display-4">Personel Paneli</h1>
+                    </div>
+                </div>
+                <div class="card mt-4 mb-70" style="border: none;"> 
+                <h5 style="left: 0;">Görev Uyarıları</h5>                   
+                    <div class="card-body">
+                    {% if uyarilar %}
+                        <div class="blockquotes mb-4">
+                        <blockquote class="blockquote blockquote-primary animated" data-animation="fadeInLeft">
+                            <p style="border-color: transparent #8B0000">{{ uyarilar.0.mesaj }}</p>
+                            <footer>
+                            <img src="assets/img/png-yonetici.png" alt="">
+                            <span class="name">Site Yönetecisi
+                                <span class="text-muted"> {{ uyarilar.0.olusturma_tarihi|date:"d.m.Y H:i" }}</span>
+                            </span>
+                            </footer>
+                        </blockquote>
+                        </div>
+                    {% else %}
+                        <p>Henüz bir uyarınız yok.</p>
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="container-fluid container-custom mt-4">
+                <h3 class="mb-4">Bilgilendirmeler</h3>                
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="card feature text-center animated" data-animation="fadeIn">
+                        <span class="icon icon-primary icon-lg"><i class="li-calendar" style="font-size: 40px;"></i></span>
+                        <h5 class="mb-0">Görev Bilgilendirmesi</h5>
+                        <span class="text-muted">Günlük görevlerinizi sistem üzerinden kontrol etmeyi unutmayın.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                    <!-- Feature -->
+                    <div class="card feature feature-1 animated text-center" data-animation="fadeIn" data-animation-delay="400">
+                        <span class="icon icon-primary icon-lg"><i class="li-bell" style="font-size: 40px;"></i></span>
+                        <h5 class="mb-0">Duyurular</h5>
+                        <span class="text-muted">Son gelişmeler için sık sık duyurular sayfasını ziyaret edin.</span>
+                    </div>
+                    </div>  
+                </div>
+                
+                <div class="row mb-4">
+                
+                    <div class="col-md-6 mb-4">
+                    <!-- Feature -->
+                    <div class="card feature feature-1 animated text-center" data-animation="fadeIn" data-animation-delay="600">
+                        <span class="icon icon-primary icon-lg"><i class="li-email" style="font-size: 40px;"></i></span>
+                        <h5 class="mb-0">İstek / Şikayet Bildirimi</h5>
+                        <span class="text-muted">Site ile ilgili öneri ya da şikayetlerinizi buradan iletebilirsiniz. Tüm geri bildirimler dikkate alınacaktır.</span>
+                    </div>
+                    </div>
+                </div>
+                
+            </div>  
+        </section>
+    </div>
+    <!-- Content / End -->
 
-<!-- JS Libraries -->
-<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
 
-<!-- JS Plugins -->
-<script src="{% static 'js/plugins.js' %}"></script>
+    <!-- Mobile Navigation Toggle -->
+    <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
 
-<!-- JS Core -->
-<script src="{% static 'js/core.js' %}"></script>
+    <!-- JS Libraries -->
+    <script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+
+    <!-- JS Plugins -->
+    <script src="{% static 'js/plugins.js' %}"></script>
+
+    <!-- JS Core -->
+    <script src="{% static 'js/core.js' %}"></script>
 
 </body>
 

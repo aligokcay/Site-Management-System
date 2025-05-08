@@ -87,7 +87,7 @@
 
                       <td>
                         {% if gorev.status != "tamamlandi" %}
-                        <form method="post" action="{% url 'gorev_tamamla' gorev.id %}">
+                        <form method="post" action="{% url 'gorev_tamamla' gorev.id %}" style="border: none;">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-success btn-sm">Tamamlandı</button>
                         </form>

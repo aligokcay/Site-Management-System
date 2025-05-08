@@ -23,7 +23,7 @@
 <link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}" />
 <style>
   .blockquote.blockquote-primary p:after {
-    border-color: transparent #8B0000 transparent transparent
+    border-color: transparent #8B0000 transparent transparent !important;
   }
 </style>
 
@@ -37,7 +37,7 @@
 
     <header id="header" class="bg-dark dark">
         <a href="/index-dark.html" class="logo">
-            <img src="assets/img/logo-light.svg" alt="">
+          <img src="{% static 'img/logo-light.svg' %}" alt="">
         </a>
         <nav id="main-menu">
             <div class="nav-wrapper">
@@ -90,7 +90,7 @@
                     <div class="col-md-6 mb-4">
                       <!-- Feature -->
                       <div class="card feature feature-1 animated text-center" data-animation="fadeIn">
-                        <span class="icon icon-primary icon-lg"><i class="li-moneybag" style="font-size: 32px;"></i></span>
+                        <span class="icon icon-primary icon-lg"><i class="li-moneybag" style="font-size: 40px;"></i></span>
                         <h5 class="mb-0">Aidat Ödeme Bilgilendirmesi</h5>
                         <span class="text-muted">Aidatlarınızı her ayın sonuna kadar ödemeniz gerekmektedir.</span>
                       </div>
@@ -98,7 +98,7 @@
                     <div class="col-md-6 mb-4">
                       <!-- Feature -->
                       <div class="card feature feature-1 animated text-center" data-animation="fadeIn" data-animation-delay="400">
-                        <span class="icon icon-primary icon-lg"><i class="li-bell" style="font-size: 32px;"></i></span>
+                        <span class="icon icon-primary icon-lg"><i class="li-bell" style="font-size: 40px;"></i></span>
                         <h5 class="mb-0">Duyurular</h5>
                         <span class="text-muted">Son gelişmeler için sık sık duyurular sayfasını ziyaret edin.</span>
                       </div>
@@ -109,7 +109,7 @@
                     <div class="col-md-6 mb-4">
                       <!-- Feature -->
                       <div class="card feature feature-1 animated text-center" data-animation="fadeIn" data-animation-delay="200">
-                        <span class="icon icon-primary icon-lg"><i class="li-clock" style="font-size: 32px;"></i></span>
+                        <span class="icon icon-primary icon-lg"><i class="li-clock" style="font-size: 40px;"></i></span>
                         <h5 class="mb-0">Randevu Hatırlatması</h5>
                         <span class="text-muted">Randevularınızı bir gün önceden kontrol edin. Katılamayacaksanız lütfen oluşturmayın.</span>
                       </div>
@@ -118,7 +118,7 @@
                     <div class="col-md-6 mb-4">
                       <!-- Feature -->
                       <div class="card feature feature-1 animated text-center" data-animation="fadeIn" data-animation-delay="600">
-                        <span class="icon icon-primary icon-lg"><i class="li-email" style="font-size: 32px;"></i></span>
+                        <span class="icon icon-primary icon-lg"><i class="li-email" style="font-size: 40px;"></i></span>
                         <h5 class="mb-0">İstek / Şikayet Bildirimi</h5>
                         <span class="text-muted">Site ile ilgili öneri ya da şikayetlerinizi buradan iletebilirsiniz. Tüm geri bildirimler dikkate alınacaktır.</span>
                       </div>
