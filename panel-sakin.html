@@ -21,6 +21,11 @@
 
 <!-- CSS Theme -->
 <link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}" />
+<style>
+  .blockquote.blockquote-primary p:after {
+    border-color: transparent #8B0000 transparent transparent
+  }
+</style>
 
 </head>
 <body class="header-vertical">
@@ -51,37 +56,79 @@
     <!-- Header / End -->
 
     <!-- Content -->
-    <section class="section">
-        <div class="card mt-4" style="margin-left: 600px;">
-            <div class="card-header"><h5>Görev Uyarıları</h5></div>
-            
-            <div class="card-body">
-              {% if uyarilar %}
-    
-                <ul>
-                  {% for uyar in uyarilar %}
-                    <li>{{ uyar.mesaj }} - {{ uyar.olusturma_tarihi }}</li>
-                  {% endfor %}
-                </ul>
-              {% else %}
-                <p>Henüz bir uyarınız yok.</p>
-              {% endif %}
-            </div>
-          </div>
-      </section>
-    <!-- Content / End -->
     <div id="content">
-        <section class="section">
-            <div class="container-fluid container-custom">
+        <section class="section text-xs-center">
+            <div class="container container-sm">
                 <div class="row">
                     <div class="col-12">
                         <h1 class="display-4">Sakin Paneli</h1>
-                        <p class="lead">Hoş geldiniz!</p>
                     </div>
                 </div>
-            </div>
+                <div class="card mt-4 mb-70" style="border: none;"> 
+                  <h5 style="left: 0;">Aidat Uyarıları</h5>                   
+                    <div class="card-body">
+                      {% if uyarilar %}
+                        <div class="blockquotes mb-4">
+                          <blockquote class="blockquote blockquote-primary animated" data-animation="fadeInLeft">
+                            <p>{{ uyarilar.0.mesaj }}</p>
+                            <footer>
+                              <img src="assets/img/png-yonetici.png" alt="">
+                              <span class="name">Site Yönetecisi
+                                <span class="text-muted"> {{ uyarilar.0.olusturma_tarihi|date:"d.m.Y H:i" }}</span>
+                              </span>
+                            </footer>
+                          </blockquote>
+                        </div>
+                      {% else %}
+                        <p>Henüz bir uyarınız yok.</p>
+                      {% endif %}
+                    </div>
+                </div>
+                <div class="container-fluid container-custom mt-4">
+                  <h3 class="mb-4">Bilgilendirmeler</h3>                
+                  <div class="row mb-4">
+                    <div class="col-md-6 mb-4">
+                      <!-- Feature -->
+                      <div class="card feature feature-1 animated text-center" data-animation="fadeIn">
+                        <span class="icon icon-primary icon-lg"><i class="li-moneybag" style="font-size: 32px;"></i></span>
+                        <h5 class="mb-0">Aidat Ödeme Bilgilendirmesi</h5>
+                        <span class="text-muted">Aidatlarınızı her ayın sonuna kadar ödemeniz gerekmektedir.</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <!-- Feature -->
+                      <div class="card feature feature-1 animated text-center" data-animation="fadeIn" data-animation-delay="400">
+                        <span class="icon icon-primary icon-lg"><i class="li-bell" style="font-size: 32px;"></i></span>
+                        <h5 class="mb-0">Duyurular</h5>
+                        <span class="text-muted">Son gelişmeler için sık sık duyurular sayfasını ziyaret edin.</span>
+                      </div>
+                    </div>  
+                  </div>
+                
+                  <div class="row mb-4">
+                    <div class="col-md-6 mb-4">
+                      <!-- Feature -->
+                      <div class="card feature feature-1 animated text-center" data-animation="fadeIn" data-animation-delay="200">
+                        <span class="icon icon-primary icon-lg"><i class="li-clock" style="font-size: 32px;"></i></span>
+                        <h5 class="mb-0">Randevu Hatırlatması</h5>
+                        <span class="text-muted">Randevularınızı bir gün önceden kontrol edin. Katılamayacaksanız lütfen oluşturmayın.</span>
+                      </div>
+                    </div>
+                
+                    <div class="col-md-6 mb-4">
+                      <!-- Feature -->
+                      <div class="card feature feature-1 animated text-center" data-animation="fadeIn" data-animation-delay="600">
+                        <span class="icon icon-primary icon-lg"><i class="li-email" style="font-size: 32px;"></i></span>
+                        <h5 class="mb-0">İstek / Şikayet Bildirimi</h5>
+                        <span class="text-muted">Site ile ilgili öneri ya da şikayetlerinizi buradan iletebilirsiniz. Tüm geri bildirimler dikkate alınacaktır.</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+            </div>  
         </section>
     </div>
+    <!-- Content / End -->
 
     <script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
 
