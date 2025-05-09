@@ -10,10 +10,16 @@ class TaskAdmin(admin.ModelAdmin):
 
 @admin.register(Aidat)
 class AidatAdmin(admin.ModelAdmin):
-    list_display = ('user', 'donem', 'tutar', 'odeme_durumu','son_odeme_tarihi' )
-    
+    list_display = ('user', 'donem', 'tutar', 'odeme_durumu', 'dekont','son_odeme_tarihi' )
     fields = ('user','donem','tutar','odeme_durumu','dekont','son_odeme_tarihi')
-    # böylece admin, mevcut aidatı seçip sadece dekont yükleyebilir
+    list_filter = ('odeme_durumu', 'son_odeme_tarihi')
+    search_fields = ('user__username', 'donem', 'tutar')
+    list_editable = ('odeme_durumu', 'son_odeme_tarihi')
+    def get_readonly_fields(self, request, obj=None):
+        if obj and obj.odeme_durumu:
+            return ['user', 'donem', 'tutar', 'dekont', 'son_odeme_tarihi']
+        return super().get_readonly_fields(request, obj)
+
 
 @admin.register(GorevUyari)
 class GorevUyariAdmin(admin.ModelAdmin):

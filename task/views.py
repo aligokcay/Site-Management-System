@@ -182,6 +182,7 @@ def admin_aidat_list(request):
     return render(request, 'aidat-takip.html', {
         'form': form,
         'aidatlar': unpaid,
+        'unpaid': unpaid.exists(),
         'today': today,
     })
 
@@ -220,8 +221,6 @@ def admin_create_aidat(request):
 
 
 def aidat_yonetici(request):
-
-
     # --- BÜYÜK AİDAT OLUŞTURMA ---
     if request.method == "POST" and 'do_bulk_create' in request.POST:
         tutar_raw = request.POST.get('bulk_tutar')
@@ -253,12 +252,15 @@ def aidat_yonetici(request):
         return redirect('aidat_takip')  # URL adınız neyse
 
     aidatlar = Aidat.objects.filter(odeme_durumu=False).order_by('-donem')
+    odenmis_aidatlar = Aidat.objects.filter(odeme_durumu=True).order_by('-donem')
+
     unpaid = aidatlar.exists()
     today = now().date()
     return render(request, 'aidat-takip.html', {
         'aidatlar': aidatlar,
         'unpaid': unpaid,
         'today': today,
+        'odenmis_aidatlar': odenmis_aidatlar,
     })
 
 @login_required
@@ -298,14 +300,6 @@ def gorev_tamamla(request, pk):
 
 
 
-# @login_required
-# def panel_personel_view(request):
-#     uyarilar = GorevUyari.objects.filter(user=request.user).order_by('-olusturma_tarihi')
-#     if not uyarilar.exists():
-#         print("Henüz bir uyarınız yok.")
-#     else:
-#         print(f"{uyarilar.count()} adet uyarınız var.")
-#         return render(request, 'panel-personel.html', {'uyarilar': uyarilar})
 @login_required
 def panel_personel_view(request):
     uyarilar = GorevUyari.objects.filter(user=request.user).order_by('-olusturma_tarihi')
@@ -341,5 +335,6 @@ def panel_sakin_view(request):
 
     return render(request, 'panel-sakin.html', {
         'uyarilar': aidat_uyarilar,
+        
     })
 
