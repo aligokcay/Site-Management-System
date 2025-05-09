@@ -282,116 +282,117 @@
                         <button class="login-button btn btn-danger btn-lg w-100 mb-3 d-flex align-items-center justify-content-center" onclick="formGoster('yonetici')">
                             <i class="fas fa-user-tie"></i> YÖNETİCİ GİRİŞİ
                         </button>
+
+                        <!-- Yönetici Giriş Formu -->
+                        <div id="yoneticiForm" class="giris-form" style="display: none;">
+                            <div class="modern-form">
+                                <button onclick="formKapat()" 
+                                    class="btn-close text-white" 
+                                    style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; background: transparent; border: none;cursor: pointer;">
+                                    &times;
+                                </button>                            
+                                <div class="form-header">
+                                    <div class="icon">
+                                        <i class="fas fa-user-shield"></i>
+                                    </div>
+                                    <h3>Yönetici Girişi</h3>
+                                </div>
+                                <form method="POST" action="/login/">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="role" value="yonetici">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="yoneticiKullaniciAdi" name="username" required placeholder="Kullanıcı adınızı giriniz">
+                                        <label for="yoneticiKullaniciAdi">Kullanıcı Adı</label>
+                                    </div>
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="yoneticiSifre" name="password" required placeholder="Şifrenizi giriniz">
+                                        <label for="yoneticiSifre">Şifre</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-login w-100">
+                                        <i class="fas fa-sign-in-alt me-2"></i> Giriş Yap
+                                    </button>
+                                    <div class="form-footer">
+                                        <p class="text-muted">Güvenli giriş için bilgilerinizi kontrol ediniz</p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                         <button class="login-button btn btn-success btn-lg w-100 mb-3 d-flex align-items-center justify-content-center" onclick="formGoster('sakin')">
                             <i class="fas fa-home"></i> APARTMAN SAKİNİ GİRİŞİ
                         </button>
+
+                        <!-- Apartman Sakini Giriş Formu -->
+                        <div id="sakinForm" class="giris-form" style="display: none;">
+                            <div class="modern-form">
+                                <button onclick="formKapat()" 
+                                    class="btn-close text-white" 
+                                    style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; background: transparent; border: none;cursor: pointer;">
+                                    &times;
+                                </button>  
+                                <div class="form-header">
+                                    <div class="icon">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <h3>Apartman Sakini Girişi</h3>
+                                </div>
+                                <form method="POST" action="/login/">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="role" value="sakin">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="sakinKullaniciAdi" name="username" required placeholder="Kullanıcı adınızı giriniz">
+                                        <label for="sakinKullaniciAdi">Kullanıcı Adı</label>
+                                    </div>
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="sakinSifre" name="password" required placeholder="Şifrenizi giriniz">
+                                        <label for="sakinSifre">Şifre</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-login w-100" style="background: linear-gradient(45deg, #34c759, #30d158);">
+                                        <i class="fas fa-sign-in-alt me-2"></i> Giriş Yap
+                                    </button>
+                                    <div class="form-footer">
+                                        <p class="text-muted">Güvenli giriş için bilgilerinizi kontrol ediniz</p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                         <button class="login-button btn btn-warning btn-lg w-100 mb-3 d-flex align-items-center justify-content-center" onclick="formGoster('personel')">
                             <i class="fas fa-user-cog"></i> PERSONEL GİRİŞİ
                         </button>
-                    </div>
-
-                    <!-- Yönetici Giriş Formu -->
-                    <div id="yoneticiForm" class="giris-form" style="display: none;">
-                        <div class="modern-form">
-                            <button onclick="formKapat()" 
-                                class="btn-close text-white" 
-                                style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; background: transparent; border: none;cursor: pointer;">
-                                &times;
-                            </button>                            
-                            <div class="form-header">
-                                <div class="icon">
-                                    <i class="fas fa-user-shield"></i>
+                        <!-- Personel Giriş Formu -->
+                        <div id="personelForm" class="giris-form" style="display: none;">
+                            <div class="modern-form">
+                                <button onclick="formKapat()" 
+                                    class="btn-close text-white" 
+                                    style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; background: transparent; border: none;cursor: pointer;">
+                                    &times;
+                                </button>  
+                                <div class="form-header">
+                                    <div class="icon">
+                                        <i class="fas fa-user-cog"></i>
+                                    </div>
+                                    <h3>Personel Girişi</h3>
                                 </div>
-                                <h3>Yönetici Girişi</h3>
+                                <form method="POST" action="/login/">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="role" value="personel">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="personelKullaniciAdi" name="username" required placeholder="Kullanıcı adınızı giriniz">
+                                        <label for="personelKullaniciAdi">Kullanıcı Adı</label>
+                                    </div>
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="personelSifre" name="password" required placeholder="Şifrenizi giriniz">
+                                        <label for="personelSifre">Şifre</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-login w-100" style="background: linear-gradient(45deg, #ff9f0a, #ffd60a);">
+                                        <i class="fas fa-sign-in-alt me-2"></i> Giriş Yap
+                                    </button>
+                                    <div class="form-footer">
+                                        <p class="text-muted">Güvenli giriş için bilgilerinizi kontrol ediniz</p>
+                                    </div>
+                                </form>
                             </div>
-                            <form method="POST" action="/login/">
-                                {% csrf_token %}
-                                <input type="hidden" name="role" value="yonetici">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="yoneticiKullaniciAdi" name="username" required placeholder="Kullanıcı adınızı giriniz">
-                                    <label for="yoneticiKullaniciAdi">Kullanıcı Adı</label>
-                                </div>
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" id="yoneticiSifre" name="password" required placeholder="Şifrenizi giriniz">
-                                    <label for="yoneticiSifre">Şifre</label>
-                                </div>
-                                <button type="submit" class="btn btn-login w-100">
-                                    <i class="fas fa-sign-in-alt me-2"></i> Giriş Yap
-                                </button>
-                                <div class="form-footer">
-                                    <p class="text-muted">Güvenli giriş için bilgilerinizi kontrol ediniz</p>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Apartman Sakini Giriş Formu -->
-                    <div id="sakinForm" class="giris-form" style="display: none;">
-                        <div class="modern-form">
-                            <button onclick="formKapat()" 
-                                class="btn-close text-white" 
-                                style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; background: transparent; border: none;cursor: pointer;">
-                                &times;
-                            </button>  
-                            <div class="form-header">
-                                <div class="icon">
-                                    <i class="fas fa-home"></i>
-                                </div>
-                                <h3>Apartman Sakini Girişi</h3>
-                            </div>
-                            <form method="POST" action="/login/">
-                                {% csrf_token %}
-                                <input type="hidden" name="role" value="sakin">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="sakinKullaniciAdi" name="username" required placeholder="Kullanıcı adınızı giriniz">
-                                    <label for="sakinKullaniciAdi">Kullanıcı Adı</label>
-                                </div>
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" id="sakinSifre" name="password" required placeholder="Şifrenizi giriniz">
-                                    <label for="sakinSifre">Şifre</label>
-                                </div>
-                                <button type="submit" class="btn btn-login w-100" style="background: linear-gradient(45deg, #34c759, #30d158);">
-                                    <i class="fas fa-sign-in-alt me-2"></i> Giriş Yap
-                                </button>
-                                <div class="form-footer">
-                                    <p class="text-muted">Güvenli giriş için bilgilerinizi kontrol ediniz</p>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Personel Giriş Formu -->
-                    <div id="personelForm" class="giris-form" style="display: none;">
-                        <div class="modern-form">
-                            <button onclick="formKapat()" 
-                                class="btn-close text-white" 
-                                style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; background: transparent; border: none;cursor: pointer;">
-                                &times;
-                            </button>  
-                            <div class="form-header">
-                                <div class="icon">
-                                    <i class="fas fa-user-cog"></i>
-                                </div>
-                                <h3>Personel Girişi</h3>
-                            </div>
-                            <form method="POST" action="/login/">
-                                {% csrf_token %}
-                                <input type="hidden" name="role" value="personel">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="personelKullaniciAdi" name="username" required placeholder="Kullanıcı adınızı giriniz">
-                                    <label for="personelKullaniciAdi">Kullanıcı Adı</label>
-                                </div>
-                                <div class="form-floating">
-                                    <input type="password" class="form-control" id="personelSifre" name="password" required placeholder="Şifrenizi giriniz">
-                                    <label for="personelSifre">Şifre</label>
-                                </div>
-                                <button type="submit" class="btn btn-login w-100" style="background: linear-gradient(45deg, #ff9f0a, #ffd60a);">
-                                    <i class="fas fa-sign-in-alt me-2"></i> Giriş Yap
-                                </button>
-                                <div class="form-footer">
-                                    <p class="text-muted">Güvenli giriş için bilgilerinizi kontrol ediniz</p>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
