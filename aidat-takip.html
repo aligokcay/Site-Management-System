@@ -8,10 +8,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <!-- Title -->
-<title>Skill - Modern &amp; Creative HTML5 Template</title>
-
+<title>Site Yönetim Sistemi</title>
 <!-- Favicons -->
-<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<link rel="shortcut icon" href="{% static 'img/favicon1.png' %}">
+<link rel="apple-touch-icon" href="{% static 'img/favicon1.png' %}">
+<link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/favicon1.png' %}">
+<link rel="apple-touch-icon" sizes="120x120" href="{% static 'img/favicon1.png' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/favicon1.png' %}">
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 <link id="theme" rel="stylesheet" href="{% static 'css/themes/theme-green.min.css' %}">
 <script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
@@ -40,7 +43,7 @@
 <header id="header" class="bg-dark dark">
 
     <!-- Logo -->
-    <a href="index-dark.html" class="logo"  style="padding: 0;">
+    <a href="/panel-yonetici.html" class="logo"  style="padding: 0;">
       <img src="{% static 'img/logo.png' %}" style="max-height: 220px;">
     </a>
 
@@ -48,7 +51,7 @@
     <nav id="main-menu">
       <div class="nav-wrapper">
         <ul class="nav nav-primary">
-            <li><a href="panel-yonetici.html" class=""><i class="li-home"></i>Ana Sayfa</a></li>
+            <li><a href="/panel-yonetici.html" class=""><i class="li-home"></i>Ana Sayfa</a></li>
                     <li><a href="/daireler/" class="" style="pointer-events: auto;"><i class="li-house"></i> Daire Bilgileri</a></li>
                     <li><a href="/aidat-takip/" class="active" style="pointer-events: auto;"><i class="li-moneybag"></i> Aidat Takibi</a></li>
                     <li><a href="/duyurular/" class="" style="pointer-events: auto;"><i class="li-bell"></i> Duyurular</a></li>
@@ -64,144 +67,149 @@
 </header>
 <!-- Header / End -->
 
-<!-- Content -->
-<div id="content">
-    
-    <!-- Section -->
-    <section class="section">
-        <div class="container container-sm">
-            <!-- ### AİDAT OLUŞTURMA FORMU ### -->
-            <div class="card mb-40">
-              <div class="card-header"><h5>Bu Ayın Aidatını Oluştur</h5></div>
-              <div class="card-body">
-                <form method="post" action="{% url 'aidat_takip' %}">
-                  {% csrf_token %}
-                  <div class="form-group">
-                    <label for="bulk_tutar">Aidat Tutarı (₺)</label>
-                    <input
-                      type="number" step="0.01" min="0"
-                      name="bulk_tutar" id="bulk_tutar"
-                      class="form-control w-25 d-inline-block"
-                      placeholder="Örn. 750.00" required
-                    />
-                    <button type="submit" name="do_bulk_create" class="btn btn-primary ml-2 btn-sm mb-5">
-                      Oluştur
-                    </button>
-                  </div>
-                  {% if messages %}
-                    {% for m in messages %}
-                      <div class="alert alert-{{ m.tags }} mt-2">{{ m }}</div>
-                    {% endfor %}
-                  {% endif %}
-                </form>
-              </div>
-            </div>
-
-           <!-- ### ÖDENMEMİŞ AİDATLAR LİSTESİ ### -->
-            <div class="card">
-                <div class="card-header">
-                <h5>Ödenmemiş Aidatlar</h5>
-                </div>
+  <!-- Content -->
+  <div id="content">
+      
+      <!-- Section -->
+      <section class="section">
+          <div class="container container-sm">
+              <!-- ### AİDAT OLUŞTURMA FORMU ### -->
+              <div class="card mb-40">
+                <div class="card-header"><h5>Bu Ayın Aidatını Oluştur</h5></div>
                 <div class="card-body">
-                {% if unpaid %}
-                <table class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>Daire</th><th>Sakin</th><th>Dönem</th><th>Tutar</th><th>Ödendi</th><th>Son Ödeme</th><th>İşlem</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {% for a in aidatlar %}
+                  <form method="post" action="{% url 'aidat_takip' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="bulk_tutar">Aidat Tutarı (₺)</label>
+                      <input
+                        type="number" step="0.01" min="0"
+                        name="bulk_tutar" id="bulk_tutar"
+                        class="form-control w-25 d-inline-block"
+                        placeholder="Örn. 750.00" required
+                      />
+                      <button type="submit" name="do_bulk_create" class="btn btn-primary ml-2 btn-sm mb-5">
+                        Oluştur
+                      </button>
+                    </div>
+                    {% if messages %}
+                      {% for m in messages %}
+                        <div class="alert alert-{{ m.tags }} mt-2">{{ m }}</div>
+                      {% endfor %}
+                    {% endif %}
+                  </form>
+                </div>
+              </div>
+
+            <!-- ### ÖDENMEMİŞ AİDATLAR LİSTESİ ### -->
+              <div class="card">
+                  <div class="card-header">
+                  <h5>Ödenmemiş Aidatlar</h5>
+                  </div>
+                  <div class="card-body">
+                  {% if unpaid %}
+                  <table class="table table-bordered table-striped">
+                      <thead>
                         <tr>
-                          <td>{{ a.user.username }}</td>
-                          <td>{{ a.user.mevcut_sakin }}</td>
-                          <td>{{ a.donem }}</td>
-                          <td>{{ a.tutar }}₺</td>
+                          <th>Daire</th><th>Sakin</th><th>Dönem</th><th>Tutar</th><th>Ödendi</th><th>Son Ödeme</th><th>İşlem</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          {% for a in aidatlar %}
+                          <tr>
+                            <td>{{ a.user.username }}</td>
+                            <td>{{ a.user.mevcut_sakin }}</td>
+                            <td>{{ a.donem }}</td>
+                            <td>{{ a.tutar }}₺</td>
 
-                          <td>
-                            {% if a.dekont %}
-                              <a href="{{ a.dekont.url }}" target="_blank" class="btn btn-sm btn-info">
-                                Dekontu Görüntüle
-                              </a>
-                              <button class="btn btn-sm btn-success" onclick="approve('{{ a.pk }}')">Onayla</button>
+                            <td>
+                              {% if a.dekont %}
+                                <a href="{{ a.dekont.url }}" target="_blank" class="btn btn-sm btn-info">
+                                  Dekontu Görüntüle
+                                </a>
+                                <button class="btn btn-sm btn-success" onclick="approve('{{ a.pk }}')">Onayla</button>
 
-                            {% else %}
-                              <span class="text-muted">Dekont bekleniyor</span>
-                            {% endif %}
-                          </td>
-                          <td>{{ a.son_odeme_tarihi }}</td>
-                          <td>
-                            {% if not a.odeme_durumu %}
-                              {% if not a.dekont %}
-                                {% if a.son_odeme_tarihi and a.son_odeme_tarihi < today %}
-                                <form method="post" action="{% url 'aidat_uyar' %}" style="margin: 0;">
-                                  {% csrf_token %}
-                                  <input type="hidden" name="aidat_id" value="{{ a.id }}">
-                                  <input type="hidden" name="mesaj" value="Aidat ödemesi gecikti. Lütfen en kısa sürede ödemenizi yapın.">
-                                  <button type="submit" class="btn btn-sm btn-danger">Uyar</button>
-                                </form>
+                              {% else %}
+                                <span class="text-muted">Dekont bekleniyor</span>
+                              {% endif %}
+                            </td>
+                            <td>{{ a.son_odeme_tarihi }}</td>
+                            <td>
+                              {% if not a.odeme_durumu %}
+                                {% if not a.dekont %}
+                                  {% if a.son_odeme_tarihi and a.son_odeme_tarihi < today %}
+                                  <form method="post" action="{% url 'aidat_uyar' %}" style="margin: 0;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="aidat_id" value="{{ a.id }}">
+                                    <input type="hidden" name="mesaj" value="Aidat ödemesi gecikti. Lütfen en kısa sürede ödemenizi yapın.">
+                                    <button type="submit" class="btn btn-sm btn-danger">Uyar</button>
+                                  </form>
+                                  {% else %}
+                                    -
+                                  {% endif %}
                                 {% else %}
                                   -
                                 {% endif %}
                               {% else %}
                                 -
                               {% endif %}
-                            {% else %}
-                              -
-                            {% endif %}
-                          </td>
-                        </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
 
-                  <script>
-                    function approve(pk) {
-                      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                  
-                      const form = document.createElement('form');
-                      form.method = 'post';
-                      form.action = "{% url 'admin_aidat_list' %}";
-                  
-                      const csrfInput = document.createElement('input');
-                      csrfInput.type = 'hidden';
-                      csrfInput.name = 'csrfmiddlewaretoken';
-                      csrfInput.value = csrfToken;
-                  
-                      const pkInput = document.createElement('input');
-                      pkInput.type = 'hidden';
-                      pkInput.name = 'approve_pk';
-                      pkInput.value = pk;
-                  
-                      form.appendChild(csrfInput);
-                      form.appendChild(pkInput);
-                  
-                      document.body.appendChild(form);
-                      form.submit();
+                    <script>
+                      function approve(pk) {
+                        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                    
+                        const form = document.createElement('form');
+                        form.method = 'post';
+                        form.action = "{% url 'admin_aidat_list' %}";
+                    
+                        const csrfInput = document.createElement('input');
+                        csrfInput.type = 'hidden';
+                        csrfInput.name = 'csrfmiddlewaretoken';
+                        csrfInput.value = csrfToken;
+                    
+                        const pkInput = document.createElement('input');
+                        pkInput.type = 'hidden';
+                        pkInput.name = 'approve_pk';
+                        pkInput.value = pk;
+                    
+                        form.appendChild(csrfInput);
+                        form.appendChild(pkInput);
+                    
+                        document.body.appendChild(form);
+                        form.submit();
 
-                      setTimeout(() => {
-                        window.location.href = "{% url 'aidat_takip' %}";
-                      }, 1000);
-                    }
-                  </script>
-                {% endif %}
-                {% if not unpaid %}
-                    <p>Tüm aidatlar ödenmiş.</p>
-                {% endif %}
-                </div>
-            </div>
+                        setTimeout(() => {
+                          window.location.href = "{% url 'aidat_takip' %}";
+                        }, 1000);
+                      }
+                    </script>
+                  {% endif %}
+                  {% if not unpaid %}
+                      <p>Tüm aidatlar ödenmiş.</p>
+                  {% endif %}
+                  </div>
+              </div>
 
-    </section>
+      </section>
 
-</div>
-<!-- Content / End -->
+  </div>
+  <!-- Content / End -->
 
-<!-- Mobile Navigation Toggle -->
-<div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
+  <!-- Mobile Navigation Toggle -->
+  <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
 
-<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
-<script src="{% static 'js/plugins.js' %}"></script>
-<script src="{% static 'js/core.js' %}"></script>
+  <!-- JS Libraries -->
+  <script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+
+  <!-- JS Plugins -->
+  <script src="{% static 'js/plugins.js' %}"></script>
+
+  <!-- JS Core -->
+  <script src="{% static 'js/core.js' %}"></script>
 
 </body>
 

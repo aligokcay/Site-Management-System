@@ -7,14 +7,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <!-- Title -->
-<title>Skill - Modern &amp; Creative HTML5 Template</title>
+<title>Site Yönetim Sistemi</title>
 
 <!-- Favicons -->
-<link rel="shortcut icon" href="assets/img/favicon.png">
-<link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
-<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
-<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
-<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
+<link rel="shortcut icon" href="assets/img/favicon1.png">
+<link rel="apple-touch-icon" href="assets/img/favicon1.png">
+<link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon1.png">
+<link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon1.png">
+<link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon1.png">
 
 <!-- Google Web Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
@@ -33,7 +33,7 @@
 
 <style>
     .login-container {
-        background: rgba(18, 19, 20, 0.8);
+        background: #1E1E1E;
         backdrop-filter: blur(10px);
         border-radius: 20px;
         padding: 2rem;
@@ -230,16 +230,6 @@
 </head>
 
 <body class="header-vertical">
-
-    {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-success" role="alert">
-          {{ message }}
-      </div>
-    {% endfor %}
-  {% endif %}
-
-
 <!-- Loader -->
 <div id="page-loader" class="bg-dark dark">
     <svg class="loader" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle class="circle" fill="none" stroke-width="2" stroke-linecap="round" cx="16" cy="16" r="14"></circle></svg>
@@ -251,7 +241,7 @@
 <header id="header" class="bg-dark dark">
 
     <!-- Logo -->
-    <a href="index-dark.html" class="logo" style="padding: 0;">
+    <a class="logo" style="padding: 0;">
         <img src="assets/img/logo.png" style="max-height: 220px;">
     </a>
 
@@ -279,6 +269,13 @@
             <div class="col-md-5 mx-auto">
                 <div class="login-container">
                     <h1 class="login-title">Site Yönetim Sistemi</h1>
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                     
                     <!-- Giriş Butonları -->
                     <div class="mb-5">
@@ -448,9 +445,6 @@
             }, 300);
         });
     }
-    
-    
-    
     </script>    
 
 </body>

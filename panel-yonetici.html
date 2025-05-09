@@ -3,13 +3,19 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Yönetici Paneli</title>
-    <link rel="shortcut icon" href="assets/img/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css" />
-    <link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Title -->
+<title>Site Yönetim Sistemi</title>
+<!-- Favicons -->
+<link rel="shortcut icon" href="{% static 'img/favicon1.png' %}">
+<link rel="apple-touch-icon" href="{% static 'img/favicon1.png' %}">
+<link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/favicon1.png' %}">
+<link rel="apple-touch-icon" sizes="120x120" href="{% static 'img/favicon1.png' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/favicon1.png' %}">
+<link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css" />
+<link id="theme" rel="stylesheet" href="assets/css/themes/theme-green.min.css" />
 </head>
 <body class="header-vertical">
     <div id="page-loader" class="bg-dark dark">
@@ -19,7 +25,7 @@
     </div>
 
     <header id="header" class="bg-dark dark">
-        <a href="index-dark.html" class="logo"  style="padding: 0;">
+        <a class="logo"  style="padding: 0;">
             <img src="{% static 'img/logo.png' %}" style="max-height: 220px;">
         </a>
         <nav id="main-menu">
@@ -45,7 +51,6 @@
                 <div class="row">
                     <div class="col-12">
                         <h1 class="display-4">Yönetici Paneli</h1>
-                        <p class="lead">Hoş geldiniz!</p>
                     </div>
                 </div>
                 <h3 class="mb-4">Bilgilendirmeler</h3>
@@ -99,6 +104,11 @@
         </section>
     </div>
 
+    
+    <!-- Mobile Navigation Toggle -->
+    <div id="mobile-nav-toggle" class="header-dark"><span></span><span></span><span></span></div>
+
+    <!-- JS Libraries -->
     <script src="assets/js/jquery-2.2.4.min.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/core.js"></script>
