@@ -194,9 +194,44 @@
                   {% endif %}
                   </div>
                   <!--odenmiş aidatları gosterme -->
-                  <div class="card-header">
-                    <h5>Ödenmiş Aidatlar</h5>
-                    
+                  <div class="card mt-4">
+                    <div class="card-header">
+                      <div class="card mb-40"></div>
+                      <h5>Ödenmiş Aidatlar</h5>
+                    </div>
+                    <div class="card-body">
+                      {% if odenmis_aidatlar %}
+                      <table class="table table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th>Daire</th><th>Sakin</th><th>Dönem</th><th>Tutar</th><th>Ödeme Tarihi</th><th>Dekont</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for a in odenmis_aidatlar %}
+                          <tr>
+                            <td>{{ a.user.username }}</td>
+                            <td>{{ a.user.mevcut_sakin }}</td>
+                            <td>{{ a.donem }}</td>
+                            <td>{{ a.tutar }}₺</td>
+                            <td>{{ a.odeme_tarihi }}</td>
+                            <td>
+                              {% if a.dekont %}
+                                <a href="{{ a.dekont.url }}" target="_blank" class="btn btn-sm btn-info">Görüntüle</a>
+                              {% else %}
+                                -
+                              {% endif %}
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                      {% else %}
+                        <p class="text-muted">Henüz ödenmiş aidat yok.</p>
+                      {% endif %}
+                    </div>
+                  </div>
+
 
 
               </div>

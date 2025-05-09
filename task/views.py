@@ -181,6 +181,7 @@ def admin_aidat_list(request):
     unpaid = Aidat.objects.filter(odeme_durumu=False).order_by('-donem')
     return render(request, 'aidat-takip.html', {
         'form': form,
+        'odenmis_aidatlar': Aidat.objects.filter(odeme_durumu=True).order_by('-donem'),
         'aidatlar': unpaid,
         'unpaid': unpaid.exists(),
         'today': today,
@@ -335,6 +336,6 @@ def panel_sakin_view(request):
 
     return render(request, 'panel-sakin.html', {
         'uyarilar': aidat_uyarilar,
-        
+
     })
 
