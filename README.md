@@ -29,8 +29,14 @@
    ```bash
    pip install -r requirements.txt
    ```
+   ```bash
+   pip install django
+   ```
 
 5. Veritabanı migrasyonları:
+   ```bash
+   python manage.py makemigrations
+   ```
    ```bash
    python manage.py migrate
    ```
