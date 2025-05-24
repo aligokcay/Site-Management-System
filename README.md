@@ -1,5 +1,10 @@
 # rAAt-ekip Projesi
 
+Bu proje ytu bilgisayar mühendisliği sistem analizi ve tasarım dersi dönem grup ödevi için geliştirilmiş bir site yönetim sistemidir. Ekteki raporlarda bir sistemin inşa süreci dökümante edilmiştir. 
+
+
+
+
 
 ## Kurulum Adımları
 
